@@ -6,7 +6,7 @@
  */
 namespace Praxigento\BonusLoyalty;
 
-use Praxigento\Wallet\Lib\Config as CfgWallet;
+use Praxigento\Wallet\Config as CfgWallet;
 
 class Config extends \Praxigento\BonusBase\Config
 {
