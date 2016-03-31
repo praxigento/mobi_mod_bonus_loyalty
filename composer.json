@@ -20,6 +20,6 @@
     }
   },
   "require": {
-    "praxigento/mobi_mod_common_bonus_loyalty": "dev-master"
+    "praxigento/mobi_mod_mage2_bonus_base": "dev-master"
   }
 }
