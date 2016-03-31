@@ -1,0 +1,118 @@
+{
+  "dBEAR": {
+    "package": {
+      "Praxigento": {
+        "alias": "prxgt",
+        "comment": "Root namespace for Praxigento modules.",
+        "package": {
+          "Bonus": {
+            "alias": "bon",
+            "comment": "Bonus related structures",
+            "package": {
+              "Loyalty": {
+                "alias": "loyal",
+                "comment": "Loyalty bonus related structures.",
+                "entity": {
+                  "Qualification": {
+                    "alias": "qual",
+                    "comment": "Qualification values (PV, GV, PSAA) to bind to compressed downline tree.",
+                    "attribute": {
+                      "CompressId": {
+                        "alias": "compress_id",
+                        "comment": "Reference to the compressed tree item in bonus base table.",
+                        "nullable": false,
+                        "type": {"integer": {"unsigned": true}}
+                      },
+                      "PersonalVolume": {
+                        "alias": "pv",
+                        "comment": "PV value for the customer.",
+                        "nullable": false,
+                        "type": {"numeric": {"precision": 12, "scale": 4}}
+                      },
+                      "GroupVolume": {
+                        "alias": "gv",
+                        "comment": "GV value for the customer.",
+                        "nullable": false,
+                        "type": {"numeric": {"precision": 12, "scale": 4}}
+                      },
+                      "PersonallySponsoredActiveAssociates": {
+                        "alias": "psaa",
+                        "comment": "Personally Sponsored Active Associates for the customer.",
+                        "nullable": false,
+                        "type": {"integer": {"unsigned": true}}
+                      }
+                    },
+                    "index": {
+                      "primary": {"type": "primary", "aliases": ["compress_id"]}
+                    },
+                    "relation": {
+                      "toCompressedTree": {
+                        "own": {"aliases": ["compress_id"]},
+                        "reference": {
+                          "entity": {"completeAlias": "prxgt_bon_base_compress"},
+                          "aliases": ["id"]
+                        },
+                        "action": {"delete": "restrict", "update": "restrict"}
+                      }
+                    }
+                  }
+                },
+                "package": {
+                  "Config": {
+                    "alias": "cfg",
+                    "comment": "Configuration parameters for loyalty bonus.",
+                    "entity": {
+                      "Param": {
+                        "alias": "param",
+                        "comment": "Calculation parameters (PV, GV, PSAA) for loyalty bonus.",
+                        "attribute": {
+                          "RankId": {
+                            "alias": "rank_id",
+                            "comment": "Reference to the rank item in bonus base table.",
+                            "nullable": false,
+                            "type": {"integer": {"unsigned": true}}
+                          },
+                          "PersonalVolume": {
+                            "alias": "pv",
+                            "comment": "PV value for the customer.",
+                            "nullable": false,
+                            "type": {"numeric": {"precision": 12, "scale": 4}}
+                          },
+                          "GroupVolume": {
+                            "alias": "gv",
+                            "comment": "GV value for the customer.",
+                            "nullable": false,
+                            "type": {"numeric": {"precision": 12, "scale": 4}}
+                          },
+                          "PersonallySponsoredActiveAssociates": {
+                            "alias": "psaa",
+                            "comment": "Personally Sponsored Active Associates for the customer.",
+                            "nullable": false,
+                            "type": {"integer": {"unsigned": true}}
+                          }
+                        },
+                        "index": {
+                          "primary": {"type": "primary", "aliases": ["rank_id"]}
+                        },
+                        "relation": {
+                          "toRank": {
+                            "own": {"aliases": ["rank_id"]},
+                            "reference": {
+                              "entity": {"completeAlias": "prxgt_bon_base_rank"},
+                              "aliases": ["id"]
+                            },
+                            "action": {"delete": "restrict", "update": "restrict"}
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

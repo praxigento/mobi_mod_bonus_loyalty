@@ -15,7 +15,8 @@
       "src/registration.php"
     ],
     "psr-4": {
-      "Praxigento\\BonusLoyalty\\": "src/"
+      "Praxigento\\BonusLoyalty\\": "src/",
+      "Praxigento\\Bonus\\Loyalty\\Lib\\": "src/"
     }
   },
   "require": {
