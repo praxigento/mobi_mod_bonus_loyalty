@@ -11,7 +11,7 @@ use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Cfg\Param as CfgParam;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification;
 use Praxigento\Bonus\Loyalty\Lib\Repo\IModule;
-use Praxigento\Core\Lib\Repo\Def\Base;
+use Praxigento\Core\Repo\Def\Base;
 use Praxigento\Pv\Lib\Entity\Sale as PvSale;
 
 class Module extends Base implements IModule {
