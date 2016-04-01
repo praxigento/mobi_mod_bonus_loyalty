@@ -9,12 +9,12 @@ use Praxigento\Bonus\Base\Lib\Entity\Calculation;
 use Praxigento\Bonus\Base\Lib\Entity\Cfg\Generation;
 use Praxigento\Bonus\Base\Lib\Entity\Compress;
 use Praxigento\Bonus\Base\Lib\Entity\Rank;
-use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Cfg\Param;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification;
 use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Bonus as LoyaltyCalcBonusRequest;
 use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Compress as LoyaltyCalcCompressRequest;
 use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Qualification as LoyaltyCalcQualificationRequest;
+use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Core\Lib\Context;
 use Praxigento\Core\Lib\Test\BaseIntegrationTest;
 use Praxigento\Pv\Lib\Entity\Sale as PvSale;
@@ -22,7 +22,8 @@ use Praxigento\Pv\Lib\Service\Sale\Request\AccountPv as PvSaleAccountPvRequest;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 
-class Main_IntegrationTest extends BaseIntegrationTest {
+class Main_IntegrationTest extends BaseIntegrationTest
+{
     const DS_DOWNLINE_SNAP_UP_TO = '20160201';
     const DS_ORDERS_CREATED = '20160115';
     const DS_PERIOD_BEGIN = '20160101';
@@ -34,15 +35,15 @@ class Main_IntegrationTest extends BaseIntegrationTest {
      * @var array
      */
     private $DEF_ORDERS = [
-        1  => 5000,
-        2  => 500,
-        3  => 5000,
-        4  => 120,
-        5  => 200,
-        6  => 200,
-        7  => null,
-        8  => 200,
-        9  => 200,
+        1 => 5000,
+        2 => 500,
+        3 => 5000,
+        4 => 120,
+        5 => 200,
+        6 => 200,
+        7 => null,
+        8 => 200,
+        9 => 200,
         10 => null,
         11 => 200,
         12 => 120,
@@ -59,7 +60,8 @@ class Main_IntegrationTest extends BaseIntegrationTest {
     /** @var \Praxigento\Core\Lib\Repo\IBasic */
     private $repoCore;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->_callPvSale = $this->_obm->get(\Praxigento\Pv\Lib\Service\ISale::class);
         $this->_callLoyaltyCalc = $this->_obm->get(\Praxigento\Bonus\Loyalty\Lib\Service\ICalc::class);
@@ -68,29 +70,32 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         $this->_repoAcc = $this->_obm->get(\Praxigento\Accounting\Lib\Repo\IModule::class);
     }
 
-    private function _calcBonus() {
+    private function _calcBonus()
+    {
         $req = new LoyaltyCalcBonusRequest();
         $resp = $this->_callLoyaltyCalc->bonus($req);
         $this->assertTrue($resp->isSucceed());
         $calcId = $resp->getCalcId();
         /* validate calculation state  */
-        $data = $this->repoCore->getEntityByPk(Calculation::ENTITY_NAME, [ Calculation::ATTR_ID => $calcId ]);
+        $data = $this->repoCore->getEntityByPk(Calculation::ENTITY_NAME, [Calculation::ATTR_ID => $calcId]);
         $this->assertEquals(Cfg::CALC_STATE_COMPLETE, $data[Calculation::ATTR_STATE]);
         return $calcId;
     }
 
-    private function _calcCompression() {
+    private function _calcCompression()
+    {
         $req = new LoyaltyCalcCompressRequest();
         $resp = $this->_callLoyaltyCalc->compress($req);
         $this->assertTrue($resp->isSucceed());
         $calcId = $resp->getCalcId();
         /* validate calculation state  */
-        $data = $this->repoCore->getEntityByPk(Calculation::ENTITY_NAME, [ Calculation::ATTR_ID => $calcId ]);
+        $data = $this->repoCore->getEntityByPk(Calculation::ENTITY_NAME, [Calculation::ATTR_ID => $calcId]);
         $this->assertEquals(Cfg::CALC_STATE_COMPLETE, $data[Calculation::ATTR_STATE]);
         return $calcId;
     }
 
-    private function _calcQualification() {
+    private function _calcQualification()
+    {
         $req = new LoyaltyCalcQualificationRequest();
         $req->setGvMaxLevels(2);
         $req->setPsaaLevel(120);
@@ -98,29 +103,30 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         $this->assertTrue($resp->isSucceed());
         $calcId = $resp->getCalcId();
         /* validate calculation state  */
-        $data = $this->repoCore->getEntityByPk(Calculation::ENTITY_NAME, [ Calculation::ATTR_ID => $calcId ]);
+        $data = $this->repoCore->getEntityByPk(Calculation::ENTITY_NAME, [Calculation::ATTR_ID => $calcId]);
         $this->assertEquals(Cfg::CALC_STATE_COMPLETE, $data[Calculation::ATTR_STATE]);
         return $calcId;
     }
 
-    private function _createOrders() {
-        foreach($this->DEF_ORDERS as $custNdx => $pv) {
-            if(is_null($pv)) {
+    private function _createOrders()
+    {
+        foreach ($this->DEF_ORDERS as $custNdx => $pv) {
+            if (is_null($pv)) {
                 continue;
             }
             $custId = $this->_mapCustomerMageIdByIndex[$custNdx];
             $ts = $this->_toolbox->getPeriod()->getTimestampTo(self::DS_ORDERS_CREATED);
             $bindOrder = [
-                Cfg::E_SALE_ORDER_A_CUSTOMER_ID      => $custId,
+                Cfg::E_SALE_ORDER_A_CUSTOMER_ID => $custId,
                 Cfg::E_SALE_ORDER_A_BASE_GRAND_TOTAL => $pv,
-                Cfg::E_SALE_ORDER_A_CREATED_AT       => $ts,
-                Cfg::E_SALE_ORDER_A_UPDATED_AT       => $ts
+                Cfg::E_SALE_ORDER_A_CREATED_AT => $ts,
+                Cfg::E_SALE_ORDER_A_UPDATED_AT => $ts
             ];
             $orderId = $this->repoCore->addEntity(Cfg::ENTITY_MAGE_SALES_ORDER, $bindOrder);
             $bindPv = [
-                PvSale::ATTR_SALE_ID   => $orderId,
-                PvSale::ATTR_SUBTOTAL  => $pv,
-                PvSale::ATTR_TOTAL     => $pv,
+                PvSale::ATTR_SALE_ID => $orderId,
+                PvSale::ATTR_SUBTOTAL => $pv,
+                PvSale::ATTR_TOTAL => $pv,
                 PvSale::ATTR_DATE_PAID => $ts
             ];
             $this->repoCore->addEntity(PvSale::ENTITY_NAME, $bindPv);
@@ -132,18 +138,20 @@ class Main_IntegrationTest extends BaseIntegrationTest {
     /**
      * Register PV transaction for sale order.
      */
-    private function _createPvTransaction($custId, $orderId, $dateApplied) {
+    private function _createPvTransaction($custId, $orderId, $dateApplied)
+    {
         $req = new PvSaleAccountPvRequest();
         $req->setCustomerId($custId);
         $req->setSaleOrderId($orderId);
         $req->setDateApplied($dateApplied);
         $resp = $this->_callPvSale->accountPv($req);
-        if($resp->isSucceed()) {
+        if ($resp->isSucceed()) {
             $this->_logger->debug("New PV transaction is registered for order #$orderId and customer #$custId .");
         }
     }
 
-    private function _repoGetBalances() {
+    private function _repoGetBalances()
+    {
         $assetTypeId = $this->_repoAcc->getTypeAssetIdByCode(Cfg::CODE_TYPE_ASSET_WALLET_ACTIVE);
         $where = Account::ATTR_ASSET_TYPE__ID . '=' . (int)$assetTypeId;
         $result = $this->repoCore->getEntities(Account::ENTITY_NAME, null, $where);
@@ -162,7 +170,8 @@ class Main_IntegrationTest extends BaseIntegrationTest {
      *
      * @param $calcId
      */
-    private function _repoGetQualificationData($calcId) {
+    private function _repoGetQualificationData($calcId)
+    {
         $dba = $this->repoCore->getDba();
         $conn = $dba->getDefaultConnection();
         /* aliases and tables */
@@ -172,11 +181,11 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         $tblQual = $dba->getTableName(Qualification::ENTITY_NAME);
         /* SELECT  FROM prxgt_bon_base_compress pbbc */
         $query = $conn->select();
-        $query->from([ $asCompress => $tblCompress ], [ Compress::ATTR_CUSTOMER_ID ]);
+        $query->from([$asCompress => $tblCompress], [Compress::ATTR_CUSTOMER_ID]);
         /* LEFT JOIN prxgt_bon_loyal_qual pblq ON pbbc.id = pblq.compress_id */
         $on = $asCompress . '.' . Compress::ATTR_ID . "=$asQual." . Qualification::ATTR_COMPRESS_ID;
         $cols = '*';
-        $query->joinLeft([ $asQual => $tblQual ], $on, $cols);
+        $query->joinLeft([$asQual => $tblQual], $on, $cols);
         /* where  */
         $where = $asCompress . '.' . Compress::ATTR_CALC_ID . '=' . (int)$calcId;
         //$query->where($where);
@@ -185,13 +194,14 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         return $result;
     }
 
-    private function _setParams() {
+    private function _setParams()
+    {
         $PARAMS = [
-            self::RANK_BY_PV   => [ Param::ATTR_PV => 120 ],
-            self::RANK_BY_GV   => [ Param::ATTR_PV => 120, Param::ATTR_GV => 500 ],
-            self::RANK_BY_PSAA => [ Param::ATTR_PV => 120, Param::ATTR_GV => 2000, Param::ATTR_PSAA => 2 ]
+            self::RANK_BY_PV => [Param::ATTR_PV => 120],
+            self::RANK_BY_GV => [Param::ATTR_PV => 120, Param::ATTR_GV => 500],
+            self::RANK_BY_PSAA => [Param::ATTR_PV => 120, Param::ATTR_GV => 2000, Param::ATTR_PSAA => 2]
         ];
-        foreach($PARAMS as $rank => $bind) {
+        foreach ($PARAMS as $rank => $bind) {
             $rankId = $this->_repoBase->getRankIdByCode($rank);
             $bind [Param::ATTR_RANK_ID] = $rankId;
             $this->repoCore->addEntity(Param::ENTITY_NAME, $bind);
@@ -199,21 +209,22 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         $this->_logger->debug("Configuration parameters for Loyalty bonus are set.");
     }
 
-    private function _setPercents() {
+    private function _setPercents()
+    {
         $PERCENTS = [
-            self::RANK_BY_PV   => [ 0.05 ],
-            self::RANK_BY_GV   => [ 0.10 ],
-            self::RANK_BY_PSAA => [ 0.15, 0.10 ]
+            self::RANK_BY_PV => [0.05],
+            self::RANK_BY_GV => [0.10],
+            self::RANK_BY_PSAA => [0.15, 0.10]
         ];
-        foreach($PERCENTS as $rank => $percents) {
+        foreach ($PERCENTS as $rank => $percents) {
             $calcTypeId = $this->_repoBase->getTypeCalcIdByCode(Cfg::CODE_TYPE_CALC_BONUS);
             $rankId = $this->_repoBase->getRankIdByCode($rank);
             $bind = [
-                Generation::ATTR_RANK_ID      => $rankId,
+                Generation::ATTR_RANK_ID => $rankId,
                 Generation::ATTR_CALC_TYPE_ID => $calcTypeId
             ];
             $gen = 1;
-            foreach($percents as $percent) {
+            foreach ($percents as $percent) {
                 $bind[Generation::ATTR_PERCENT] = $percent;
                 $bind[Generation::ATTR_GENERATION] = $gen++;
                 $this->repoCore->addEntity(Generation::ENTITY_NAME, $bind);
@@ -222,7 +233,8 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         $this->_logger->debug("Configuration parameters for Loyalty bonus are set.");
     }
 
-    private function _setRanks() {
+    private function _setRanks()
+    {
         $this->repoCore->addEntity(Rank::ENTITY_NAME, [
             Rank::ATTR_CODE => self::RANK_BY_PV,
             Rank::ATTR_NOTE => 'Customer is qualified by PV only.'
@@ -238,7 +250,8 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         $this->_logger->debug("Ranks for Loyalty bonus are set.");
     }
 
-    private function _validateBonus($calcId) {
+    private function _validateBonus($calcId)
+    {
         $EXP_COUNT = 5; // 4 customers + 1 representative
         $EXP_REPR = -1017.00;
         /* [$custNdx => [$pv, $gv, $psaa], ... ] */
@@ -250,10 +263,10 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         ];
         $data = $this->_repoGetBalances();
         $this->assertEquals($EXP_COUNT, count($data));
-        foreach($data as $item) {
+        foreach ($data as $item) {
             $custId = $item[Account::ATTR_CUST_ID];
             $balance = $item[Account::ATTR_BALANCE];
-            if($balance < 0) {
+            if ($balance < 0) {
                 /* representative */
                 $this->assertEquals($EXP_REPR, $balance);
             } else {
@@ -263,17 +276,18 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         }
     }
 
-    private function _validateCompression($calcId) {
+    private function _validateCompression($calcId)
+    {
         $EXP_COUNT = 11;
         $EXP_TREE = [
-            1  => 1,
-            2  => 1,
-            3  => 1,
-            4  => 2,
-            5  => 2,
-            6  => 3,
-            8  => 6,
-            9  => 6,
+            1 => 1,
+            2 => 1,
+            3 => 1,
+            4 => 2,
+            5 => 2,
+            6 => 3,
+            8 => 6,
+            9 => 6,
             11 => 3,
             12 => 3,
             13 => 3
@@ -281,7 +295,7 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         $where = Compress::ATTR_CALC_ID . '=' . $calcId;
         $data = $this->repoCore->getEntities(Compress::ENTITY_NAME, null, $where);
         $this->assertEquals($EXP_COUNT, count($data));
-        foreach($data as $item) {
+        foreach ($data as $item) {
             $custId = $item[Compress::ATTR_CUSTOMER_ID];
             $parentId = $item[Compress::ATTR_PARENT_ID];
             $custNdx = $this->_mapCustomerIndexByMageId[$custId];
@@ -290,25 +304,26 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         }
     }
 
-    private function _validateQualification($calcId) {
+    private function _validateQualification($calcId)
+    {
         $EXP_COUNT = 11;
         /* [$custNdx => [$pv, $gv, $psaa], ... ] */
         $EXP_TREE = [
-            1  => [ 5000, 6440, 2 ],
-            2  => [ 500, 320, 1 ],
-            3  => [ 5000, 1020, 2 ],
-            4  => [ 120, 0, 0 ],
-            5  => [ 200, 0, 0 ],
-            6  => [ 200, 400, 2 ],
-            8  => [ 200, 0, 0 ],
-            9  => [ 200, 0, 0 ],
-            11 => [ 200, 0, 0 ],
-            12 => [ 120, 0, 0 ],
-            13 => [ 100, 0, 0 ]
+            1 => [5000, 6440, 2],
+            2 => [500, 320, 1],
+            3 => [5000, 1020, 2],
+            4 => [120, 0, 0],
+            5 => [200, 0, 0],
+            6 => [200, 400, 2],
+            8 => [200, 0, 0],
+            9 => [200, 0, 0],
+            11 => [200, 0, 0],
+            12 => [120, 0, 0],
+            13 => [100, 0, 0]
         ];
         $data = $this->_repoGetQualificationData($calcId);
         $this->assertEquals($EXP_COUNT, count($data));
-        foreach($data as $item) {
+        foreach ($data as $item) {
             $custId = $item[Compress::ATTR_CUSTOMER_ID];
             $pv = +$item[Qualification::ATTR_PV];
             $gv = +$item[Qualification::ATTR_GV];
@@ -320,7 +335,15 @@ class Main_IntegrationTest extends BaseIntegrationTest {
         }
     }
 
-    public function test_main() {
+    public function setUp()
+    {
+        parent::setUp();
+        /* clear cached data */
+        $this->_callPvSale->cacheReset();
+    }
+
+    public function test_main()
+    {
         $this->_logger->debug('Story01 in Loyalty Bonus Integration tests is started.');
         $this->_conn->beginTransaction();
         try {
