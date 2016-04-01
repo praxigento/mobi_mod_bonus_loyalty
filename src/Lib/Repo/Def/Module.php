@@ -21,7 +21,7 @@ class Module extends Base implements IModule {
     protected $_toolPeriod;
 
     public function __construct(
-        \Praxigento\Core\Lib\Repo\IBasic $repoBasic,
+        \Praxigento\Core\Repo\IBasic $repoBasic,
         BonusBaseRepo $repoBonusBase,
         \Praxigento\Core\Lib\Tool\Period $toolPeriod
     ) {
