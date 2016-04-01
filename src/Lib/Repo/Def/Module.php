@@ -11,7 +11,7 @@ use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Cfg\Param as CfgParam;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification;
 use Praxigento\Bonus\Loyalty\Lib\Repo\IModule;
-use Praxigento\Core\Lib\Repo\Base;
+use Praxigento\Core\Lib\Repo\Def\Base;
 use Praxigento\Pv\Lib\Entity\Sale as PvSale;
 
 class Module extends Base implements IModule {
@@ -88,7 +88,7 @@ class Module extends Base implements IModule {
             CfgParam::ATTR_GV . ' DESC',
             CfgParam::ATTR_PV . ' DESC'
         ];
-        $result = $this->_repoBasic->getEntities(CfgParam::ENTITY_NAME, null, null, $order);
+        $result = $this->_resourceConnection->getEntities(CfgParam::ENTITY_NAME, null, null, $order);
         return $result;
     }
 
@@ -203,7 +203,7 @@ class Module extends Base implements IModule {
         $isCommited = false;
         try {
             foreach($updates as $item) {
-                $this->_repoBasic->addEntity(Qualification::ENTITY_NAME, $item);
+                $this->_resourceConnection->addEntity(Qualification::ENTITY_NAME, $item);
             }
             $conn->commit();
             $isCommited = true;
@@ -237,7 +237,7 @@ class Module extends Base implements IModule {
         $isCommited = false;
         try {
             foreach($updates as $item) {
-                $this->_repoBasic->addEntity(Qualification::ENTITY_NAME, $item);
+                $this->_resourceConnection->addEntity(Qualification::ENTITY_NAME, $item);
             }
             $conn->commit();
             $isCommited = true;
