@@ -25,8 +25,8 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
 
     protected function setUp() {
         parent::setUp();
-        $this->mConn = $this->_mockConnection();
-        $this->mDba = $this->_mockDba($this->mConn);
+        $this->mConn = $this->_mockDba();
+        $this->mDba = $this->_mockRsrcConnOld($this->mConn);
         $this->mRepoBasic = $this->_mockRepoBasic($this->mDba);
         $this->mRepoBonusBase = $this->_mock(\Praxigento\Bonus\Base\Lib\Repo\IModule::class);
         $this->mToolPeriod = $this->_mock(\Praxigento\Core\Lib\Tool\Period::class);
