@@ -5,7 +5,7 @@
 
 namespace Praxigento\Bonus\Loyalty\Lib\Repo;
 
-interface IModule  extends \Praxigento\Core\Lib\Repo\IModule {
+interface IModule  {
 
     /**
      * @return array [$rankId=>[$generation=>$percent], ...]

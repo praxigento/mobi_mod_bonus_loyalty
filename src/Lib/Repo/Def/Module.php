@@ -7,36 +7,39 @@ namespace Praxigento\Bonus\Loyalty\Lib\Repo\Def;
 
 use Praxigento\Bonus\Base\Lib\Entity\Compress;
 use Praxigento\Bonus\Base\Lib\Repo\IModule as BonusBaseRepo;
-use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Cfg\Param as CfgParam;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification;
 use Praxigento\Bonus\Loyalty\Lib\Repo\IModule;
+use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Core\Repo\Def\Base;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
 
-class Module extends Base implements IModule {
+class Module extends Base implements IModule
+{
     /** @var BonusBaseRepo */
     protected $_repoBonusBase;
     /** @var  \Praxigento\Core\Lib\Tool\Period */
     protected $_toolPeriod;
 
     public function __construct(
-        \Praxigento\Core\Repo\IBasic $repoBasic,
+        \Magento\Framework\App\ResourceConnection $resource,
         BonusBaseRepo $repoBonusBase,
         \Praxigento\Core\Lib\Tool\Period $toolPeriod
     ) {
-        parent::__construct($repoBasic);
+        parent::__construct($resource);
         $this->_toolPeriod = $toolPeriod;
         $this->_repoBonusBase = $repoBonusBase;
     }
 
-    function getBonusPercents() {
+    function getBonusPercents()
+    {
         $calcTypeId = $this->_repoBonusBase->getTypeCalcIdByCode(Cfg::CODE_TYPE_CALC_BONUS);
         $result = $this->_repoBonusBase->getConfigGenerationsPercents($calcTypeId);
         return $result;
     }
 
-    public function getCompressedTree($calcId) {
+    public function getCompressedTree($calcId)
+    {
         $result = $this->_repoBonusBase->getCompressedTree($calcId);
         return $result;
     }
@@ -56,7 +59,8 @@ class Module extends Base implements IModule {
      *
      * @param $calcId
      */
-    public function getCompressedTreeWithQualifications($calcId) {
+    public function getCompressedTreeWithQualifications($calcId)
+    {
         $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
         /* aliases and tables */
         $asCompress = 'pbbc';
@@ -65,7 +69,7 @@ class Module extends Base implements IModule {
         $tblQual = $this->_getTableName(Qualification::ENTITY_NAME);
         // SELECT FROM prxgt_bon_base_compress pbbc
         $query = $conn->select();
-        $query->from([ $asCompress => $tblCompress ], [ Compress::ATTR_CUSTOMER_ID, Compress::ATTR_PARENT_ID ]);
+        $query->from([$asCompress => $tblCompress], [Compress::ATTR_CUSTOMER_ID, Compress::ATTR_PARENT_ID]);
         // LEFT JOIN prxgt_bon_loyal_qual pblq ON pbbc.id = pblq.compress_id
         $on = "$asCompress." . Compress::ATTR_ID . "=$asQual." . Qualification::ATTR_COMPRESS_ID;
         $cols = [
@@ -73,7 +77,7 @@ class Module extends Base implements IModule {
             Qualification::ATTR_GV,
             Qualification::ATTR_PSAA
         ];
-        $query->joinLeft([ $asQual => $tblQual ], $on, $cols);
+        $query->joinLeft([$asQual => $tblQual], $on, $cols);
         // where
         $where = $asCompress . '.' . Compress::ATTR_CALC_ID . '=' . (int)$calcId;
         $query->where($where);
@@ -82,17 +86,19 @@ class Module extends Base implements IModule {
         return $result;
     }
 
-    function getConfigParams() {
+    function getConfigParams()
+    {
         $order = [
             CfgParam::ATTR_PSAA . ' DESC',
             CfgParam::ATTR_GV . ' DESC',
             CfgParam::ATTR_PV . ' DESC'
         ];
-        $result = $this->_resourceConnection->getEntities(CfgParam::ENTITY_NAME, null, null, $order);
+        $result = $this->_resource->getEntities(CfgParam::ENTITY_NAME, null, null, $order);
         return $result;
     }
 
-    public function getLatestCalcForPeriod($calcTypeId, $dsBegin, $dsEnd) {
+    public function getLatestCalcForPeriod($calcTypeId, $dsBegin, $dsEnd)
+    {
         $shouldGetLatestCalc = true;
         $result = $this->_repoBonusBase->getCalcsForPeriod($calcTypeId, $dsBegin, $dsEnd, $shouldGetLatestCalc);
         return $result;
@@ -114,7 +120,8 @@ class Module extends Base implements IModule {
      *
      * @return array [$custId => $pvSummary, ...]
      */
-    function getQualificationData($dsFrom, $dsTo) {
+    function getQualificationData($dsFrom, $dsTo)
+    {
         $tsFrom = $this->_toolPeriod->getTimestampFrom($dsFrom);
         $tsTo = $this->_toolPeriod->getTimestampTo($dsTo);
         $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
@@ -126,13 +133,13 @@ class Module extends Base implements IModule {
         $tblOrder = $this->_getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
         // SELECT FROM prxgt_pv_sale pps
         $query = $conn->select();
-        $query->from([ $asPvSales => $tblPv ], [ $asSummary => 'SUM(' . PvSale::ATTR_TOTAL . ')' ]);
+        $query->from([$asPvSales => $tblPv], [$asSummary => 'SUM(' . PvSale::ATTR_TOTAL . ')']);
         // LEFT JOIN sales_flat_order sfo ON pps.sale_id = sfo.entity_id
         $on = "$asPvSales." . PvSale::ATTR_SALE_ID . "=$asOrder." . Cfg::E_SALE_ORDER_A_ENTITY_ID;
         $cols = [
             Cfg::E_SALE_ORDER_A_CUSTOMER_ID
         ];
-        $query->joinLeft([ $asOrder => $tblOrder ], $on, $cols);
+        $query->joinLeft([$asOrder => $tblOrder], $on, $cols);
         // where
         $whereFrom = $asPvSales . '.' . PvSale::ATTR_DATE_PAID . '>=' . $conn->quote($tsFrom);
         $whereTo = $asPvSales . '.' . PvSale::ATTR_DATE_PAID . '<=' . $conn->quote($tsTo);
@@ -141,8 +148,8 @@ class Module extends Base implements IModule {
         $query->group($asOrder . '.' . Cfg::E_SALE_ORDER_A_CUSTOMER_ID);
         // $sql = (string)$query;
         $items = $conn->fetchAll($query);
-        $result = [ ];
-        foreach($items as $item) {
+        $result = [];
+        foreach ($items as $item) {
             $custId = $item[Cfg::E_SALE_ORDER_A_CUSTOMER_ID];
             $pv = $item[$asSummary];
             $result[$custId] = $pv;
@@ -165,7 +172,8 @@ class Module extends Base implements IModule {
      *
      * @return array
      */
-    function getSalesOrdersForPeriod($dsFrom, $dsTo) {
+    function getSalesOrdersForPeriod($dsFrom, $dsTo)
+    {
         $tsFrom = $this->_toolPeriod->getTimestampFrom($dsFrom);
         $tsTo = $this->_toolPeriod->getTimestampTo($dsTo);
         $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
@@ -176,13 +184,13 @@ class Module extends Base implements IModule {
         $tblOrder = $this->_getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
         // SELECT FROM prxgt_pv_sale pps
         $query = $conn->select();
-        $query->from([ $asPv => $tblPv ], [ PvSale::ATTR_SALE_ID, PvSale::ATTR_TOTAL ]);
+        $query->from([$asPv => $tblPv], [PvSale::ATTR_SALE_ID, PvSale::ATTR_TOTAL]);
         // LEFT JOIN sales_flat_order sfo ON pps.sale_id = sfo.entity_id
         $on = "$asPv." . PvSale::ATTR_SALE_ID . "=$asOrder." . Cfg::E_SALE_ORDER_A_ENTITY_ID;
         $cols = [
             Cfg::E_SALE_ORDER_A_CUSTOMER_ID
         ];
-        $query->joinLeft([ $asOrder => $tblOrder ], $on, $cols);
+        $query->joinLeft([$asOrder => $tblOrder], $on, $cols);
         // where
         $whereFrom = $asPv . '.' . PvSale::ATTR_DATE_PAID . '>=' . $conn->quote($tsFrom);
         $whereTo = $asPv . '.' . PvSale::ATTR_DATE_PAID . '<=' . $conn->quote($tsTo);
@@ -192,63 +200,68 @@ class Module extends Base implements IModule {
         return $result;
     }
 
-    public function getTypeCalcIdByCode($calcTypeCode) {
+    public function getTypeCalcIdByCode($calcTypeCode)
+    {
         $result = $this->_repoBonusBase->getTypeCalcIdByCode($calcTypeCode);
         return $result;
     }
 
-    public function saveBonus($updates) {
+    public function saveBonus($updates)
+    {
         $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
         $conn->beginTransaction();
         $isCommited = false;
         try {
-            foreach($updates as $item) {
-                $this->_resourceConnection->addEntity(Qualification::ENTITY_NAME, $item);
+            foreach ($updates as $item) {
+                $this->_resource->addEntity(Qualification::ENTITY_NAME, $item);
             }
             $conn->commit();
             $isCommited = true;
         } finally {
-            if(!$isCommited) {
+            if (!$isCommited) {
                 $conn->rollback();
             }
         }
     }
 
-    public function saveLogSaleOrders($updates) {
+    public function saveLogSaleOrders($updates)
+    {
         $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
         $conn->beginTransaction();
         $isCommited = false;
         try {
-            foreach($updates as $transId => $saleId) {
+            foreach ($updates as $transId => $saleId) {
                 $this->_repoBonusBase->addLogSaleOrder($transId, $saleId);
             }
             $conn->commit();
             $isCommited = true;
         } finally {
-            if(!$isCommited) {
+            if (!$isCommited) {
                 $conn->rollback();
             }
         }
     }
 
-    public function saveQualificationParams($updates) {
+    public function saveQualificationParams($updates)
+    {
         $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
         $conn->beginTransaction();
         $isCommited = false;
         try {
-            foreach($updates as $item) {
-                $this->_resourceConnection->addEntity(Qualification::ENTITY_NAME, $item);
+            foreach ($updates as $item) {
+                $this->_resource->addEntity(Qualification::ENTITY_NAME, $item);
             }
             $conn->commit();
             $isCommited = true;
         } finally {
-            if(!$isCommited) {
+            if (!$isCommited) {
                 $conn->rollback();
             }
         }
     }
 
-    public function updateCalcSetComplete($calcId) {
+    public function updateCalcSetComplete($calcId)
+    {
         $result = $this->_repoBonusBase->updateCalcSetComplete($calcId);
         return $result;
     }
