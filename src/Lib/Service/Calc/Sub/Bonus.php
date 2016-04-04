@@ -9,7 +9,7 @@ use Praxigento\Bonus\Base\Lib\Entity\Compress;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Downline\Data\Entity\Snap;
 use Praxigento\Downline\Lib\Service\Snap\Request\ExpandMinimal as DownlineSnapExtendMinimalRequest;
-use Praxigento\Pv\Lib\Entity\Sale as PvSale;
+use Praxigento\Pv\Data\Entity\Sale as PvSale;
 
 class Bonus {
     /** @var   \Praxigento\Downline\Lib\Service\ISnap */

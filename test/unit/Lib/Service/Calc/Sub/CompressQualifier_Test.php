@@ -5,7 +5,7 @@
 
 namespace Praxigento\Bonus\Loyalty\Lib\Service\Calc\Sub;
 
-use Praxigento\Pv\Lib\Entity\Sale as PvSale;
+use Praxigento\Pv\Data\Entity\Sale as PvSale;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 

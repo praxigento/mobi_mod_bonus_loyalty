@@ -17,7 +17,7 @@ use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Qualification as LoyaltyCa
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Core\Lib\Context;
 use Praxigento\Core\Lib\Test\BaseIntegrationTest;
-use Praxigento\Pv\Lib\Entity\Sale as PvSale;
+use Praxigento\Pv\Data\Entity\Sale as PvSale;
 use Praxigento\Pv\Lib\Service\Sale\Request\AccountPv as PvSaleAccountPvRequest;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
