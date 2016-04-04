@@ -7,7 +7,7 @@ namespace Praxigento\Bonus\Loyalty\Lib\Service\Calc\Sub;
 
 use Praxigento\Bonus\Base\Lib\Entity\Compress;
 use Praxigento\BonusLoyalty\Config as Cfg;
-use Praxigento\Downline\Lib\Entity\Snap;
+use Praxigento\Downline\Data\Entity\Snap;
 use Praxigento\Downline\Lib\Service\Snap\Request\ExpandMinimal as DownlineSnapExtendMinimalRequest;
 use Praxigento\Pv\Lib\Entity\Sale as PvSale;
 

@@ -7,7 +7,7 @@ namespace Praxigento\Bonus\Loyalty\Lib\Service\Calc\Sub;
 
 use Flancer32\Lib\DataObject;
 use Praxigento\BonusLoyalty\Config as Cfg;
-use Praxigento\Downline\Lib\Entity\Snap;
+use Praxigento\Downline\Data\Entity\Snap;
 use Praxigento\Pv\Lib\Entity\Sale as PvSale;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');

@@ -7,7 +7,7 @@ namespace Praxigento\Bonus\Loyalty\Lib\Service\Calc\Sub;
 
 use Praxigento\Bonus\Base\Lib\Entity\Compress;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification as EntityQual;
-use Praxigento\Downline\Lib\Entity\Snap;
+use Praxigento\Downline\Data\Entity\Snap;
 use Praxigento\Downline\Lib\Service\Map\Request\ById as DownlineMapByIdRequest;
 use Praxigento\Downline\Lib\Service\Map\Request\TreeByDepth as DownlineMapTreeByDepthRequest;
 use Praxigento\Downline\Lib\Service\Map\Request\TreeByTeams as DownlineMapTreeByTeamsRequest;
