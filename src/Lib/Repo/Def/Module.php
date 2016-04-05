@@ -20,13 +20,21 @@ class Module extends Base implements IModule
     protected $_repoBonusBase;
     /** @var  \Praxigento\Core\Lib\Tool\Period */
     protected $_toolPeriod;
+    /** @var \Praxigento\Core\Repo\IBasic */
+    protected $_repoBasic;
+    /** @var  \Praxigento\Core\Repo\ITransactionManager */
+    protected $_manTrans;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
+        \Praxigento\Core\Repo\ITransactionManager $manTrans,
+        \Praxigento\Core\Repo\IBasic $repoBasic,
         BonusBaseRepo $repoBonusBase,
         \Praxigento\Core\Lib\Tool\Period $toolPeriod
     ) {
         parent::__construct($resource);
+        $this->_manTrans = $manTrans;
+        $this->_repoBasic = $repoBasic;
         $this->_toolPeriod = $toolPeriod;
         $this->_repoBonusBase = $repoBonusBase;
     }
@@ -61,14 +69,13 @@ class Module extends Base implements IModule
      */
     public function getCompressedTreeWithQualifications($calcId)
     {
-        $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
         /* aliases and tables */
         $asCompress = 'pbbc';
         $asQual = 'pblq';
-        $tblCompress = $this->_getTableName(Compress::ENTITY_NAME);
-        $tblQual = $this->_getTableName(Qualification::ENTITY_NAME);
+        $tblCompress = $this->_conn->getTableName(Compress::ENTITY_NAME);
+        $tblQual = $this->_conn->getTableName(Qualification::ENTITY_NAME);
         // SELECT FROM prxgt_bon_base_compress pbbc
-        $query = $conn->select();
+        $query = $this->_conn->select();
         $query->from([$asCompress => $tblCompress], [Compress::ATTR_CUSTOMER_ID, Compress::ATTR_PARENT_ID]);
         // LEFT JOIN prxgt_bon_loyal_qual pblq ON pbbc.id = pblq.compress_id
         $on = "$asCompress." . Compress::ATTR_ID . "=$asQual." . Qualification::ATTR_COMPRESS_ID;
@@ -82,7 +89,7 @@ class Module extends Base implements IModule
         $where = $asCompress . '.' . Compress::ATTR_CALC_ID . '=' . (int)$calcId;
         $query->where($where);
         // $sql = (string)$query;
-        $result = $conn->fetchAll($query);
+        $result = $this->_conn->fetchAll($query);
         return $result;
     }
 
@@ -93,7 +100,7 @@ class Module extends Base implements IModule
             CfgParam::ATTR_GV . ' DESC',
             CfgParam::ATTR_PV . ' DESC'
         ];
-        $result = $this->_resource->getEntities(CfgParam::ENTITY_NAME, null, null, $order);
+        $result = $this->_repoBasic->getEntities(CfgParam::ENTITY_NAME, null, null, $order);
         return $result;
     }
 
@@ -124,15 +131,14 @@ class Module extends Base implements IModule
     {
         $tsFrom = $this->_toolPeriod->getTimestampFrom($dsFrom);
         $tsTo = $this->_toolPeriod->getTimestampTo($dsTo);
-        $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
         /* aliases and tables */
         $asPvSales = 'pps';
         $asOrder = 'sfo';
         $asSummary = 'summary';
-        $tblPv = $this->_getTableName(PvSale::ENTITY_NAME);
-        $tblOrder = $this->_getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
+        $tblPv = $this->_conn->getTableName(PvSale::ENTITY_NAME);
+        $tblOrder = $this->_conn->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
         // SELECT FROM prxgt_pv_sale pps
-        $query = $conn->select();
+        $query = $this->_conn->select();
         $query->from([$asPvSales => $tblPv], [$asSummary => 'SUM(' . PvSale::ATTR_TOTAL . ')']);
         // LEFT JOIN sales_flat_order sfo ON pps.sale_id = sfo.entity_id
         $on = "$asPvSales." . PvSale::ATTR_SALE_ID . "=$asOrder." . Cfg::E_SALE_ORDER_A_ENTITY_ID;
@@ -141,13 +147,13 @@ class Module extends Base implements IModule
         ];
         $query->joinLeft([$asOrder => $tblOrder], $on, $cols);
         // where
-        $whereFrom = $asPvSales . '.' . PvSale::ATTR_DATE_PAID . '>=' . $conn->quote($tsFrom);
-        $whereTo = $asPvSales . '.' . PvSale::ATTR_DATE_PAID . '<=' . $conn->quote($tsTo);
+        $whereFrom = $asPvSales . '.' . PvSale::ATTR_DATE_PAID . '>=' . $this->_conn->quote($tsFrom);
+        $whereTo = $asPvSales . '.' . PvSale::ATTR_DATE_PAID . '<=' . $this->_conn->quote($tsTo);
         $query->where("$whereFrom AND $whereTo");
         // group by
         $query->group($asOrder . '.' . Cfg::E_SALE_ORDER_A_CUSTOMER_ID);
         // $sql = (string)$query;
-        $items = $conn->fetchAll($query);
+        $items = $this->_conn->fetchAll($query);
         $result = [];
         foreach ($items as $item) {
             $custId = $item[Cfg::E_SALE_ORDER_A_CUSTOMER_ID];
@@ -176,14 +182,13 @@ class Module extends Base implements IModule
     {
         $tsFrom = $this->_toolPeriod->getTimestampFrom($dsFrom);
         $tsTo = $this->_toolPeriod->getTimestampTo($dsTo);
-        $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
         /* aliases and tables */
         $asPv = 'pps';
         $asOrder = 'sfo';
-        $tblPv = $this->_getTableName(PvSale::ENTITY_NAME);
-        $tblOrder = $this->_getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
+        $tblPv = $this->_conn->getTableName(PvSale::ENTITY_NAME);
+        $tblOrder = $this->_conn->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
         // SELECT FROM prxgt_pv_sale pps
-        $query = $conn->select();
+        $query = $this->_conn->select();
         $query->from([$asPv => $tblPv], [PvSale::ATTR_SALE_ID, PvSale::ATTR_TOTAL]);
         // LEFT JOIN sales_flat_order sfo ON pps.sale_id = sfo.entity_id
         $on = "$asPv." . PvSale::ATTR_SALE_ID . "=$asOrder." . Cfg::E_SALE_ORDER_A_ENTITY_ID;
@@ -192,11 +197,11 @@ class Module extends Base implements IModule
         ];
         $query->joinLeft([$asOrder => $tblOrder], $on, $cols);
         // where
-        $whereFrom = $asPv . '.' . PvSale::ATTR_DATE_PAID . '>=' . $conn->quote($tsFrom);
-        $whereTo = $asPv . '.' . PvSale::ATTR_DATE_PAID . '<=' . $conn->quote($tsTo);
+        $whereFrom = $asPv . '.' . PvSale::ATTR_DATE_PAID . '>=' . $this->_conn->quote($tsFrom);
+        $whereTo = $asPv . '.' . PvSale::ATTR_DATE_PAID . '<=' . $this->_conn->quote($tsTo);
         $query->where("$whereFrom AND $whereTo");
         // $sql = (string)$query;
-        $result = $conn->fetchAll($query);
+        $result = $this->_conn->fetchAll($query);
         return $result;
     }
 
@@ -208,55 +213,40 @@ class Module extends Base implements IModule
 
     public function saveBonus($updates)
     {
-        $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
-        $conn->beginTransaction();
-        $isCommited = false;
+        $trans = $this->_manTrans->transactionBegin();
         try {
             foreach ($updates as $item) {
-                $this->_resource->addEntity(Qualification::ENTITY_NAME, $item);
+                $this->_repoBasic->addEntity(Qualification::ENTITY_NAME, $item);
             }
-            $conn->commit();
-            $isCommited = true;
+            $this->_manTrans->transactionCommit($trans);
         } finally {
-            if (!$isCommited) {
-                $conn->rollback();
-            }
+            $this->_manTrans->transactionClose($trans);
         }
     }
 
     public function saveLogSaleOrders($updates)
     {
-        $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
-        $conn->beginTransaction();
-        $isCommited = false;
+        $trans = $this->_manTrans->transactionBegin();
         try {
             foreach ($updates as $transId => $saleId) {
                 $this->_repoBonusBase->addLogSaleOrder($transId, $saleId);
             }
-            $conn->commit();
-            $isCommited = true;
+            $this->_manTrans->transactionCommit($trans);
         } finally {
-            if (!$isCommited) {
-                $conn->rollback();
-            }
+            $this->_manTrans->transactionClose($trans);
         }
     }
 
     public function saveQualificationParams($updates)
     {
-        $conn = $this->getBasicRepo()->getDba()->getDefaultConnection();
-        $conn->beginTransaction();
-        $isCommited = false;
+        $trans = $this->_manTrans->transactionBegin();
         try {
             foreach ($updates as $item) {
-                $this->_resource->addEntity(Qualification::ENTITY_NAME, $item);
+                $this->_repoBasic->addEntity(Qualification::ENTITY_NAME, $item);
             }
-            $conn->commit();
-            $isCommited = true;
+            $this->_manTrans->transactionCommit($trans);
         } finally {
-            if (!$isCommited) {
-                $conn->rollback();
-            }
+            $this->_manTrans->transactionClose($trans);
         }
     }
 

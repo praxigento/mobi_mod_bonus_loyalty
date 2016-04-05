@@ -9,20 +9,19 @@ use Praxigento\Bonus\Base\Lib\Entity\Period;
 use Praxigento\Bonus\Base\Lib\Service\Compress\Request\QualifyByUserData as BonusBaseQualifyByUserDataRequest;
 use Praxigento\Bonus\Base\Lib\Service\Period\Request\GetForDependentCalc as PeriodGetForDependentCalcRequest;
 use Praxigento\Bonus\Base\Lib\Service\Period\Request\GetForPvBasedCalc as PeriodGetLatestForPvBasedCalcRequest;
-use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Bonus\Loyalty\Lib\Service\ICalc;
+use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Core\Lib\Service\Base\NeoCall as NeoCall;
 use Praxigento\Downline\Lib\Service\Snap\Request\GetStateOnDate as DownlineSnapGetStateOnDateRequest;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
 use Praxigento\Wallet\Lib\Service\Operation\Request\AddToWalletActive as WalletOperationAddToWalletActiveRequest;
 
-class Call extends NeoCall implements ICalc {
+class Call extends NeoCall implements ICalc
+{
     /** @var  \Praxigento\Bonus\Base\Lib\Service\ICompress */
     protected $_callBaseCompress;
     /** @var  \Praxigento\Bonus\Base\Lib\Service\IPeriod */
     protected $_callBasePeriod;
-    /** @var  \Praxigento\Downline\Lib\Service\ISnap */
-    private $_callDownlineSnap;
     /** @var  \Praxigento\Wallet\Lib\Service\IOperation */
     protected $_callWalletOperation;
     /** @var \Psr\Log\LoggerInterface */
@@ -33,9 +32,14 @@ class Call extends NeoCall implements ICalc {
     protected $_subBonus;
     /** @var Sub\Qualification */
     protected $_subQualification;
+    /** @var  \Praxigento\Downline\Lib\Service\ISnap */
+    protected $_callDownlineSnap;
+    /** @var  \Praxigento\Core\Repo\ITransactionManager */
+    protected $_manTrans;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
+        \Praxigento\Core\Repo\ITransactionManager $manTrans,
         \Praxigento\Bonus\Loyalty\Lib\Repo\IModule $repoMod,
         \Praxigento\Bonus\Base\Lib\Service\ICompress $callBaseCompress,
         \Praxigento\Bonus\Base\Lib\Service\IPeriod $callBasePeriod,
@@ -45,6 +49,7 @@ class Call extends NeoCall implements ICalc {
         Sub\Qualification $subQualification
     ) {
         $this->_logger = $logger;
+        $this->_manTrans = $manTrans;
         $this->_repoMod = $repoMod;
         $this->_callBaseCompress = $callBaseCompress;
         $this->_callBasePeriod = $callBasePeriod;
@@ -59,14 +64,15 @@ class Call extends NeoCall implements ICalc {
      *
      * @return \Praxigento\Wallet\Lib\Service\Operation\Response\AddToWalletActive
      */
-    private function _createBonusOperation($updates) {
+    private function _createBonusOperation($updates)
+    {
         $asCustId = 'asCid';
         $asAmount = 'asAmnt';
         $asRef = 'asRef';
-        $transData = [ ];
-        foreach($updates as $custId => $sales) {
-            foreach($sales as $saleId => $amount) {
-                $item = [ $asCustId => $custId, $asAmount => $amount, $asRef => $saleId ];
+        $transData = [];
+        foreach ($updates as $custId => $sales) {
+            foreach ($sales as $saleId => $amount) {
+                $item = [$asCustId => $custId, $asAmount => $amount, $asRef => $saleId];
                 $transData[] = $item;
             }
         }
@@ -87,7 +93,8 @@ class Call extends NeoCall implements ICalc {
      *
      * @return array|null
      */
-    private function _getDownlineSnapshot($ds) {
+    private function _getDownlineSnapshot($ds)
+    {
         $req = new DownlineSnapGetStateOnDateRequest();
         $req->setDatestamp($ds);
         $resp = $this->_callDownlineSnap->getStateOnDate($req);
@@ -100,7 +107,8 @@ class Call extends NeoCall implements ICalc {
      *
      * @return Response\Bonus
      */
-    public function bonus(Request\Bonus $req) {
+    public function bonus(Request\Bonus $req)
+    {
         $result = new Response\Bonus();
         $datePerformed = $req->getDatePerformed();
         $dateApplied = $req->getDateApplied();
@@ -111,9 +119,8 @@ class Call extends NeoCall implements ICalc {
         $reqGetPeriod->setBaseCalcTypeCode($calcTypeBase);
         $reqGetPeriod->setDependentCalcTypeCode($calcType);
         $respGetPeriod = $this->_callBasePeriod->getForDependentCalc($reqGetPeriod);
-        if($respGetPeriod->isSucceed()) {
-            $conn = $this->_repoMod->getBasicRepo()->getDba()->getDefaultConnection();
-            $conn->beginTransaction();
+        if ($respGetPeriod->isSucceed()) {
+            $trans = $this->_manTrans->transactionBegin();
             try {
                 $periodDataDepend = $respGetPeriod->getDependentPeriodData();
                 $calcDataDepend = $respGetPeriod->getDependentCalcData();
@@ -136,30 +143,28 @@ class Call extends NeoCall implements ICalc {
                 $this->_repoMod->saveLogSaleOrders($transLog);
                 /* mark calculation as completed and finalize bonus */
                 $this->_repoMod->updateCalcSetComplete($calcIdDepend);
-                $conn->commit();
+                $this->_manTrans->transactionCommit($trans);
                 $result->setPeriodId($periodDataDepend[Period::ATTR_ID]);
                 $result->setCalcId($calcIdDepend);
                 $result->setAsSucceed();
             } finally {
-                if(!$result->isSucceed()) {
-                    $conn->rollback();
-                }
+                $this->_manTrans->transactionClose($trans);
             }
         }
         $this->_logger->info("'Loyalty Bonus' calculation is complete.");
         return $result;
     }
 
-    public function compress(Request\Compress $req) {
+    public function compress(Request\Compress $req)
+    {
         $result = new Response\Compress();
         $calcTypeCode = Cfg::CODE_TYPE_CALC_COMPRESSION;
         $this->_logger->info("'Loyalty Compression' calculation is started.");
         $reqGetLatest = new PeriodGetLatestForPvBasedCalcRequest();
         $reqGetLatest->setCalcTypeCode($calcTypeCode);
         $respGetLatest = $this->_callBasePeriod->getForPvBasedCalc($reqGetLatest);
-        if($respGetLatest->isSucceed()) {
-            $conn = $this->_repoMod->getBasicRepo()->getDba()->getDefaultConnection();
-            $conn->beginTransaction();
+        if ($respGetLatest->isSucceed()) {
+            $trans = $this->_manTrans->transactionBegin();
             try {
                 /* get tree snapshot and orders data */
                 $periodData = $respGetLatest->getPeriodData();
@@ -168,7 +173,7 @@ class Call extends NeoCall implements ICalc {
                 $tree = $this->_getDownlineSnapshot($dsEnd);
                 $orders = $this->_repoMod->getSalesOrdersForPeriod($dsBegin, $dsEnd);
                 /* match orders to customers  */
-                foreach($orders as $order) {
+                foreach ($orders as $order) {
                     $custId = $order[Cfg::E_SALE_ORDER_A_CUSTOMER_ID];
                     $tree[$custId][Sub\CompressQualifier::AS_HAS_ORDERS] = true;
                 }
@@ -181,24 +186,23 @@ class Call extends NeoCall implements ICalc {
                 $reqCompress->setSkipTreeExpand(true);
                 $reqCompress->setQualifier(new Sub\CompressQualifier());
                 $respCompress = $this->_callBaseCompress->qualifyByUserData($reqCompress);
-                if($respCompress->isSucceed()) {
+                if ($respCompress->isSucceed()) {
                     $this->_repoMod->updateCalcSetComplete($calcId);
-                    $conn->commit();
+                    $this->_manTrans->transactionCommit($trans);
                     $result->setPeriodId($periodData[Period::ATTR_ID]);
                     $result->setCalcId($calcId);
                     $result->setAsSucceed();
                 }
             } finally {
-                if(!$result->isSucceed()) {
-                    $conn->rollback();
-                }
+                $this->_manTrans->transactionClose($trans);
             }
         }
         $this->_logger->info("'Loyalty Compression' calculation is complete.");
         return $result;
     }
 
-    public function qualification(Request\Qualification $req) {
+    public function qualification(Request\Qualification $req)
+    {
         $result = new Response\Qualification();
         $datePerformed = $req->getDatePerformed();
         $dateApplied = $req->getDateApplied();
@@ -211,9 +215,8 @@ class Call extends NeoCall implements ICalc {
         $reqGetPeriod->setBaseCalcTypeCode($calcTypeBase);
         $reqGetPeriod->setDependentCalcTypeCode($calcType);
         $respGetPeriod = $this->_callBasePeriod->getForDependentCalc($reqGetPeriod);
-        if($respGetPeriod->isSucceed()) {
-            $conn = $this->_repoMod->getBasicRepo()->getDba()->getDefaultConnection();
-            $conn->beginTransaction();
+        if ($respGetPeriod->isSucceed()) {
+            $trans = $this->_manTrans->transactionBegin();
             try {
                 $periodDataDepend = $respGetPeriod->getDependentPeriodData();
                 $calcDataDepend = $respGetPeriod->getDependentCalcData();
@@ -227,14 +230,12 @@ class Call extends NeoCall implements ICalc {
                 $updates = $this->_subQualification->calcParams($tree, $qualData, $gvMaxLevels, $psaaLevel);
                 $this->_repoMod->saveQualificationParams($updates);
                 $this->_repoMod->updateCalcSetComplete($calcIdDepend);
-                $conn->commit();
+                $this->_manTrans->transactionCommit($trans);
                 $result->setPeriodId($periodDataDepend[Period::ATTR_ID]);
                 $result->setCalcId($calcIdDepend);
                 $result->setAsSucceed();
             } finally {
-                if(!$result->isSucceed()) {
-                    $conn->rollback();
-                }
+                $this->_manTrans->transactionClose($trans);
             }
         }
         $this->_logger->info("'Qualification for Loyalty' calculation is complete.");
