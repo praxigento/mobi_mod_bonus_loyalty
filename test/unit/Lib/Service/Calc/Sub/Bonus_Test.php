@@ -27,7 +27,7 @@ class Bonus_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     protected function setUp() {
         parent::setUp();
         $this->mCallDownlineSnap = $this->_mock(\Praxigento\Downline\Lib\Service\ISnap::class);
-        $this->mToolFormat = $this->_mock(\Praxigento\Core\Lib\Tool\Format::class);
+        $this->mToolFormat = $this->_mock(\Praxigento\Core\Tool\IFormat::class);
         $this->mToolDownlineTree = $this->_mock(\Praxigento\Downline\Lib\Tool\ITree::class);
         $this->mRankQualifier = $this->_mock(Bonus\RankQualifier::class);
         $this->sub = new Bonus(
