@@ -11,31 +11,31 @@ use Praxigento\Bonus\Base\Lib\Service\Period\Request\GetForDependentCalc as Peri
 use Praxigento\Bonus\Base\Lib\Service\Period\Request\GetForPvBasedCalc as PeriodGetLatestForPvBasedCalcRequest;
 use Praxigento\Bonus\Loyalty\Lib\Service\ICalc;
 use Praxigento\BonusLoyalty\Config as Cfg;
-use Praxigento\Core\Lib\Service\Base\NeoCall as NeoCall;
+use Praxigento\Core\Service\Base\Call as BaseCall;
 use Praxigento\Downline\Lib\Service\Snap\Request\GetStateOnDate as DownlineSnapGetStateOnDateRequest;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
 use Praxigento\Wallet\Lib\Service\Operation\Request\AddToWalletActive as WalletOperationAddToWalletActiveRequest;
 
-class Call extends NeoCall implements ICalc
+class Call extends BaseCall implements ICalc
 {
     /** @var  \Praxigento\Bonus\Base\Lib\Service\ICompress */
     protected $_callBaseCompress;
     /** @var  \Praxigento\Bonus\Base\Lib\Service\IPeriod */
     protected $_callBasePeriod;
+    /** @var  \Praxigento\Downline\Lib\Service\ISnap */
+    protected $_callDownlineSnap;
     /** @var  \Praxigento\Wallet\Lib\Service\IOperation */
     protected $_callWalletOperation;
     /** @var \Psr\Log\LoggerInterface */
     protected $_logger;
+    /** @var  \Praxigento\Core\Repo\ITransactionManager */
+    protected $_manTrans;
     /** @var \Praxigento\Bonus\Loyalty\Lib\Repo\IModule */
     protected $_repoMod;
     /** @var Sub\Bonus */
     protected $_subBonus;
     /** @var Sub\Qualification */
     protected $_subQualification;
-    /** @var  \Praxigento\Downline\Lib\Service\ISnap */
-    protected $_callDownlineSnap;
-    /** @var  \Praxigento\Core\Repo\ITransactionManager */
-    protected $_manTrans;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,

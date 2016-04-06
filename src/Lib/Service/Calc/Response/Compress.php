@@ -12,6 +12,6 @@ namespace Praxigento\Bonus\Loyalty\Lib\Service\Calc\Response;
  * @method bool getHasNoPvTransactionsYet()
  * @method void setHasNoPvTransactionsYet(bool $data)
  */
-class Compress extends \Praxigento\Core\Lib\Service\Base\Response {
+class Compress extends \Praxigento\Core\Service\Base\Response {
 
 }
