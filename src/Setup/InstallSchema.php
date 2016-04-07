@@ -5,8 +5,6 @@
  */
 namespace Praxigento\BonusLoyalty\Setup;
 
-use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\SchemaSetupInterface;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Cfg\Param;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification;
 
