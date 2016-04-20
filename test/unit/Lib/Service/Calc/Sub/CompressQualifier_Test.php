@@ -9,7 +9,7 @@ use Praxigento\Pv\Data\Entity\Sale as PvSale;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
-class CompressQualifier_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
+class CompressQualifier_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase {
 
     /** @var  CompressQualifier */
     private $sub;

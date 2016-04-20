@@ -16,7 +16,7 @@ use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Compress as LoyaltyCalcCom
 use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Qualification as LoyaltyCalcQualificationRequest;
 use Praxigento\BonusLoyalty\Config as Cfg;
 
-use Praxigento\Core\Lib\Test\BaseIntegrationTest;
+use Praxigento\Core\Test\BaseIntegrationTest;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
 use Praxigento\Pv\Lib\Service\Sale\Request\AccountPv as PvSaleAccountPvRequest;
 
