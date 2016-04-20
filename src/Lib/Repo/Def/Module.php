@@ -20,7 +20,7 @@ class Module extends Base implements IModule
     protected $_repoBonusBase;
     /** @var  \Praxigento\Core\Tool\IPeriod */
     protected $_toolPeriod;
-    /** @var \Praxigento\Core\Repo\IBasic */
+    /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
     /** @var  \Praxigento\Core\Repo\ITransactionManager */
     protected $_manTrans;
@@ -28,7 +28,7 @@ class Module extends Base implements IModule
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Repo\ITransactionManager $manTrans,
-        \Praxigento\Core\Repo\IBasic $repoBasic,
+        \Praxigento\Core\Repo\IGeneric $repoBasic,
         BonusBaseRepo $repoBonusBase,
         \Praxigento\Core\Tool\IPeriod $toolPeriod
     ) {
