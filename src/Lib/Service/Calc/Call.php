@@ -146,7 +146,7 @@ class Call extends BaseCall implements ICalc
                 $this->_manTrans->transactionCommit($trans);
                 $result->setPeriodId($periodDataDepend[Period::ATTR_ID]);
                 $result->setCalcId($calcIdDepend);
-                $result->setAsSucceed();
+                $result->markSucceed();
             } finally {
                 $this->_manTrans->transactionClose($trans);
             }
@@ -191,7 +191,7 @@ class Call extends BaseCall implements ICalc
                     $this->_manTrans->transactionCommit($trans);
                     $result->setPeriodId($periodData[Period::ATTR_ID]);
                     $result->setCalcId($calcId);
-                    $result->setAsSucceed();
+                    $result->markSucceed();
                 }
             } finally {
                 $this->_manTrans->transactionClose($trans);
@@ -233,7 +233,7 @@ class Call extends BaseCall implements ICalc
                 $this->_manTrans->transactionCommit($trans);
                 $result->setPeriodId($periodDataDepend[Period::ATTR_ID]);
                 $result->setCalcId($calcIdDepend);
-                $result->setAsSucceed();
+                $result->markSucceed();
             } finally {
                 $this->_manTrans->transactionClose($trans);
             }

@@ -74,7 +74,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
             ->shouldReceive('getForDependentCalc')->once()
             ->andReturn($mRespGetPeriod);
         // if($respGetPeriod->isSucceed()) {
-        $mRespGetPeriod->setAsSucceed();
+        $mRespGetPeriod->markSucceed();
         // $this->_getConn()->beginTransaction();
         $this->mConn
             ->shouldReceive('beginTransaction')->once();
@@ -116,7 +116,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
             ->shouldReceive('getForDependentCalc')->once()
             ->andReturn($mRespGetPeriod);
         // if($respGetPeriod->isSucceed()) {
-        $mRespGetPeriod->setAsSucceed();
+        $mRespGetPeriod->markSucceed();
         // $this->_getConn()->beginTransaction();
         $this->mConn
             ->shouldReceive('beginTransaction')->once();
@@ -198,7 +198,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
             ->shouldReceive('getForPvBasedCalc')->once()
             ->andReturn($mRespGetPeriod);
         // if($respGetPeriod->isSucceed()) {
-        $mRespGetPeriod->setAsSucceed();
+        $mRespGetPeriod->markSucceed();
         // $this->_getConn()->beginTransaction();
         $this->mConn
             ->shouldReceive('beginTransaction')->once();
@@ -249,7 +249,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
             ->shouldReceive('getForPvBasedCalc')->once()
             ->andReturn($mRespGetPeriod);
         // if($respGetPeriod->isSucceed()) {
-        $mRespGetPeriod->setAsSucceed();
+        $mRespGetPeriod->markSucceed();
         // $this->_getConn()->beginTransaction();
         $this->mConn
             ->shouldReceive('beginTransaction')->once();
@@ -275,7 +275,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
             ->shouldReceive('qualifyByUserData')->once()
             ->andReturn($mRespCompress);
         // if($respCompress->isSucceed()) {...}
-        $mRespCompress->setAsSucceed();
+        $mRespCompress->markSucceed();
         // $this->_repoMod->updateCalcSetComplete($calcIdDepend);
         $this->mRepoMod
             ->shouldReceive('updateCalcSetComplete')->once();
@@ -307,7 +307,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
             ->shouldReceive('getForDependentCalc')->once()
             ->andReturn($mRespGetPeriod);
         // if($respGetPeriod->isSucceed()) {
-        $mRespGetPeriod->setAsSucceed();
+        $mRespGetPeriod->markSucceed();
         // $this->_getConn()->beginTransaction();
         $this->mConn
             ->shouldReceive('beginTransaction')->once();
@@ -361,7 +361,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
             ->shouldReceive('getForDependentCalc')->once()
             ->andReturn($mRespGetPeriod);
         // if($respGetPeriod->isSucceed()) {
-        $mRespGetPeriod->setAsSucceed();
+        $mRespGetPeriod->markSucceed();
         // $this->_getConn()->beginTransaction();
         $this->mConn
             ->shouldReceive('beginTransaction')->once();
