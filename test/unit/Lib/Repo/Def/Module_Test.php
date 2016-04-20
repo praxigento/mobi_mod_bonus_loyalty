@@ -9,7 +9,8 @@ use Praxigento\BonusLoyalty\Config as Cfg;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
+class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+{
     /** @var  \Mockery\MockInterface */
     private $mConn;
     /** @var  \Mockery\MockInterface */
@@ -23,8 +24,10 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     /** @var  Module */
     private $repo;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         parent::setUp();
+        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
         $this->mConn = $this->_mockDba();
         $this->mDba = $this->_mockRsrcConnOld($this->mConn);
         $this->mRepoBasic = $this->_mockRepoBasic($this->mDba);
@@ -37,7 +40,8 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         );
     }
 
-    public function test_getBonusPercents() {
+    public function test_getBonusPercents()
+    {
         /** === Test Data === */
         $CALC_TYPE_ID = 2;
         $PERCENT = 'percent';
@@ -56,7 +60,8 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertEquals($PERCENT, $resp);
     }
 
-    public function test_getCompressedTree() {
+    public function test_getCompressedTree()
+    {
         /** === Test Data === */
         $CALC_ID = 2;
         $TREE = 'tree';
@@ -71,7 +76,8 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertEquals($TREE, $resp);
     }
 
-    public function test_getCompressedTreeWithQualifications() {
+    public function test_getCompressedTreeWithQualifications()
+    {
         /** === Test Data === */
         $CALC_ID = 2;
         $RESULT = 'result';
@@ -97,7 +103,8 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertEquals($RESULT, $resp);
     }
 
-    public function test_getConfigParams() {
+    public function test_getConfigParams()
+    {
         /** === Test Data === */
         $RESULT = 'result';
         /** === Setup Mocks === */
@@ -110,7 +117,8 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertEquals($RESULT, $resp);
     }
 
-    public function test_getLatestCalcForPeriod() {
+    public function test_getLatestCalcForPeriod()
+    {
         /** === Test Data === */
         $CALC_TYPE_ID = 4;
         $DS_BEGIN = 'begin';
@@ -128,14 +136,15 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     }
 
 
-    public function test_getQualificationData() {
+    public function test_getQualificationData()
+    {
         /** === Test Data === */
         $DS_FROM = 'from';
         $DS_TO = 'to';
         $CUST_ID = 16;
         $SUMMARY = 32;
         $ITEMS = [
-            [ Cfg::E_SALE_ORDER_A_CUSTOMER_ID => $CUST_ID, 'summary' => $SUMMARY ]
+            [Cfg::E_SALE_ORDER_A_CUSTOMER_ID => $CUST_ID, 'summary' => $SUMMARY]
         ];
         $TS_FROM = 'ts from';
         $TS_TO = 'ts to';
@@ -173,7 +182,8 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertEquals($SUMMARY, $resp[$CUST_ID]);
     }
 
-    public function test_getSalesOrdersForPeriod() {
+    public function test_getSalesOrdersForPeriod()
+    {
         /** === Test Data === */
         $DS_FROM = 'from';
         $DS_TO = 'to';
@@ -212,7 +222,8 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertEquals($ITEMS, $resp);
     }
 
-    public function test_getTypeCalcIdByCode() {
+    public function test_getTypeCalcIdByCode()
+    {
         /** === Test Data === */
         $TYPE_CODE = 'code';
         $RESULT = 'result';
@@ -227,9 +238,10 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertEquals($RESULT, $resp);
     }
 
-    public function test_saveBonus_commit() {
+    public function test_saveBonus_commit()
+    {
         /** === Test Data === */
-        $UPDATES = [ [ ] ];
+        $UPDATES = [[]];
         /** === Setup Mocks === */
         // $conn->beginTransaction();
         $this->mConn
@@ -247,9 +259,10 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     /**
      * @expectedException \Exception
      */
-    public function test_saveBonus_rollback() {
+    public function test_saveBonus_rollback()
+    {
         /** === Test Data === */
-        $UPDATES = [ [ ] ];
+        $UPDATES = [[]];
         /** === Setup Mocks === */
         // $conn->beginTransaction();
         $this->mConn
@@ -265,9 +278,10 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->repo->saveBonus($UPDATES);
     }
 
-    public function test_saveLogSaleOrders_commit() {
+    public function test_saveLogSaleOrders_commit()
+    {
         /** === Test Data === */
-        $UPDATES = [ [ ] ];
+        $UPDATES = [[]];
         /** === Setup Mocks === */
         // $conn->beginTransaction();
         $this->mConn
@@ -285,9 +299,10 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     /**
      * @expectedException \Exception
      */
-    public function test_saveLogSaleOrders_rollback() {
+    public function test_saveLogSaleOrders_rollback()
+    {
         /** === Test Data === */
-        $UPDATES = [ [ ] ];
+        $UPDATES = [[]];
         /** === Setup Mocks === */
         // $conn->beginTransaction();
         $this->mConn
@@ -303,9 +318,10 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->repo->saveLogSaleOrders($UPDATES);
     }
 
-    public function test_saveQualificationParams_commit() {
+    public function test_saveQualificationParams_commit()
+    {
         /** === Test Data === */
-        $UPDATES = [ [ ] ];
+        $UPDATES = [[]];
         /** === Setup Mocks === */
         // $conn->beginTransaction();
         $this->mConn
@@ -323,9 +339,10 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     /**
      * @expectedException \Exception
      */
-    public function test_saveQualificationParams_rollback() {
+    public function test_saveQualificationParams_rollback()
+    {
         /** === Test Data === */
-        $UPDATES = [ [ ] ];
+        $UPDATES = [[]];
         /** === Setup Mocks === */
         // $conn->beginTransaction();
         $this->mConn
@@ -341,7 +358,8 @@ class Module_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->repo->saveQualificationParams($UPDATES);
     }
 
-    public function test_updateCalcSetComplete() {
+    public function test_updateCalcSetComplete()
+    {
         /** === Test Data === */
         $CALC_ID = 'id';
         $RESULT = 'result';

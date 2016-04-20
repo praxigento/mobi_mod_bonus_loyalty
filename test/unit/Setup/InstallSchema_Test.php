@@ -26,6 +26,7 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
     public function setUp()
     {
         parent::setUp();
+        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
         /* create mocks */
         $this->mConn = $this->_mockConn();
         $this->mToolDem = $this->_mock(\Praxigento\Core\Setup\Dem\Tool::class);

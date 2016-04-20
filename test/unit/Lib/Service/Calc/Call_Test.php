@@ -12,7 +12,8 @@ use Praxigento\BonusLoyalty\Config as Cfg;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
+class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase
+{
     /** @var  Call */
     private $call;
     /** @var  \Mockery\MockInterface */
@@ -30,8 +31,10 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     /** @var  \Mockery\MockInterface */
     private $mSubQual;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         parent::setUp();
+        $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
         $this->mConn = $this->_mockDba();
         $this->mDba = $this->_mockRsrcConnOld($this->mConn);
         $this->mRepoBasic = $this->_mockRepoBasic($this->mDba);
@@ -61,7 +64,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     /**
      * @expectedException \Exception
      */
-    public function test_bonus_rollback() {
+    public function test_bonus_rollback()
+    {
         /** === Test Data === */
         $DATE_PERFORMED = 'performed';
         $DATE_APPLIED = 'applied';
@@ -93,7 +97,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertFalse($resp->isSucceed());
     }
 
-    public function test_bonus_success() {
+    public function test_bonus_success()
+    {
         /** === Test Data === */
         $DATE_PERFORMED = 'performed';
         $DATE_APPLIED = 'applied';
@@ -101,13 +106,13 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $DS_END = 'end';
         $CALC_TYPE_ID_COMPRESS = 4;
         $CALC_ID_COMPRESS = 8;
-        $CALC_DATA_COMPRESS = [ Calculation::ATTR_ID => $CALC_ID_COMPRESS ];
-        $CONFI_PARAMS = [ ];
+        $CALC_DATA_COMPRESS = [Calculation::ATTR_ID => $CALC_ID_COMPRESS];
+        $CONFI_PARAMS = [];
         $PERCENTS = 'percents';
-        $TREE_COMPRESS = [ ];
+        $TREE_COMPRESS = [];
         $ORDERS = 'orders';
-        $UPDATES = [ 'custId' => [ 'rankId' => 'amount' ] ];
-        $TRANS_LOG = [ ];
+        $UPDATES = ['custId' => ['rankId' => 'amount']];
+        $TRANS_LOG = [];
         /** === Setup Mocks === */
         $this->mLogger->shouldReceive('info');
         // $respGetPeriod = $this->_callBasePeriod->getForDependentCalc($reqGetPeriod);
@@ -124,7 +129,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         // $dsEnd = $periodDataDepend[Period::ATTR_DSTAMP_END];
         $mRespGetPeriod->setDependentPeriodData([
             Period::ATTR_DSTAMP_BEGIN => $DS_BEGIN,
-            Period::ATTR_DSTAMP_END   => $DS_END
+            Period::ATTR_DSTAMP_END => $DS_END
         ]);
         // $calcTypeIdCompress = $this->_repoMod->getTypeCalcIdByCode(Cfg::CODE_TYPE_CALC_COMPRESSION);
         $this->mRepoMod
@@ -185,7 +190,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     /**
      * @expectedException \Exception
      */
-    public function test_compress_rollback() {
+    public function test_compress_rollback()
+    {
         /** === Test Data === */
         $DATE_PERFORMED = 'performed';
         $DATE_APPLIED = 'applied';
@@ -222,7 +228,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertFalse($resp->isSucceed());
     }
 
-    public function test_compress_success() {
+    public function test_compress_success()
+    {
         /** === Test Data === */
         $CUST_ID = 1;
         $DATE_PERFORMED = 'performed';
@@ -231,16 +238,16 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $DS_END = 'end';
         $CALC_TYPE_ID_COMPRESS = 4;
         $CALC_ID_COMPRESS = 8;
-        $CALC_DATA_COMPRESS = [ Calculation::ATTR_ID => $CALC_ID_COMPRESS ];
-        $CONFI_PARAMS = [ ];
+        $CALC_DATA_COMPRESS = [Calculation::ATTR_ID => $CALC_ID_COMPRESS];
+        $CONFI_PARAMS = [];
         $PERCENTS = 'percents';
-        $TREE_COMPRESS = [ ];
+        $TREE_COMPRESS = [];
         $ORDERS = [
-            [ Cfg::E_SALE_ORDER_A_CUSTOMER_ID => $CUST_ID ]
+            [Cfg::E_SALE_ORDER_A_CUSTOMER_ID => $CUST_ID]
         ];
-        $UPDATES = [ 'custId' => [ 'rankId' => 'amount' ] ];
-        $TRANS_LOG = [ ];
-        $DOWNLINE_SNAP = [ $CUST_ID => [ ] ];
+        $UPDATES = ['custId' => ['rankId' => 'amount']];
+        $TRANS_LOG = [];
+        $DOWNLINE_SNAP = [$CUST_ID => []];
         /** === Setup Mocks === */
         $this->mLogger->shouldReceive('info');
         // $respGetLatest = $this->_callBasePeriod->getForPvBasedCalc($reqGetLatest);
@@ -257,7 +264,7 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         // $dsEnd = $periodDataDepend[Period::ATTR_DSTAMP_END];
         $mRespGetPeriod->setPeriodData([
             Period::ATTR_DSTAMP_BEGIN => $DS_BEGIN,
-            Period::ATTR_DSTAMP_END   => $DS_END
+            Period::ATTR_DSTAMP_END => $DS_END
         ]);
         // $tree = $this->_getDownlineSnapshot($dsEnd);
         // $resp = $this->_callDownlineSnap->getStateOnDate($req);
@@ -290,15 +297,16 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
         $this->assertTrue($resp->isSucceed());
     }
 
-    public function test_qualification_commit() {
+    public function test_qualification_commit()
+    {
         /** === Test Data === */
         $DATE_PERFORMED = 'performed';
         $DATE_APPLIED = 'applied';
         $GV_MAX_LEVELS = 3;
-        $TREE_COMPRESS = [ ];
-        $QUAL_DATA = [ ];
-        $CFG_PARAMS = [ ];
-        $UPDATES = [ ];
+        $TREE_COMPRESS = [];
+        $QUAL_DATA = [];
+        $CFG_PARAMS = [];
+        $UPDATES = [];
         /** === Setup Mocks === */
         $this->mLogger->shouldReceive('info');
         // $respGetPeriod = $this->_callBasePeriod->getForDependentCalc($reqGetPeriod);
@@ -348,7 +356,8 @@ class Call_UnitTest extends \Praxigento\Core\Lib\Test\BaseMockeryCase {
     /**
      * @expectedException \Exception
      */
-    public function test_qualification_rollback() {
+    public function test_qualification_rollback()
+    {
         /** === Test Data === */
         $DATE_PERFORMED = 'performed';
         $DATE_APPLIED = 'applied';
