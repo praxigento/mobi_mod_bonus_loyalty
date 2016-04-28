@@ -53,7 +53,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private $_callLoyaltyCalc;
     /** @var  \Praxigento\Pv\Lib\Service\ISale */
     private $_callPvSale;
-    /** @var   \Praxigento\Accounting\Lib\Repo\IModule */
+    /** @var   \Praxigento\Accounting\Repo\IModule */
     private $_repoAcc;
     /** @var \Praxigento\Bonus\Base\Lib\Repo\IModule */
     private $_repoBase;
@@ -67,7 +67,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_callLoyaltyCalc = $this->_manObj->get(\Praxigento\Bonus\Loyalty\Lib\Service\ICalc::class);
         $this->repoCore = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
         $this->_repoBase = $this->_manObj->get(\Praxigento\Bonus\Base\Lib\Repo\IModule::class);
-        $this->_repoAcc = $this->_manObj->get(\Praxigento\Accounting\Lib\Repo\IModule::class);
+        $this->_repoAcc = $this->_manObj->get(\Praxigento\Accounting\Repo\IModule::class);
     }
 
     private function _calcBonus()
