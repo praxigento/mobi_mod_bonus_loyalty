@@ -46,7 +46,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mCallBaseCompress = $this->_mock(\Praxigento\Bonus\Base\Lib\Service\ICompress::class);
         $this->mCallBasePeriod = $this->_mock(\Praxigento\Bonus\Base\Lib\Service\IPeriod::class);
         $this->mCallDownlineSnap = $this->_mock(\Praxigento\Downline\Lib\Service\ISnap::class);
-        $this->mCallWalletOperation = $this->_mock(\Praxigento\Wallet\Lib\Service\IOperation::class);
+        $this->mCallWalletOperation = $this->_mock(\Praxigento\Wallet\Service\IOperation::class);
         $this->mSubBonus = $this->_mock(Sub\Bonus::class);
         $this->mSubQual = $this->_mock(Sub\Qualification::class);
         $this->call = new Call(
@@ -164,7 +164,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
             ->andReturn($UPDATES);
         // $respAdd = $this->_createBonusOperation($updates);
         // $result = $this->_callWalletOperation->addToWalletActive($req);
-        $mRespAddWallet = new \Praxigento\Wallet\Lib\Service\Operation\Response\AddToWalletActive();
+        $mRespAddWallet = new \Praxigento\Wallet\Service\Operation\Response\AddToWalletActive();
         $this->mCallWalletOperation
             ->shouldReceive('addToWalletActive')
             ->andReturn($mRespAddWallet);

@@ -14,7 +14,7 @@ use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Core\Service\Base\Call as BaseCall;
 use Praxigento\Downline\Lib\Service\Snap\Request\GetStateOnDate as DownlineSnapGetStateOnDateRequest;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
-use Praxigento\Wallet\Lib\Service\Operation\Request\AddToWalletActive as WalletOperationAddToWalletActiveRequest;
+use Praxigento\Wallet\Service\Operation\Request\AddToWalletActive as WalletOperationAddToWalletActiveRequest;
 
 class Call extends BaseCall implements ICalc
 {
@@ -24,7 +24,7 @@ class Call extends BaseCall implements ICalc
     protected $_callBasePeriod;
     /** @var  \Praxigento\Downline\Lib\Service\ISnap */
     protected $_callDownlineSnap;
-    /** @var  \Praxigento\Wallet\Lib\Service\IOperation */
+    /** @var  \Praxigento\Wallet\Service\IOperation */
     protected $_callWalletOperation;
     /** @var \Psr\Log\LoggerInterface */
     protected $_logger;
@@ -44,7 +44,7 @@ class Call extends BaseCall implements ICalc
         \Praxigento\Bonus\Base\Lib\Service\ICompress $callBaseCompress,
         \Praxigento\Bonus\Base\Lib\Service\IPeriod $callBasePeriod,
         \Praxigento\Downline\Lib\Service\ISnap $callDownlineSnap,
-        \Praxigento\Wallet\Lib\Service\IOperation $callWalletOperation,
+        \Praxigento\Wallet\Service\IOperation $callWalletOperation,
         Sub\Bonus $subBonus,
         Sub\Qualification $subQualification
     ) {
@@ -62,7 +62,7 @@ class Call extends BaseCall implements ICalc
     /**
      * @param $updates
      *
-     * @return \Praxigento\Wallet\Lib\Service\Operation\Response\AddToWalletActive
+     * @return \Praxigento\Wallet\Service\Operation\Response\AddToWalletActive
      */
     private function _createBonusOperation($updates)
     {
