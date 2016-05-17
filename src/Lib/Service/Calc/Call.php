@@ -12,7 +12,7 @@ use Praxigento\Bonus\Base\Lib\Service\Period\Request\GetForPvBasedCalc as Period
 use Praxigento\Bonus\Loyalty\Lib\Service\ICalc;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Core\Service\Base\Call as BaseCall;
-use Praxigento\Downline\Lib\Service\Snap\Request\GetStateOnDate as DownlineSnapGetStateOnDateRequest;
+use Praxigento\Downline\Service\Snap\Request\GetStateOnDate as DownlineSnapGetStateOnDateRequest;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
 use Praxigento\Wallet\Service\Operation\Request\AddToWalletActive as WalletOperationAddToWalletActiveRequest;
 
@@ -22,7 +22,7 @@ class Call extends BaseCall implements ICalc
     protected $_callBaseCompress;
     /** @var  \Praxigento\Bonus\Base\Lib\Service\IPeriod */
     protected $_callBasePeriod;
-    /** @var  \Praxigento\Downline\Lib\Service\ISnap */
+    /** @var  \Praxigento\Downline\Service\ISnap */
     protected $_callDownlineSnap;
     /** @var  \Praxigento\Wallet\Service\IOperation */
     protected $_callWalletOperation;
@@ -43,7 +43,7 @@ class Call extends BaseCall implements ICalc
         \Praxigento\Bonus\Loyalty\Lib\Repo\IModule $repoMod,
         \Praxigento\Bonus\Base\Lib\Service\ICompress $callBaseCompress,
         \Praxigento\Bonus\Base\Lib\Service\IPeriod $callBasePeriod,
-        \Praxigento\Downline\Lib\Service\ISnap $callDownlineSnap,
+        \Praxigento\Downline\Service\ISnap $callDownlineSnap,
         \Praxigento\Wallet\Service\IOperation $callWalletOperation,
         Sub\Bonus $subBonus,
         Sub\Qualification $subQualification

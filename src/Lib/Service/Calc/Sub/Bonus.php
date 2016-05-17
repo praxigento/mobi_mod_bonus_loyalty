@@ -8,11 +8,11 @@ namespace Praxigento\Bonus\Loyalty\Lib\Service\Calc\Sub;
 use Praxigento\Bonus\Base\Lib\Entity\Compress;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Downline\Data\Entity\Snap;
-use Praxigento\Downline\Lib\Service\Snap\Request\ExpandMinimal as DownlineSnapExtendMinimalRequest;
+use Praxigento\Downline\Service\Snap\Request\ExpandMinimal as DownlineSnapExtendMinimalRequest;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
 
 class Bonus {
-    /** @var   \Praxigento\Downline\Lib\Service\ISnap */
+    /** @var   \Praxigento\Downline\Service\ISnap */
     protected $_callDownlineSnap;
     /** @var Bonus\RankQualifier */
     protected $_rankQualifier;
@@ -25,7 +25,7 @@ class Bonus {
      * Bonus constructor.
      */
     public function __construct(
-        \Praxigento\Downline\Lib\Service\ISnap $callDownlineSnap,
+        \Praxigento\Downline\Service\ISnap $callDownlineSnap,
         \Praxigento\Core\Tool\IFormat $toolFormat,
         \Praxigento\Downline\Tool\ITree $toolDownlineTree,
         Bonus\RankQualifier $rankQualifier

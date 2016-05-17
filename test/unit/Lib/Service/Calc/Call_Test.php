@@ -45,7 +45,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
         $this->mLogger = $this->_mockLogger();
         $this->mCallBaseCompress = $this->_mock(\Praxigento\Bonus\Base\Lib\Service\ICompress::class);
         $this->mCallBasePeriod = $this->_mock(\Praxigento\Bonus\Base\Lib\Service\IPeriod::class);
-        $this->mCallDownlineSnap = $this->_mock(\Praxigento\Downline\Lib\Service\ISnap::class);
+        $this->mCallDownlineSnap = $this->_mock(\Praxigento\Downline\Service\ISnap::class);
         $this->mCallWalletOperation = $this->_mock(\Praxigento\Wallet\Service\IOperation::class);
         $this->mSubBonus = $this->_mock(Sub\Bonus::class);
         $this->mSubQual = $this->_mock(Sub\Qualification::class);

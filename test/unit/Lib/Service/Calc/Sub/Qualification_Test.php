@@ -24,8 +24,8 @@ class Qualification_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
     {
         parent::setUp();
         $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
-        $this->mCallDownlineMap = $this->_mock(\Praxigento\Downline\Lib\Service\IMap::class);
-        $this->mCallDownlineSnap = $this->_mock(\Praxigento\Downline\Lib\Service\ISnap::class);
+        $this->mCallDownlineMap = $this->_mock(\Praxigento\Downline\Service\IMap::class);
+        $this->mCallDownlineSnap = $this->_mock(\Praxigento\Downline\Service\ISnap::class);
         $this->mToolDownlineTree = $this->_mock(\Praxigento\Downline\Tool\ITree::class);
         $this->sub = new Qualification(
             $this->mCallDownlineMap,
