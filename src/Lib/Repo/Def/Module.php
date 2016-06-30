@@ -22,12 +22,12 @@ class Module extends Base implements IModule
     protected $_toolPeriod;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
-    /** @var  \Praxigento\Core\Repo\ITransactionManager */
+    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
     protected $_manTrans;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Repo\ITransactionManager $manTrans,
+        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
         \Praxigento\Core\Repo\IGeneric $repoBasic,
         BonusBaseRepo $repoBonusBase,
         \Praxigento\Core\Tool\IPeriod $toolPeriod
