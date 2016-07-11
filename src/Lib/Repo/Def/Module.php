@@ -72,8 +72,8 @@ class Module extends Base implements IModule
         /* aliases and tables */
         $asCompress = 'pbbc';
         $asQual = 'pblq';
-        $tblCompress = $this->_conn->getTableName(Compress::ENTITY_NAME);
-        $tblQual = $this->_conn->getTableName(Qualification::ENTITY_NAME);
+        $tblCompress = $this->_resource->getTableName(Compress::ENTITY_NAME);
+        $tblQual = $this->_resource->getTableName(Qualification::ENTITY_NAME);
         // SELECT FROM prxgt_bon_base_compress pbbc
         $query = $this->_conn->select();
         $query->from([$asCompress => $tblCompress], [Compress::ATTR_CUSTOMER_ID, Compress::ATTR_PARENT_ID]);
@@ -135,8 +135,8 @@ class Module extends Base implements IModule
         $asPvSales = 'pps';
         $asOrder = 'sfo';
         $asSummary = 'summary';
-        $tblPv = $this->_conn->getTableName(PvSale::ENTITY_NAME);
-        $tblOrder = $this->_conn->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
+        $tblPv = $this->_resource->getTableName(PvSale::ENTITY_NAME);
+        $tblOrder = $this->_resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
         // SELECT FROM prxgt_pv_sale pps
         $query = $this->_conn->select();
         $query->from([$asPvSales => $tblPv], [$asSummary => 'SUM(' . PvSale::ATTR_TOTAL . ')']);
@@ -185,8 +185,8 @@ class Module extends Base implements IModule
         /* aliases and tables */
         $asPv = 'pps';
         $asOrder = 'sfo';
-        $tblPv = $this->_conn->getTableName(PvSale::ENTITY_NAME);
-        $tblOrder = $this->_conn->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
+        $tblPv = $this->_resource->getTableName(PvSale::ENTITY_NAME);
+        $tblOrder = $this->_resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
         // SELECT FROM prxgt_pv_sale pps
         $query = $this->_conn->select();
         $query->from([$asPv => $tblPv], [PvSale::ATTR_SALE_ID, PvSale::ATTR_TOTAL]);
