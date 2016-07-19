@@ -22,12 +22,12 @@ class Module extends Base implements IModule
     protected $_toolPeriod;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
-    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
+    /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
+        \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Core\Repo\IGeneric $repoBasic,
         BonusBaseRepo $repoBonusBase,
         \Praxigento\Core\Tool\IPeriod $toolPeriod
@@ -213,40 +213,40 @@ class Module extends Base implements IModule
 
     public function saveBonus($updates)
     {
-        $trans = $this->_manTrans->transactionBegin();
+        $def = $this->_manTrans->begin();
         try {
             foreach ($updates as $item) {
                 $this->_repoBasic->addEntity(Qualification::ENTITY_NAME, $item);
             }
-            $this->_manTrans->transactionCommit($trans);
+            $this->_manTrans->commit($def);
         } finally {
-            $this->_manTrans->transactionClose($trans);
+            $this->_manTrans->end($def);
         }
     }
 
     public function saveLogSaleOrders($updates)
     {
-        $trans = $this->_manTrans->transactionBegin();
+        $def = $this->_manTrans->begin();
         try {
             foreach ($updates as $transId => $saleId) {
                 $this->_repoBonusBase->addLogSaleOrder($transId, $saleId);
             }
-            $this->_manTrans->transactionCommit($trans);
+            $this->_manTrans->commit($def);
         } finally {
-            $this->_manTrans->transactionClose($trans);
+            $this->_manTrans->end($def);
         }
     }
 
     public function saveQualificationParams($updates)
     {
-        $trans = $this->_manTrans->transactionBegin();
+        $def = $this->_manTrans->begin();
         try {
             foreach ($updates as $item) {
                 $this->_repoBasic->addEntity(Qualification::ENTITY_NAME, $item);
             }
-            $this->_manTrans->transactionCommit($trans);
+            $this->_manTrans->commit($def);
         } finally {
-            $this->_manTrans->transactionClose($trans);
+            $this->_manTrans->end($def);
         }
     }
 

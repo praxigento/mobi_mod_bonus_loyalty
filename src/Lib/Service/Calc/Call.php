@@ -28,7 +28,7 @@ class Call extends BaseCall implements ICalc
     protected $_callWalletOperation;
     /** @var \Psr\Log\LoggerInterface */
     protected $_logger;
-    /** @var  \Praxigento\Core\Repo\Transaction\IManager */
+    /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var \Praxigento\Bonus\Loyalty\Lib\Repo\IModule */
     protected $_repoMod;
@@ -39,7 +39,7 @@ class Call extends BaseCall implements ICalc
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
-        \Praxigento\Core\Repo\Transaction\IManager $manTrans,
+        \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Bonus\Loyalty\Lib\Repo\IModule $repoMod,
         \Praxigento\Bonus\Base\Lib\Service\ICompress $callBaseCompress,
         \Praxigento\Bonus\Base\Lib\Service\IPeriod $callBasePeriod,
@@ -120,7 +120,7 @@ class Call extends BaseCall implements ICalc
         $reqGetPeriod->setDependentCalcTypeCode($calcType);
         $respGetPeriod = $this->_callBasePeriod->getForDependentCalc($reqGetPeriod);
         if ($respGetPeriod->isSucceed()) {
-            $trans = $this->_manTrans->transactionBegin();
+            $def = $this->_manTrans->begin();
             try {
                 $periodDataDepend = $respGetPeriod->getDependentPeriodData();
                 $calcDataDepend = $respGetPeriod->getDependentCalcData();
@@ -143,12 +143,12 @@ class Call extends BaseCall implements ICalc
                 $this->_repoMod->saveLogSaleOrders($transLog);
                 /* mark calculation as completed and finalize bonus */
                 $this->_repoMod->updateCalcSetComplete($calcIdDepend);
-                $this->_manTrans->transactionCommit($trans);
+                $this->_manTrans->commit($def);
                 $result->setPeriodId($periodDataDepend[Period::ATTR_ID]);
                 $result->setCalcId($calcIdDepend);
                 $result->markSucceed();
             } finally {
-                $this->_manTrans->transactionClose($trans);
+                $this->_manTrans->end($def);
             }
         }
         $this->_logger->info("'Loyalty Bonus' calculation is complete.");
@@ -164,7 +164,7 @@ class Call extends BaseCall implements ICalc
         $reqGetLatest->setCalcTypeCode($calcTypeCode);
         $respGetLatest = $this->_callBasePeriod->getForPvBasedCalc($reqGetLatest);
         if ($respGetLatest->isSucceed()) {
-            $trans = $this->_manTrans->transactionBegin();
+            $def = $this->_manTrans->begin();
             try {
                 /* get tree snapshot and orders data */
                 $periodData = $respGetLatest->getPeriodData();
@@ -188,13 +188,13 @@ class Call extends BaseCall implements ICalc
                 $respCompress = $this->_callBaseCompress->qualifyByUserData($reqCompress);
                 if ($respCompress->isSucceed()) {
                     $this->_repoMod->updateCalcSetComplete($calcId);
-                    $this->_manTrans->transactionCommit($trans);
+                    $this->_manTrans->commit($def);
                     $result->setPeriodId($periodData[Period::ATTR_ID]);
                     $result->setCalcId($calcId);
                     $result->markSucceed();
                 }
             } finally {
-                $this->_manTrans->transactionClose($trans);
+                $this->_manTrans->end($def);
             }
         }
         $this->_logger->info("'Loyalty Compression' calculation is complete.");
@@ -216,7 +216,7 @@ class Call extends BaseCall implements ICalc
         $reqGetPeriod->setDependentCalcTypeCode($calcType);
         $respGetPeriod = $this->_callBasePeriod->getForDependentCalc($reqGetPeriod);
         if ($respGetPeriod->isSucceed()) {
-            $trans = $this->_manTrans->transactionBegin();
+            $def = $this->_manTrans->begin();
             try {
                 $periodDataDepend = $respGetPeriod->getDependentPeriodData();
                 $calcDataDepend = $respGetPeriod->getDependentCalcData();
@@ -230,12 +230,12 @@ class Call extends BaseCall implements ICalc
                 $updates = $this->_subQualification->calcParams($tree, $qualData, $gvMaxLevels, $psaaLevel);
                 $this->_repoMod->saveQualificationParams($updates);
                 $this->_repoMod->updateCalcSetComplete($calcIdDepend);
-                $this->_manTrans->transactionCommit($trans);
+                $this->_manTrans->commit($def);
                 $result->setPeriodId($periodDataDepend[Period::ATTR_ID]);
                 $result->setCalcId($calcIdDepend);
                 $result->markSucceed();
             } finally {
-                $this->_manTrans->transactionClose($trans);
+                $this->_manTrans->end($def);
             }
         }
         $this->_logger->info("'Qualification for Loyalty' calculation is complete.");
