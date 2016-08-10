@@ -11,10 +11,10 @@ use Praxigento\Bonus\Loyalty\Lib\Entity\Cfg\Param as CfgParam;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification;
 use Praxigento\Bonus\Loyalty\Lib\Repo\IModule;
 use Praxigento\BonusLoyalty\Config as Cfg;
-use Praxigento\Core\Repo\Def\Base;
+use Praxigento\Core\Repo\Def\Db;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
 
-class Module extends Base implements IModule
+class Module extends Db implements IModule
 {
     /** @var BonusBaseRepo */
     protected $_repoBonusBase;
