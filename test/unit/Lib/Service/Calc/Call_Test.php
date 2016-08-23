@@ -12,7 +12,7 @@ use Praxigento\BonusLoyalty\Config as Cfg;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
-class Call_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  Call */
     private $call;

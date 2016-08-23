@@ -12,7 +12,7 @@ use Praxigento\Pv\Data\Entity\Sale as PvSale;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
-class Bonus_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase {
+class Bonus_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery {
     /** @var  \Mockery\MockInterface */
     private $mCallDownlineSnap;
     /** @var  \Mockery\MockInterface */

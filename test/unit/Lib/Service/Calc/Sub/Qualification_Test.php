@@ -9,7 +9,7 @@ use Flancer32\Lib\DataObject;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
-class Qualification_UnitTest extends \Praxigento\Core\Test\BaseMockeryCase
+class Qualification_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
 {
     /** @var  \Mockery\MockInterface */
     protected $mCallDownlineMap;
