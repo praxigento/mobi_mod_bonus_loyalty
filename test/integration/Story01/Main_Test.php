@@ -15,7 +15,6 @@ use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Bonus as LoyaltyCalcBonusR
 use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Compress as LoyaltyCalcCompressRequest;
 use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Qualification as LoyaltyCalcQualificationRequest;
 use Praxigento\BonusLoyalty\Config as Cfg;
-
 use Praxigento\Core\Test\BaseIntegrationTest;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
 use Praxigento\Pv\Service\Sale\Request\AccountPv as PvSaleAccountPvRequest;
@@ -57,6 +56,8 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private $_repoAcc;
     /** @var \Praxigento\Bonus\Base\Lib\Repo\IModule */
     private $_repoBase;
+    /** @var  \Praxigento\Accounting\Repo\Entity\Type\IAsset */
+    private $_repoTypeAsset;
     /** @var \Praxigento\Core\Repo\IGeneric */
     private $repoCore;
 
@@ -67,6 +68,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_callLoyaltyCalc = $this->_manObj->get(\Praxigento\Bonus\Loyalty\Lib\Service\ICalc::class);
         $this->repoCore = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
         $this->_repoBase = $this->_manObj->get(\Praxigento\Bonus\Base\Lib\Repo\IModule::class);
+        $this->_repoTypeAsset = $this->_manObj->get(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);
         $this->_repoAcc = $this->_manObj->get(\Praxigento\Accounting\Repo\IModule::class);
     }
 
@@ -152,7 +154,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
 
     private function _repoGetBalances()
     {
-        $assetTypeId = $this->_repoAcc->getTypeAssetIdByCode(Cfg::CODE_TYPE_ASSET_WALLET_ACTIVE);
+        $assetTypeId = $this->_repoTypeAsset->getIdByCode(Cfg::CODE_TYPE_ASSET_WALLET_ACTIVE);
         $where = Account::ATTR_ASSET_TYPE_ID . '=' . (int)$assetTypeId;
         $result = $this->repoCore->getEntities(Account::ENTITY_NAME, null, $where);
         return $result;
@@ -169,6 +171,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
      * WHERE pbbc.calc_id = 1
      *
      * @param $calcId
+     * @return array
      */
     private function _repoGetQualificationData($calcId)
     {
