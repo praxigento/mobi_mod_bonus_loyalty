@@ -6,9 +6,9 @@ namespace Praxigento\Bonus\Loyalty\Lib\Service\Calc;
 
 use Praxigento\BonusBase\Data\Entity\Calculation;
 use Praxigento\BonusBase\Data\Entity\Period;
-use Praxigento\BonusBase\Lib\Service\Compress\Request\QualifyByUserData as BonusBaseQualifyByUserDataRequest;
-use Praxigento\BonusBase\Lib\Service\Period\Request\GetForDependentCalc as PeriodGetForDependentCalcRequest;
-use Praxigento\BonusBase\Lib\Service\Period\Request\GetForPvBasedCalc as PeriodGetLatestForPvBasedCalcRequest;
+use Praxigento\BonusBase\Service\Compress\Request\QualifyByUserData as BonusBaseQualifyByUserDataRequest;
+use Praxigento\BonusBase\Service\Period\Request\GetForDependentCalc as PeriodGetForDependentCalcRequest;
+use Praxigento\BonusBase\Service\Period\Request\GetForPvBasedCalc as PeriodGetLatestForPvBasedCalcRequest;
 use Praxigento\Bonus\Loyalty\Lib\Service\ICalc;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Core\Service\Base\Call as BaseCall;
@@ -18,9 +18,9 @@ use Praxigento\Wallet\Service\Operation\Request\AddToWalletActive as WalletOpera
 
 class Call extends BaseCall implements ICalc
 {
-    /** @var  \Praxigento\BonusBase\Lib\Service\ICompress */
+    /** @var  \Praxigento\BonusBase\Service\ICompress */
     protected $_callBaseCompress;
-    /** @var  \Praxigento\BonusBase\Lib\Service\IPeriod */
+    /** @var  \Praxigento\BonusBase\Service\IPeriod */
     protected $_callBasePeriod;
     /** @var  \Praxigento\Downline\Service\ISnap */
     protected $_callDownlineSnap;
@@ -41,8 +41,8 @@ class Call extends BaseCall implements ICalc
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Bonus\Loyalty\Lib\Repo\IModule $repoMod,
-        \Praxigento\BonusBase\Lib\Service\ICompress $callBaseCompress,
-        \Praxigento\BonusBase\Lib\Service\IPeriod $callBasePeriod,
+        \Praxigento\BonusBase\Service\ICompress $callBaseCompress,
+        \Praxigento\BonusBase\Service\IPeriod $callBasePeriod,
         \Praxigento\Downline\Service\ISnap $callDownlineSnap,
         \Praxigento\Wallet\Service\IOperation $callWalletOperation,
         Sub\Bonus $subBonus,
