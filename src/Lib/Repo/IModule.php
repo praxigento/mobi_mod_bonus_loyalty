@@ -36,7 +36,7 @@ interface IModule  {
     function getConfigParams();
 
     /**
-     * Adapter for \Praxigento\Bonus\Base\Lib\Repo\Def\Module::getCalcsForPeriod
+     * Adapter for \Praxigento\BonusBase\Lib\Repo\Def\Module::getCalcsForPeriod
      *
      * @param int    $calcTypeId
      * @param string $dsBegin 'YYYYMMDD'
@@ -63,7 +63,7 @@ interface IModule  {
     function getSalesOrdersForPeriod($dsFrom, $dsTo);
 
     /**
-     * Decorator for \Praxigento\Bonus\Base\Lib\Repo\IModule::getTypeCalcIdByCode
+     * Decorator for \Praxigento\BonusBase\Lib\Repo\IModule::getTypeCalcIdByCode
      *
      * @param string $calcTypeCode
      *
@@ -91,7 +91,7 @@ interface IModule  {
     public function saveQualificationParams($updates);
 
     /**
-     * Decorator for \Praxigento\Bonus\Base\Lib\Repo\IModule::updateCalcSetComplete
+     * Decorator for \Praxigento\BonusBase\Lib\Repo\IModule::updateCalcSetComplete
      *
      * @param $calcId
      */

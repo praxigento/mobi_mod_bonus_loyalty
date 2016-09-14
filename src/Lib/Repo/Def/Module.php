@@ -5,8 +5,8 @@
  */
 namespace Praxigento\Bonus\Loyalty\Lib\Repo\Def;
 
-use Praxigento\Bonus\Base\Lib\Entity\Compress;
-use Praxigento\Bonus\Base\Lib\Repo\IModule as BonusBaseRepo;
+use Praxigento\BonusBase\Data\Entity\Compress;
+use Praxigento\BonusBase\Lib\Repo\IModule as BonusBaseRepo;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Cfg\Param as CfgParam;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification;
 use Praxigento\Bonus\Loyalty\Lib\Repo\IModule;

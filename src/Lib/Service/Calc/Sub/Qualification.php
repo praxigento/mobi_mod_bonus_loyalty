@@ -5,7 +5,7 @@
 
 namespace Praxigento\Bonus\Loyalty\Lib\Service\Calc\Sub;
 
-use Praxigento\Bonus\Base\Lib\Entity\Compress;
+use Praxigento\BonusBase\Data\Entity\Compress;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification as EntityQual;
 use Praxigento\Downline\Data\Entity\Snap;
 use Praxigento\Downline\Service\Map\Request\ById as DownlineMapByIdRequest;

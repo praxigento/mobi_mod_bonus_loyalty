@@ -5,7 +5,7 @@
 
 namespace Praxigento\Bonus\Loyalty\Lib\Service\Calc\Sub\Bonus;
 
-use Praxigento\Bonus\Base\Lib\Entity\Compress;
+use Praxigento\BonusBase\Data\Entity\Compress;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Cfg\Param as CfgParam;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification;
 

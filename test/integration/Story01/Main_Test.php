@@ -5,10 +5,10 @@
 namespace Praxigento\Bonus\Loyalty\Lib\Test\Story01;
 
 use Praxigento\Accounting\Data\Entity\Account;
-use Praxigento\Bonus\Base\Lib\Entity\Calculation;
-use Praxigento\Bonus\Base\Lib\Entity\Cfg\Generation;
-use Praxigento\Bonus\Base\Lib\Entity\Compress;
-use Praxigento\Bonus\Base\Lib\Entity\Rank;
+use Praxigento\BonusBase\Data\Entity\Calculation;
+use Praxigento\BonusBase\Data\Entity\Cfg\Generation;
+use Praxigento\BonusBase\Data\Entity\Compress;
+use Praxigento\BonusBase\Data\Entity\Rank;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Cfg\Param;
 use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification;
 use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Bonus as LoyaltyCalcBonusRequest;
@@ -54,7 +54,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private $_callPvSale;
     /** @var   \Praxigento\Accounting\Repo\IModule */
     private $_repoAcc;
-    /** @var \Praxigento\Bonus\Base\Lib\Repo\IModule */
+    /** @var \Praxigento\BonusBase\Lib\Repo\IModule */
     private $_repoBase;
     /** @var  \Praxigento\Accounting\Repo\Entity\Type\IAsset */
     private $_repoTypeAsset;
@@ -67,7 +67,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_callPvSale = $this->_manObj->get(\Praxigento\Pv\Service\ISale::class);
         $this->_callLoyaltyCalc = $this->_manObj->get(\Praxigento\Bonus\Loyalty\Lib\Service\ICalc::class);
         $this->repoCore = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
-        $this->_repoBase = $this->_manObj->get(\Praxigento\Bonus\Base\Lib\Repo\IModule::class);
+        $this->_repoBase = $this->_manObj->get(\Praxigento\BonusBase\Lib\Repo\IModule::class);
         $this->_repoTypeAsset = $this->_manObj->get(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);
         $this->_repoAcc = $this->_manObj->get(\Praxigento\Accounting\Repo\IModule::class);
     }
