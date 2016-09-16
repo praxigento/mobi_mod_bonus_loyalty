@@ -3,11 +3,11 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
     <!-- Repos -->
-    <preference for="Praxigento\Bonus\Loyalty\Lib\Repo\IModule"
-                type="Praxigento\Bonus\Loyalty\Lib\Repo\Def\Module"/>
+    <preference for="Praxigento\Bonus\Loyalty\Repo\IModule"
+                type="Praxigento\Bonus\Loyalty\Repo\Def\Module"/>
 
     <!-- Services -->
-    <preference for="Praxigento\Bonus\Loyalty\Lib\Service\ICalc"
-                type="Praxigento\Bonus\Loyalty\Lib\Service\Calc\Call"/>
+    <preference for="Praxigento\Bonus\Loyalty\Service\ICalc"
+                type="Praxigento\Bonus\Loyalty\Service\Calc\Call"/>
 
 </config>

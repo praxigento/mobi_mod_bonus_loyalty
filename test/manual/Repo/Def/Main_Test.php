@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Bonus\Loyalty\Lib\Repo\Def;
+namespace Praxigento\Bonus\Loyalty\Repo\Def;
 
 
 
@@ -12,17 +12,17 @@ class Main_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
 
     public function test_construct() {
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
-        /** @var  $repo \Praxigento\Bonus\Loyalty\Lib\Repo\IModule */
-        $repo = $obm->get(\Praxigento\Bonus\Loyalty\Lib\Repo\IModule::class);
-        $this->assertTrue($repo instanceof \Praxigento\Bonus\Loyalty\Lib\Repo\Def\Module);
+        /** @var  $repo \Praxigento\Bonus\Loyalty\Repo\IModule */
+        $repo = $obm->get(\Praxigento\Bonus\Loyalty\Repo\IModule::class);
+        $this->assertTrue($repo instanceof \Praxigento\Bonus\Loyalty\Repo\Def\Module);
     }
 
     public function test_getQualificationData() {
         $FROM = '20160101';
         $TO = '20161231';
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
-        /** @var  $repo \Praxigento\Bonus\Loyalty\Lib\Repo\IModule */
-        $repo = $obm->get(\Praxigento\Bonus\Loyalty\Lib\Repo\IModule::class);
+        /** @var  $repo \Praxigento\Bonus\Loyalty\Repo\IModule */
+        $repo = $obm->get(\Praxigento\Bonus\Loyalty\Repo\IModule::class);
         $data = $repo->getQualificationData($FROM, $TO);
         $this->assertTrue(is_array($data));
     }
@@ -31,8 +31,8 @@ class Main_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         $FROM = '20160101';
         $TO = '20161231';
         $obm = \Magento\Framework\App\ObjectManager::getInstance();
-        /** @var  $repo \Praxigento\Bonus\Loyalty\Lib\Repo\IModule */
-        $repo = $obm->get(\Praxigento\Bonus\Loyalty\Lib\Repo\IModule::class);
+        /** @var  $repo \Praxigento\Bonus\Loyalty\Repo\IModule */
+        $repo = $obm->get(\Praxigento\Bonus\Loyalty\Repo\IModule::class);
         $data = $repo->getSalesOrdersForPeriod($FROM, $TO);
         $this->assertTrue(is_array($data));
     }

@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Bonus\Loyalty\Lib\Service\Calc;
+namespace Praxigento\Bonus\Loyalty\Service\Calc;
 
 
 
@@ -15,8 +15,8 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         /** @var  $dba \Praxigento\Core\Lib\Context\IDbAdapter */
         $dba = $obm->get(\Praxigento\Core\Lib\Context\IDbAdapter::class);
         $dba->getDefaultConnection()->beginTransaction();
-        /** @var  $call \Praxigento\Bonus\Loyalty\Lib\Service\ICalc */
-        $call = $obm->get(\Praxigento\Bonus\Loyalty\Lib\Service\ICalc::class);
+        /** @var  $call \Praxigento\Bonus\Loyalty\Service\ICalc */
+        $call = $obm->get(\Praxigento\Bonus\Loyalty\Service\ICalc::class);
         $req = new Request\Compress();
         $resp = $call->bonus($req);
         $this->assertTrue($resp->isSucceed());
@@ -28,8 +28,8 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         /** @var  $dba \Praxigento\Core\Lib\Context\IDbAdapter */
         $dba = $obm->get(\Praxigento\Core\Lib\Context\IDbAdapter::class);
         $dba->getDefaultConnection()->beginTransaction();
-        /** @var  $call \Praxigento\Bonus\Loyalty\Lib\Service\ICalc */
-        $call = $obm->get('Praxigento\Bonus\Loyalty\Lib\Service\ICalc');
+        /** @var  $call \Praxigento\Bonus\Loyalty\Service\ICalc */
+        $call = $obm->get('Praxigento\Bonus\Loyalty\Service\ICalc');
         $req = new Request\Compress();
         $resp = $call->compress($req);
         $this->assertTrue($resp->isSucceed());
@@ -41,8 +41,8 @@ class Call_ManualTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         /** @var  $dba \Praxigento\Core\Lib\Context\IDbAdapter */
         $dba = $obm->get(\Praxigento\Core\Lib\Context\IDbAdapter::class);
         $dba->getDefaultConnection()->beginTransaction();
-        /** @var  $call \Praxigento\Bonus\Loyalty\Lib\Service\ICalc */
-        $call = $obm->get(\Praxigento\Bonus\Loyalty\Lib\Service\ICalc::class);
+        /** @var  $call \Praxigento\Bonus\Loyalty\Service\ICalc */
+        $call = $obm->get(\Praxigento\Bonus\Loyalty\Service\ICalc::class);
         $req = new Request\Qualification();
         $req->setGvMaxLevels(2);
         $req->setPsaaLevel(120);

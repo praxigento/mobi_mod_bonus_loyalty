@@ -9,11 +9,11 @@ use Praxigento\BonusBase\Data\Entity\Calculation;
 use Praxigento\BonusBase\Data\Entity\Cfg\Generation;
 use Praxigento\BonusBase\Data\Entity\Compress;
 use Praxigento\BonusBase\Data\Entity\Rank;
-use Praxigento\Bonus\Loyalty\Lib\Entity\Cfg\Param;
-use Praxigento\Bonus\Loyalty\Lib\Entity\Qualification;
-use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Bonus as LoyaltyCalcBonusRequest;
-use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Compress as LoyaltyCalcCompressRequest;
-use Praxigento\Bonus\Loyalty\Lib\Service\Calc\Request\Qualification as LoyaltyCalcQualificationRequest;
+use Praxigento\Bonus\Loyalty\Data\Entity\Cfg\Param;
+use Praxigento\Bonus\Loyalty\Data\Entity\Qualification;
+use Praxigento\Bonus\Loyalty\Service\Calc\Request\Bonus as LoyaltyCalcBonusRequest;
+use Praxigento\Bonus\Loyalty\Service\Calc\Request\Compress as LoyaltyCalcCompressRequest;
+use Praxigento\Bonus\Loyalty\Service\Calc\Request\Qualification as LoyaltyCalcQualificationRequest;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Core\Test\BaseIntegrationTest;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
@@ -48,7 +48,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         12 => 120,
         13 => 100
     ];
-    /** @var \Praxigento\Bonus\Loyalty\Lib\Service\ICalc */
+    /** @var \Praxigento\Bonus\Loyalty\Service\ICalc */
     private $_callLoyaltyCalc;
     /** @var  \Praxigento\Pv\Service\ISale */
     private $_callPvSale;
@@ -65,7 +65,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
     {
         parent::__construct();
         $this->_callPvSale = $this->_manObj->get(\Praxigento\Pv\Service\ISale::class);
-        $this->_callLoyaltyCalc = $this->_manObj->get(\Praxigento\Bonus\Loyalty\Lib\Service\ICalc::class);
+        $this->_callLoyaltyCalc = $this->_manObj->get(\Praxigento\Bonus\Loyalty\Service\ICalc::class);
         $this->repoCore = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
         $this->_repoBase = $this->_manObj->get(\Praxigento\BonusBase\Repo\IModule::class);
         $this->_repoTypeAsset = $this->_manObj->get(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);
