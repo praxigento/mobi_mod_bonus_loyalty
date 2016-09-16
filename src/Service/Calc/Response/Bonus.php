@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Bonus\Loyalty\Service\Calc\Response;
+namespace Praxigento\BonusLoyalty\Service\Calc\Response;
 
 /**
  * @method int getCalcId()

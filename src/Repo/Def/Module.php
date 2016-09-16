@@ -3,13 +3,13 @@
  * Facade for current module for dependent modules repos.
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Bonus\Loyalty\Repo\Def;
+namespace Praxigento\BonusLoyalty\Repo\Def;
 
 use Praxigento\BonusBase\Data\Entity\Compress;
 use Praxigento\BonusBase\Repo\IModule as BonusBaseRepo;
-use Praxigento\Bonus\Loyalty\Data\Entity\Cfg\Param as CfgParam;
-use Praxigento\Bonus\Loyalty\Data\Entity\Qualification;
-use Praxigento\Bonus\Loyalty\Repo\IModule;
+use Praxigento\BonusLoyalty\Data\Entity\Cfg\Param as CfgParam;
+use Praxigento\BonusLoyalty\Data\Entity\Qualification;
+use Praxigento\BonusLoyalty\Repo\IModule;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Core\Repo\Def\Db;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;

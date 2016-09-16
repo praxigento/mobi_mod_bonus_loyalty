@@ -2,14 +2,14 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Bonus\Loyalty\Service\Calc;
+namespace Praxigento\BonusLoyalty\Service\Calc;
 
 use Praxigento\BonusBase\Data\Entity\Calculation;
 use Praxigento\BonusBase\Data\Entity\Period;
 use Praxigento\BonusBase\Service\Compress\Request\QualifyByUserData as BonusBaseQualifyByUserDataRequest;
 use Praxigento\BonusBase\Service\Period\Request\GetForDependentCalc as PeriodGetForDependentCalcRequest;
 use Praxigento\BonusBase\Service\Period\Request\GetForPvBasedCalc as PeriodGetLatestForPvBasedCalcRequest;
-use Praxigento\Bonus\Loyalty\Service\ICalc;
+use Praxigento\BonusLoyalty\Service\ICalc;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Core\Service\Base\Call as BaseCall;
 use Praxigento\Downline\Service\Snap\Request\GetStateOnDate as DownlineSnapGetStateOnDateRequest;
@@ -30,7 +30,7 @@ class Call extends BaseCall implements ICalc
     protected $_logger;
     /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
-    /** @var \Praxigento\Bonus\Loyalty\Repo\IModule */
+    /** @var \Praxigento\BonusLoyalty\Repo\IModule */
     protected $_repoMod;
     /** @var Sub\Bonus */
     protected $_subBonus;
@@ -40,7 +40,7 @@ class Call extends BaseCall implements ICalc
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
-        \Praxigento\Bonus\Loyalty\Repo\IModule $repoMod,
+        \Praxigento\BonusLoyalty\Repo\IModule $repoMod,
         \Praxigento\BonusBase\Service\ICompress $callBaseCompress,
         \Praxigento\BonusBase\Service\IPeriod $callBasePeriod,
         \Praxigento\Downline\Service\ISnap $callDownlineSnap,

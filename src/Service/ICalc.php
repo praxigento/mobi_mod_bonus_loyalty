@@ -2,10 +2,10 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Bonus\Loyalty\Service;
+namespace Praxigento\BonusLoyalty\Service;
 
-use Praxigento\Bonus\Loyalty\Service\Calc\Request;
-use Praxigento\Bonus\Loyalty\Service\Calc\Response;
+use Praxigento\BonusLoyalty\Service\Calc\Request;
+use Praxigento\BonusLoyalty\Service\Calc\Response;
 
 interface ICalc {
 

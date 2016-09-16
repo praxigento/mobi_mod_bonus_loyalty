@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Bonus\Loyalty\Service\Calc\Sub;
+namespace Praxigento\BonusLoyalty\Service\Calc\Sub;
 
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
 

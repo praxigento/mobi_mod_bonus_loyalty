@@ -5,7 +5,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Bonus\Loyalty\Service\Calc\Sub;
+namespace Praxigento\BonusLoyalty\Service\Calc\Sub;
 
 class CompressQualifier implements \Praxigento\BonusBase\Tool\IQualifyUser {
     const AS_HAS_ORDERS = 'HasOrders';

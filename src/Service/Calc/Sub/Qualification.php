@@ -3,10 +3,10 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Bonus\Loyalty\Service\Calc\Sub;
+namespace Praxigento\BonusLoyalty\Service\Calc\Sub;
 
 use Praxigento\BonusBase\Data\Entity\Compress;
-use Praxigento\Bonus\Loyalty\Data\Entity\Qualification as EntityQual;
+use Praxigento\BonusLoyalty\Data\Entity\Qualification as EntityQual;
 use Praxigento\Downline\Data\Entity\Snap;
 use Praxigento\Downline\Service\Map\Request\ById as DownlineMapByIdRequest;
 use Praxigento\Downline\Service\Map\Request\TreeByDepth as DownlineMapTreeByDepthRequest;

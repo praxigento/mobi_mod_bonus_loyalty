@@ -2,7 +2,7 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\Bonus\Loyalty\Service\Calc\Request;
+namespace Praxigento\BonusLoyalty\Service\Calc\Request;
 /**
  * @method string getDateApplied() Transaction applied dates for calculation. UTC current date is used if missed.
  * @method void setDateApplied(string $data)

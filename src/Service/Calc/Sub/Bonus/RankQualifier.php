@@ -3,11 +3,11 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Bonus\Loyalty\Service\Calc\Sub\Bonus;
+namespace Praxigento\BonusLoyalty\Service\Calc\Sub\Bonus;
 
 use Praxigento\BonusBase\Data\Entity\Compress;
-use Praxigento\Bonus\Loyalty\Data\Entity\Cfg\Param as CfgParam;
-use Praxigento\Bonus\Loyalty\Data\Entity\Qualification;
+use Praxigento\BonusLoyalty\Data\Entity\Cfg\Param as CfgParam;
+use Praxigento\BonusLoyalty\Data\Entity\Qualification;
 
 class RankQualifier {
 

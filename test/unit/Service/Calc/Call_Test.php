@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Bonus\Loyalty\Service\Calc;
+namespace Praxigento\BonusLoyalty\Service\Calc;
 
 use Flancer32\Lib\DataObject;
 use Praxigento\BonusBase\Data\Entity\Calculation;
@@ -39,7 +39,7 @@ class Call_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->mDba = $this->_mockResourceConnection($this->mConn);
         $this->mRepoGeneric = $this->_mockRepoGeneric($this->mDba);
         $this->mRepoMod = $this->_mockRepoMod(
-            \Praxigento\Bonus\Loyalty\Repo\IModule::class,
+            \Praxigento\BonusLoyalty\Repo\IModule::class,
             $this->mRepoGeneric
         );
         $this->mLogger = $this->_mockLogger();

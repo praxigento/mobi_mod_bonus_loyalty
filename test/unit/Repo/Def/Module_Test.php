@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Bonus\Loyalty\Repo\Def;
+namespace Praxigento\BonusLoyalty\Repo\Def;
 
 use Praxigento\BonusLoyalty\Config as Cfg;
 

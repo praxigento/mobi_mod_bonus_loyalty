@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\Bonus\Loyalty\Repo;
+namespace Praxigento\BonusLoyalty\Repo;
 
 interface IModule  {
 
