@@ -9,8 +9,8 @@ use Praxigento\BonusBase\Data\Entity\Period;
 use Praxigento\BonusBase\Service\Compress\Request\QualifyByUserData as BonusBaseQualifyByUserDataRequest;
 use Praxigento\BonusBase\Service\Period\Request\GetForDependentCalc as PeriodGetForDependentCalcRequest;
 use Praxigento\BonusBase\Service\Period\Request\GetForPvBasedCalc as PeriodGetLatestForPvBasedCalcRequest;
-use Praxigento\BonusLoyalty\Service\ICalc;
 use Praxigento\BonusLoyalty\Config as Cfg;
+use Praxigento\BonusLoyalty\Service\ICalc;
 use Praxigento\Core\Service\Base\Call as BaseCall;
 use Praxigento\Downline\Service\Snap\Request\GetStateOnDate as DownlineSnapGetStateOnDateRequest;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
@@ -32,6 +32,8 @@ class Call extends BaseCall implements ICalc
     protected $_manTrans;
     /** @var \Praxigento\BonusLoyalty\Repo\IModule */
     protected $_repoMod;
+    /** @var  \Praxigento\BonusBase\Repo\Entity\ICompress */
+    protected $_repoBonusCompress;
     /** @var Sub\Bonus */
     protected $_subBonus;
     /** @var Sub\Qualification */
@@ -41,6 +43,7 @@ class Call extends BaseCall implements ICalc
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\BonusLoyalty\Repo\IModule $repoMod,
+        \Praxigento\BonusBase\Repo\Entity\ICompress $repoBonusCompress,
         \Praxigento\BonusBase\Service\ICompress $callBaseCompress,
         \Praxigento\BonusBase\Service\IPeriod $callBasePeriod,
         \Praxigento\Downline\Service\ISnap $callDownlineSnap,
@@ -51,6 +54,7 @@ class Call extends BaseCall implements ICalc
         $this->_logger = $logger;
         $this->_manTrans = $manTrans;
         $this->_repoMod = $repoMod;
+        $this->_repoBonusCompress = $repoBonusCompress;
         $this->_callBaseCompress = $callBaseCompress;
         $this->_callBasePeriod = $callBasePeriod;
         $this->_callDownlineSnap = $callDownlineSnap;
@@ -225,7 +229,7 @@ class Call extends BaseCall implements ICalc
                 $dsBegin = $periodDataDepend[Period::ATTR_DSTAMP_BEGIN];
                 $dsEnd = $periodDataDepend[Period::ATTR_DSTAMP_END];
                 $calcIdBase = $calcDataBase[Calculation::ATTR_ID];
-                $tree = $this->_repoMod->getCompressedTree($calcIdBase);
+                $tree = $this->_repoBonusCompress->getTreeByCalcId($calcIdBase);
                 $qualData = $this->_repoMod->getQualificationData($dsBegin, $dsEnd);
                 $updates = $this->_subQualification->calcParams($tree, $qualData, $gvMaxLevels, $psaaLevel);
                 $this->_repoMod->saveQualificationParams($updates);

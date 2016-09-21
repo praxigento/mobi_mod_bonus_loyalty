@@ -60,21 +60,6 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->assertEquals($PERCENT, $resp);
     }
 
-    public function test_getCompressedTree()
-    {
-        /** === Test Data === */
-        $CALC_ID = 2;
-        $TREE = 'tree';
-        /** === Setup Mocks === */
-        // $result = $this->_repoBonusBase->getCompressedTree($calcId);
-        $this->mRepoBonusBase
-            ->shouldReceive('getCompressedTree')->once()
-            ->with($CALC_ID)
-            ->andReturn($TREE);
-        /** === Call and asserts  === */
-        $resp = $this->repo->getCompressedTree($CALC_ID);
-        $this->assertEquals($TREE, $resp);
-    }
 
     public function test_getCompressedTreeWithQualifications()
     {

@@ -5,19 +5,13 @@
 
 namespace Praxigento\BonusLoyalty\Repo;
 
-interface IModule  {
+interface IModule
+{
 
     /**
      * @return array [$rankId=>[$generation=>$percent], ...]
      */
     function getBonusPercents();
-
-    /**
-     * @param $calcId
-     *
-     * @return array [[Compress/*], ...]
-     */
-    public function getCompressedTree($calcId);
 
     /**
      * Get compressed tree with qualification data (PV, GV, PSAA, ...).
@@ -38,7 +32,7 @@ interface IModule  {
     /**
      * Adapter for \Praxigento\BonusBase\Repo\Def\Module::getCalcsForPeriod
      *
-     * @param int    $calcTypeId
+     * @param int $calcTypeId
      * @param string $dsBegin 'YYYYMMDD'
      * @param string $dsEnd 'YYYYMMDD'
      *

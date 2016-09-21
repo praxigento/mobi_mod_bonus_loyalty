@@ -7,10 +7,10 @@ namespace Praxigento\BonusLoyalty\Repo\Def;
 
 use Praxigento\BonusBase\Data\Entity\Compress;
 use Praxigento\BonusBase\Repo\IModule as BonusBaseRepo;
+use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\BonusLoyalty\Data\Entity\Cfg\Param as CfgParam;
 use Praxigento\BonusLoyalty\Data\Entity\Qualification;
 use Praxigento\BonusLoyalty\Repo\IModule;
-use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\Core\Repo\Def\Db;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
 
@@ -18,6 +18,8 @@ class Module extends Db implements IModule
 {
     /** @var BonusBaseRepo */
     protected $_repoBonusBase;
+    /** @var  \Praxigento\BonusBase\Repo\Entity\Log\ISales */
+    protected $_repoLogSales;
     /** @var  \Praxigento\Core\Tool\IPeriod */
     protected $_toolPeriod;
     /** @var \Praxigento\Core\Repo\IGeneric */
@@ -30,25 +32,21 @@ class Module extends Db implements IModule
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Core\Repo\IGeneric $repoBasic,
         BonusBaseRepo $repoBonusBase,
+        \Praxigento\BonusBase\Repo\Entity\Log\ISales $repoLogSales,
         \Praxigento\Core\Tool\IPeriod $toolPeriod
     ) {
         parent::__construct($resource);
         $this->_manTrans = $manTrans;
         $this->_repoBasic = $repoBasic;
-        $this->_toolPeriod = $toolPeriod;
         $this->_repoBonusBase = $repoBonusBase;
+        $this->_repoLogSales = $repoLogSales;
+        $this->_toolPeriod = $toolPeriod;
     }
 
     function getBonusPercents()
     {
         $calcTypeId = $this->_repoBonusBase->getTypeCalcIdByCode(Cfg::CODE_TYPE_CALC_BONUS);
         $result = $this->_repoBonusBase->getConfigGenerationsPercents($calcTypeId);
-        return $result;
-    }
-
-    public function getCompressedTree($calcId)
-    {
-        $result = $this->_repoBonusBase->getCompressedTree($calcId);
         return $result;
     }
 
@@ -229,7 +227,11 @@ class Module extends Db implements IModule
         $def = $this->_manTrans->begin();
         try {
             foreach ($updates as $transId => $saleId) {
-                $this->_repoBonusBase->addLogSaleOrder($transId, $saleId);
+                $data = [
+                    \Praxigento\BonusBase\Data\Entity\Log\Sales::ATTR_TRANS_ID => $transId,
+                    \Praxigento\BonusBase\Data\Entity\Log\Sales::ATTR_SALE_ORDER_ID => $saleId
+                ];
+                $this->_repoLogSales->create($data);
             }
             $this->_manTrans->commit($def);
         } finally {
