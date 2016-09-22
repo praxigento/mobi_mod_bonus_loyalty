@@ -102,25 +102,6 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->assertEquals($RESULT, $resp);
     }
 
-    public function test_getLatestCalcForPeriod()
-    {
-        /** === Test Data === */
-        $CALC_TYPE_ID = 4;
-        $DS_BEGIN = 'begin';
-        $DS_END = 'end';
-        $RESULT = 'result';
-        /** === Setup Mocks === */
-        // $result = $this->_repoBonusBase->getCalcsForPeriod($calcTypeId, $dsBegin, $dsEnd, $shouldGetLatestCalc);
-        $this->mRepoBonusBase
-            ->shouldReceive('getCalcsForPeriod')->once()
-            ->with($CALC_TYPE_ID, $DS_BEGIN, $DS_END, true)
-            ->andReturn($RESULT);
-        /** === Call and asserts  === */
-        $resp = $this->repo->getLatestCalcForPeriod($CALC_TYPE_ID, $DS_BEGIN, $DS_END);
-        $this->assertEquals($RESULT, $resp);
-    }
-
-
     public function test_getQualificationData()
     {
         /** === Test Data === */

@@ -119,13 +119,6 @@ class Module extends Db implements IModule
         return $result;
     }
 
-    public function getLatestCalcForPeriod($calcTypeId, $dsBegin, $dsEnd)
-    {
-        $shouldGetLatestCalc = true;
-        $result = $this->_repoBonusBase->getCalcsForPeriod($calcTypeId, $dsBegin, $dsEnd, $shouldGetLatestCalc);
-        return $result;
-    }
-
     /**
      * SELECT
      * SUM(total) AS `summary`,
