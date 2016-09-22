@@ -252,9 +252,4 @@ class Module extends Db implements IModule
         }
     }
 
-    public function updateCalcSetComplete($calcId)
-    {
-        $result = $this->_repoBonusBase->updateCalcSetComplete($calcId);
-        return $result;
-    }
 }

@@ -343,20 +343,4 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->repo->saveQualificationParams($UPDATES);
     }
 
-    public function test_updateCalcSetComplete()
-    {
-        /** === Test Data === */
-        $CALC_ID = 'id';
-        $RESULT = 'result';
-        /** === Setup Mocks === */
-        // $result = $this->_repoBonusBase->updateCalcSetComplete($calcId);
-        $this->mRepoBonusBase
-            ->shouldReceive('updateCalcSetComplete')->once()
-            ->with($CALC_ID)
-            ->andReturn($RESULT);
-        /** === Call and asserts  === */
-        $resp = $this->repo->updateCalcSetComplete($CALC_ID);
-        $this->assertEquals($RESULT, $resp);
-    }
-
 }

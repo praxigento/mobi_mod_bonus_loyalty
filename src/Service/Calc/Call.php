@@ -30,10 +30,12 @@ class Call extends BaseCall implements ICalc
     protected $_logger;
     /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
-    /** @var \Praxigento\BonusLoyalty\Repo\IModule */
-    protected $_repoMod;
     /** @var  \Praxigento\BonusBase\Repo\Entity\ICompress */
     protected $_repoBonusCompress;
+    /** @var \Praxigento\BonusBase\Repo\Service\IModule */
+    protected $_repoBonusService;
+    /** @var \Praxigento\BonusLoyalty\Repo\IModule */
+    protected $_repoMod;
     /** @var Sub\Bonus */
     protected $_subBonus;
     /** @var Sub\Qualification */
@@ -43,6 +45,7 @@ class Call extends BaseCall implements ICalc
         \Psr\Log\LoggerInterface $logger,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\BonusLoyalty\Repo\IModule $repoMod,
+        \Praxigento\BonusBase\Repo\Service\IModule $repoBonusService,
         \Praxigento\BonusBase\Repo\Entity\ICompress $repoBonusCompress,
         \Praxigento\BonusBase\Service\ICompress $callBaseCompress,
         \Praxigento\BonusBase\Service\IPeriod $callBasePeriod,
@@ -54,6 +57,7 @@ class Call extends BaseCall implements ICalc
         $this->_logger = $logger;
         $this->_manTrans = $manTrans;
         $this->_repoMod = $repoMod;
+        $this->_repoBonusService = $repoBonusService;
         $this->_repoBonusCompress = $repoBonusCompress;
         $this->_callBaseCompress = $callBaseCompress;
         $this->_callBasePeriod = $callBasePeriod;
@@ -146,7 +150,7 @@ class Call extends BaseCall implements ICalc
                 $transLog = $respAdd->getTransactionsIds();
                 $this->_repoMod->saveLogSaleOrders($transLog);
                 /* mark calculation as completed and finalize bonus */
-                $this->_repoMod->updateCalcSetComplete($calcIdDepend);
+                $this->_repoBonusService->markCalcComplete($calcIdDepend);
                 $this->_manTrans->commit($def);
                 $result->setPeriodId($periodDataDepend[Period::ATTR_ID]);
                 $result->setCalcId($calcIdDepend);
@@ -191,7 +195,7 @@ class Call extends BaseCall implements ICalc
                 $reqCompress->setQualifier(new Sub\CompressQualifier());
                 $respCompress = $this->_callBaseCompress->qualifyByUserData($reqCompress);
                 if ($respCompress->isSucceed()) {
-                    $this->_repoMod->updateCalcSetComplete($calcId);
+                    $this->_repoBonusService->markCalcComplete($calcId);
                     $this->_manTrans->commit($def);
                     $result->setPeriodId($periodData[Period::ATTR_ID]);
                     $result->setCalcId($calcId);
@@ -233,7 +237,7 @@ class Call extends BaseCall implements ICalc
                 $qualData = $this->_repoMod->getQualificationData($dsBegin, $dsEnd);
                 $updates = $this->_subQualification->calcParams($tree, $qualData, $gvMaxLevels, $psaaLevel);
                 $this->_repoMod->saveQualificationParams($updates);
-                $this->_repoMod->updateCalcSetComplete($calcIdDepend);
+                $this->_repoBonusService->markCalcComplete($calcIdDepend);
                 $this->_manTrans->commit($def);
                 $result->setPeriodId($periodDataDepend[Period::ATTR_ID]);
                 $result->setCalcId($calcIdDepend);
