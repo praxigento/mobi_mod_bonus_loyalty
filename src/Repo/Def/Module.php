@@ -5,8 +5,9 @@
  */
 namespace Praxigento\BonusLoyalty\Repo\Def;
 
+use Praxigento\BonusBase\Data\Entity\Cfg\Generation as ECfgGeneration;
 use Praxigento\BonusBase\Data\Entity\Compress;
-use Praxigento\BonusBase\Repo\IModule as BonusBaseRepo;
+use Praxigento\BonusBase\Repo\IModule as RepoBonusBaseModule;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\BonusLoyalty\Data\Entity\Cfg\Param as CfgParam;
 use Praxigento\BonusLoyalty\Data\Entity\Qualification;
@@ -20,8 +21,10 @@ class Module extends Db implements IModule
     protected $_manTrans;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
-    /** @var BonusBaseRepo */
+    /** @var RepoBonusBaseModule */
     protected $_repoBonusBase;
+    /** @var \Praxigento\BonusBase\Repo\Entity\Cfg\IGeneration */
+    protected $_repoBonusCfgGen;
     /** @var  \Praxigento\BonusBase\Repo\Entity\Log\ISales */
     protected $_repoLogSales;
     /** @var \Praxigento\BonusBase\Repo\Entity\Type\ICalc */
@@ -33,7 +36,8 @@ class Module extends Db implements IModule
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Core\Repo\IGeneric $repoBasic,
-        BonusBaseRepo $repoBonusBase,
+        RepoBonusBaseModule $repoBonusBase,
+        \Praxigento\BonusBase\Repo\Entity\Cfg\IGeneration $repoBonusCfgGen,
         \Praxigento\BonusBase\Repo\Entity\Log\ISales $repoLogSales,
         \Praxigento\BonusBase\Repo\Entity\Type\ICalc $repoTypeCalc,
         \Praxigento\Core\Tool\IPeriod $toolPeriod
@@ -42,6 +46,7 @@ class Module extends Db implements IModule
         $this->_manTrans = $manTrans;
         $this->_repoBasic = $repoBasic;
         $this->_repoBonusBase = $repoBonusBase;
+        $this->_repoBonusCfgGen = $repoBonusCfgGen;
         $this->_repoLogSales = $repoLogSales;
         $this->_repoTypeCalc = $repoTypeCalc;
         $this->_toolPeriod = $toolPeriod;
@@ -49,8 +54,16 @@ class Module extends Db implements IModule
 
     function getBonusPercents()
     {
+        $result = [];
         $calcTypeId = $this->_repoTypeCalc->getIdByCode(Cfg::CODE_TYPE_CALC_BONUS);
-        $result = $this->_repoBonusBase->getConfigGenerationsPercents($calcTypeId);
+        $where = ECfgGeneration::ATTR_CALC_TYPE_ID . '=' . (int)$calcTypeId;
+        $rows = $this->_repoBonusCfgGen->get($where);
+        foreach ($rows as $row) {
+            $rankId = $row[ECfgGeneration::ATTR_RANK_ID];
+            $gen = $row[ECfgGeneration::ATTR_GENERATION];
+            $percent = $row[ECfgGeneration::ATTR_PERCENT];
+            $result[$rankId][$gen] = $percent;
+        }
         return $result;
     }
 
