@@ -57,15 +57,6 @@ interface IModule
     function getSalesOrdersForPeriod($dsFrom, $dsTo);
 
     /**
-     * Decorator for \Praxigento\BonusBase\Repo\IModule::getTypeCalcIdByCode
-     *
-     * @param string $calcTypeCode
-     *
-     * @return int
-     */
-    public function getTypeCalcIdByCode($calcTypeCode);
-
-    /**
      * @param array $updates [$custId=>[$orderId=>$amount], ...]
      *
      * @return

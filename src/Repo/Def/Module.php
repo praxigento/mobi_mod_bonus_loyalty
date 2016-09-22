@@ -16,16 +16,18 @@ use Praxigento\Pv\Data\Entity\Sale as PvSale;
 
 class Module extends Db implements IModule
 {
+    /** @var  \Praxigento\Core\Transaction\Database\IManager */
+    protected $_manTrans;
+    /** @var \Praxigento\Core\Repo\IGeneric */
+    protected $_repoBasic;
     /** @var BonusBaseRepo */
     protected $_repoBonusBase;
     /** @var  \Praxigento\BonusBase\Repo\Entity\Log\ISales */
     protected $_repoLogSales;
+    /** @var \Praxigento\BonusBase\Repo\Entity\Type\ICalc */
+    protected $_repoTypeCalc;
     /** @var  \Praxigento\Core\Tool\IPeriod */
     protected $_toolPeriod;
-    /** @var \Praxigento\Core\Repo\IGeneric */
-    protected $_repoBasic;
-    /** @var  \Praxigento\Core\Transaction\Database\IManager */
-    protected $_manTrans;
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
@@ -33,6 +35,7 @@ class Module extends Db implements IModule
         \Praxigento\Core\Repo\IGeneric $repoBasic,
         BonusBaseRepo $repoBonusBase,
         \Praxigento\BonusBase\Repo\Entity\Log\ISales $repoLogSales,
+        \Praxigento\BonusBase\Repo\Entity\Type\ICalc $repoTypeCalc,
         \Praxigento\Core\Tool\IPeriod $toolPeriod
     ) {
         parent::__construct($resource);
@@ -40,12 +43,13 @@ class Module extends Db implements IModule
         $this->_repoBasic = $repoBasic;
         $this->_repoBonusBase = $repoBonusBase;
         $this->_repoLogSales = $repoLogSales;
+        $this->_repoTypeCalc = $repoTypeCalc;
         $this->_toolPeriod = $toolPeriod;
     }
 
     function getBonusPercents()
     {
-        $calcTypeId = $this->_repoBonusBase->getTypeCalcIdByCode(Cfg::CODE_TYPE_CALC_BONUS);
+        $calcTypeId = $this->_repoTypeCalc->getIdByCode(Cfg::CODE_TYPE_CALC_BONUS);
         $result = $this->_repoBonusBase->getConfigGenerationsPercents($calcTypeId);
         return $result;
     }
@@ -200,12 +204,6 @@ class Module extends Db implements IModule
         $query->where("$whereFrom AND $whereTo");
         // $sql = (string)$query;
         $result = $this->_conn->fetchAll($query);
-        return $result;
-    }
-
-    public function getTypeCalcIdByCode($calcTypeCode)
-    {
-        $result = $this->_repoBonusBase->getTypeCalcIdByCode($calcTypeCode);
         return $result;
     }
 

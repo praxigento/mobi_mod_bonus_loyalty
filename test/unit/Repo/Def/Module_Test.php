@@ -207,22 +207,6 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->assertEquals($ITEMS, $resp);
     }
 
-    public function test_getTypeCalcIdByCode()
-    {
-        /** === Test Data === */
-        $TYPE_CODE = 'code';
-        $RESULT = 'result';
-        /** === Setup Mocks === */
-        // $result = $this->_repoBonusBase->getTypeCalcIdByCode($calcTypeCode);
-        $this->mRepoBonusBase
-            ->shouldReceive('getTypeCalcIdByCode')->once()
-            ->with($TYPE_CODE)
-            ->andReturn($RESULT);
-        /** === Call and asserts  === */
-        $resp = $this->repo->getTypeCalcIdByCode($TYPE_CODE);
-        $this->assertEquals($RESULT, $resp);
-    }
-
     public function test_saveBonus_commit()
     {
         /** === Test Data === */

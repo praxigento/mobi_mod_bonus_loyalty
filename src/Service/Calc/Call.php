@@ -5,7 +5,6 @@
 namespace Praxigento\BonusLoyalty\Service\Calc;
 
 use Praxigento\BonusBase\Data\Entity\Calculation;
-use Praxigento\BonusBase\Data\Entity\Period;
 use Praxigento\BonusBase\Service\Compress\Request\QualifyByUserData as BonusBaseQualifyByUserDataRequest;
 use Praxigento\BonusBase\Service\Period\Request\GetForDependentCalc as PeriodGetForDependentCalcRequest;
 use Praxigento\BonusBase\Service\Period\Request\GetForPvBasedCalc as PeriodGetLatestForPvBasedCalcRequest;
@@ -34,6 +33,8 @@ class Call extends BaseCall implements ICalc
     protected $_repoBonusCompress;
     /** @var \Praxigento\BonusBase\Repo\Service\IModule */
     protected $_repoBonusService;
+    /** @var \Praxigento\BonusBase\Repo\Entity\Type\ICalc */
+    protected $_repoBonusTypeCalc;
     /** @var \Praxigento\BonusLoyalty\Repo\IModule */
     protected $_repoMod;
     /** @var Sub\Bonus */
@@ -47,6 +48,7 @@ class Call extends BaseCall implements ICalc
         \Praxigento\BonusLoyalty\Repo\IModule $repoMod,
         \Praxigento\BonusBase\Repo\Service\IModule $repoBonusService,
         \Praxigento\BonusBase\Repo\Entity\ICompress $repoBonusCompress,
+        \Praxigento\BonusBase\Repo\Entity\Type\ICalc $repoBonusTypeCalc,
         \Praxigento\BonusBase\Service\ICompress $callBaseCompress,
         \Praxigento\BonusBase\Service\IPeriod $callBasePeriod,
         \Praxigento\Downline\Service\ISnap $callDownlineSnap,
@@ -59,6 +61,7 @@ class Call extends BaseCall implements ICalc
         $this->_repoMod = $repoMod;
         $this->_repoBonusService = $repoBonusService;
         $this->_repoBonusCompress = $repoBonusCompress;
+        $this->_repoBonusTypeCalc = $repoBonusTypeCalc;
         $this->_callBaseCompress = $callBaseCompress;
         $this->_callBasePeriod = $callBasePeriod;
         $this->_callDownlineSnap = $callDownlineSnap;
@@ -136,7 +139,7 @@ class Call extends BaseCall implements ICalc
                 $dsBegin = $periodDataDepend->getDstampBegin();
                 $dsEnd = $periodDataDepend->getDstampEnd();
                 /* collect data to process bonus */
-                $calcTypeIdCompress = $this->_repoMod->getTypeCalcIdByCode(Cfg::CODE_TYPE_CALC_COMPRESSION);
+                $calcTypeIdCompress = $this->_repoBonusTypeCalc->getIdByCode(Cfg::CODE_TYPE_CALC_COMPRESSION);
                 $calcDataCompress = $this->_repoMod->getLatestCalcForPeriod($calcTypeIdCompress, $dsBegin, $dsEnd);
                 $calcIdCompress = $calcDataCompress[Calculation::ATTR_ID];
                 $params = $this->_repoMod->getConfigParams();
