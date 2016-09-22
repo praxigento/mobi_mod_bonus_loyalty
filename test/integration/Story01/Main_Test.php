@@ -56,6 +56,8 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private $_repoAcc;
     /** @var \Praxigento\BonusBase\Repo\IModule */
     private $_repoBase;
+    /** @var \Praxigento\BonusBase\Repo\Entity\IRank */
+    private $_repoBonusRank;
     /** @var \Praxigento\BonusBase\Repo\Entity\Type\ICalc */
     private $_repoBonusTypeCalc;
     /** @var \Praxigento\Core\Repo\IGeneric */
@@ -71,6 +73,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_repoCore = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
         $this->_repoBase = $this->_manObj->get(\Praxigento\BonusBase\Repo\IModule::class);
         $this->_repoBonusTypeCalc = $this->_manObj->get(\Praxigento\BonusBase\Repo\Entity\Type\ICalc::class);
+        $this->_repoBonusRank = $this->_manObj->get(\Praxigento\BonusBase\Repo\Entity\IRank::class);
         $this->_repoTypeAsset = $this->_manObj->get(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);
         $this->_repoAcc = $this->_manObj->get(\Praxigento\Accounting\Repo\IModule::class);
     }
@@ -206,7 +209,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
             self::RANK_BY_PSAA => [Param::ATTR_PV => 120, Param::ATTR_GV => 2000, Param::ATTR_PSAA => 2]
         ];
         foreach ($PARAMS as $rank => $bind) {
-            $rankId = $this->_repoBase->getRankIdByCode($rank);
+            $rankId = $this->_repoBonusRank->getIdByCode($rank);
             $bind [Param::ATTR_RANK_ID] = $rankId;
             $this->_repoCore->addEntity(Param::ENTITY_NAME, $bind);
         }
@@ -222,7 +225,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         ];
         foreach ($PERCENTS as $rank => $percents) {
             $calcTypeId = $this->_repoBonusTypeCalc->getIdByCode(Cfg::CODE_TYPE_CALC_BONUS);
-            $rankId = $this->_repoBase->getRankIdByCode($rank);
+            $rankId = $this->_repoBonusRank->getIdByCode($rank);
             $bind = [
                 Generation::ATTR_RANK_ID => $rankId,
                 Generation::ATTR_CALC_TYPE_ID => $calcTypeId
