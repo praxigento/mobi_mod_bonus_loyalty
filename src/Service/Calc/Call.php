@@ -176,8 +176,8 @@ class Call extends BaseCall implements ICalc
             try {
                 /* get tree snapshot and orders data */
                 $periodData = $respGetLatest->getPeriodData();
-                $dsBegin = $periodData[Period::ATTR_DSTAMP_BEGIN];
-                $dsEnd = $periodData[Period::ATTR_DSTAMP_END];
+                $dsBegin = $periodData->getDstampBegin();
+                $dsEnd = $periodData->getDstampEnd();
                 $tree = $this->_getDownlineSnapshot($dsEnd);
                 $orders = $this->_repoMod->getSalesOrdersForPeriod($dsBegin, $dsEnd);
                 /* match orders to customers  */
@@ -188,7 +188,7 @@ class Call extends BaseCall implements ICalc
                 /* call to compression operation from bonus base module */
                 $reqCompress = new BonusBaseQualifyByUserDataRequest();
                 $calcData = $respGetLatest->getCalcData();
-                $calcId = $calcData[Calculation::ATTR_ID];
+                $calcId = $calcData->getId();
                 $reqCompress->setCalcId($calcId);
                 $reqCompress->setFlatTree($tree);
                 $reqCompress->setSkipTreeExpand(true);
@@ -197,7 +197,7 @@ class Call extends BaseCall implements ICalc
                 if ($respCompress->isSucceed()) {
                     $this->_repoBonusService->markCalcComplete($calcId);
                     $this->_manTrans->commit($def);
-                    $result->setPeriodId($periodData[Period::ATTR_ID]);
+                    $result->setPeriodId($periodData->getId());
                     $result->setCalcId($calcId);
                     $result->markSucceed();
                 }
