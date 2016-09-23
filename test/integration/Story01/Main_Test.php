@@ -54,8 +54,6 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private $_callPvSale;
     /** @var   \Praxigento\Accounting\Repo\IModule */
     private $_repoAcc;
-    /** @var \Praxigento\BonusBase\Repo\IModule */
-    private $_repoBase;
     /** @var \Praxigento\BonusBase\Repo\Entity\IRank */
     private $_repoBonusRank;
     /** @var \Praxigento\BonusBase\Repo\Entity\Type\ICalc */
@@ -71,7 +69,6 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_callPvSale = $this->_manObj->get(\Praxigento\Pv\Service\ISale::class);
         $this->_callLoyaltyCalc = $this->_manObj->get(\Praxigento\BonusLoyalty\Service\ICalc::class);
         $this->_repoCore = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
-        $this->_repoBase = $this->_manObj->get(\Praxigento\BonusBase\Repo\IModule::class);
         $this->_repoBonusTypeCalc = $this->_manObj->get(\Praxigento\BonusBase\Repo\Entity\Type\ICalc::class);
         $this->_repoBonusRank = $this->_manObj->get(\Praxigento\BonusBase\Repo\Entity\IRank::class);
         $this->_repoTypeAsset = $this->_manObj->get(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);

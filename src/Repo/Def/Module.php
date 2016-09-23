@@ -7,7 +7,6 @@ namespace Praxigento\BonusLoyalty\Repo\Def;
 
 use Praxigento\BonusBase\Data\Entity\Cfg\Generation as ECfgGeneration;
 use Praxigento\BonusBase\Data\Entity\Compress;
-use Praxigento\BonusBase\Repo\IModule as RepoBonusBaseModule;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\BonusLoyalty\Data\Entity\Cfg\Param as CfgParam;
 use Praxigento\BonusLoyalty\Data\Entity\Qualification;
@@ -21,8 +20,6 @@ class Module extends Db implements IModule
     protected $_manTrans;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
-    /** @var RepoBonusBaseModule */
-    protected $_repoBonusBase;
     /** @var \Praxigento\BonusBase\Repo\Entity\Cfg\IGeneration */
     protected $_repoBonusCfgGen;
     /** @var  \Praxigento\BonusBase\Repo\Entity\Log\ISales */
@@ -36,7 +33,6 @@ class Module extends Db implements IModule
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Core\Repo\IGeneric $repoBasic,
-        RepoBonusBaseModule $repoBonusBase,
         \Praxigento\BonusBase\Repo\Entity\Cfg\IGeneration $repoBonusCfgGen,
         \Praxigento\BonusBase\Repo\Entity\Log\ISales $repoLogSales,
         \Praxigento\BonusBase\Repo\Entity\Type\ICalc $repoTypeCalc,
@@ -45,7 +41,6 @@ class Module extends Db implements IModule
         parent::__construct($resource);
         $this->_manTrans = $manTrans;
         $this->_repoBasic = $repoBasic;
-        $this->_repoBonusBase = $repoBonusBase;
         $this->_repoBonusCfgGen = $repoBonusCfgGen;
         $this->_repoLogSales = $repoLogSales;
         $this->_repoTypeCalc = $repoTypeCalc;
