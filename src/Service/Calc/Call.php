@@ -8,13 +8,18 @@ use Praxigento\BonusBase\Service\Compress\Request\QualifyByUserData as BonusBase
 use Praxigento\BonusBase\Service\Period\Request\GetForDependentCalc as PeriodGetForDependentCalcRequest;
 use Praxigento\BonusBase\Service\Period\Request\GetForPvBasedCalc as PeriodGetLatestForPvBasedCalcRequest;
 use Praxigento\BonusLoyalty\Config as Cfg;
-use Praxigento\BonusLoyalty\Service\ICalc;
-use Praxigento\Core\Service\Base\Call as BaseCall;
 use Praxigento\Downline\Service\Snap\Request\GetStateOnDate as DownlineSnapGetStateOnDateRequest;
 use Praxigento\Pv\Data\Entity\Sale as PvSale;
 use Praxigento\Wallet\Service\Operation\Request\AddToWalletActive as WalletOperationAddToWalletActiveRequest;
 
-class Call extends BaseCall implements ICalc
+/**
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class Call
+    extends \Praxigento\Core\Service\Base\Call
+    implements \Praxigento\BonusLoyalty\Service\ICalc
 {
     /** @var  \Praxigento\BonusBase\Service\ICompress */
     protected $_callBaseCompress;
@@ -41,8 +46,27 @@ class Call extends BaseCall implements ICalc
     /** @var Sub\Qualification */
     protected $_subQualification;
 
+    /**
+     * Call constructor.
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Magento\Framework\ObjectManagerInterface $manObj
+     * @param \Praxigento\Core\Transaction\Database\IManager $manTrans
+     * @param \Praxigento\BonusLoyalty\Repo\IModule $repoMod
+     * @param \Praxigento\BonusBase\Repo\Service\IModule $repoBonusService
+     * @param \Praxigento\BonusBase\Repo\Entity\ICompress $repoBonusCompress
+     * @param \Praxigento\BonusBase\Repo\Entity\Type\ICalc $repoBonusTypeCalc
+     * @param \Praxigento\BonusBase\Service\ICompress $callBaseCompress
+     * @param \Praxigento\BonusBase\Service\IPeriod $callBasePeriod
+     * @param \Praxigento\Downline\Service\ISnap $callDownlineSnap
+     * @param \Praxigento\Wallet\Service\IOperation $callWalletOperation
+     * @param Sub\Bonus $subBonus
+     * @param Sub\Qualification $subQualification
+     *
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     */
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
+        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\BonusLoyalty\Repo\IModule $repoMod,
         \Praxigento\BonusBase\Repo\Service\IModule $repoBonusService,
@@ -55,7 +79,7 @@ class Call extends BaseCall implements ICalc
         Sub\Bonus $subBonus,
         Sub\Qualification $subQualification
     ) {
-        $this->_logger = $logger;
+        parent::__construct($logger, $manObj);
         $this->_manTrans = $manTrans;
         $this->_repoMod = $repoMod;
         $this->_repoBonusService = $repoBonusService;
@@ -99,14 +123,14 @@ class Call extends BaseCall implements ICalc
     /**
      * Get Downline Tree snapshot on the $ds (datestamp). Result is an array [$customerId => [...], ...]
      *
-     * @param $ds 'YYYYMMDD'
+     * @param $dstamp 'YYYYMMDD'
      *
      * @return array|null
      */
-    private function _getDownlineSnapshot($ds)
+    private function _getDownlineSnapshot($dstamp)
     {
         $req = new DownlineSnapGetStateOnDateRequest();
-        $req->setDatestamp($ds);
+        $req->setDatestamp($dstamp);
         $resp = $this->_callDownlineSnap->getStateOnDate($req);
         $result = $resp->getData();
         return $result;
