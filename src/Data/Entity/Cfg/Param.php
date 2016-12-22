@@ -19,7 +19,7 @@ class Param
      */
     public function getGv()
     {
-        $result = parent::getData(self::ATTR_GV);
+        $result = parent::get(self::ATTR_GV);
         return $result;
     }
 
@@ -33,7 +33,7 @@ class Param
      */
     public function getPsaa()
     {
-        $result = parent::getData(self::ATTR_PSAA);
+        $result = parent::get(self::ATTR_PSAA);
         return $result;
     }
 
@@ -42,7 +42,7 @@ class Param
      */
     public function getPv()
     {
-        $result = parent::getData(self::ATTR_PV);
+        $result = parent::get(self::ATTR_PV);
         return $result;
     }
 
@@ -51,7 +51,7 @@ class Param
      */
     public function getRankId()
     {
-        $result = parent::getData(self::ATTR_RANK_ID);
+        $result = parent::get(self::ATTR_RANK_ID);
         return $result;
     }
 
@@ -60,7 +60,7 @@ class Param
      */
     public function setGv($data)
     {
-        parent::setData(self::ATTR_GV, $data);
+        parent::set(self::ATTR_GV, $data);
     }
 
     /**
@@ -68,7 +68,7 @@ class Param
      */
     public function setPsaa($data)
     {
-        parent::setData(self::ATTR_PSAA, $data);
+        parent::set(self::ATTR_PSAA, $data);
     }
 
     /**
@@ -76,7 +76,7 @@ class Param
      */
     public function setPv($data)
     {
-        parent::setData(self::ATTR_PV, $data);
+        parent::set(self::ATTR_PV, $data);
     }
 
     /**
@@ -84,6 +84,6 @@ class Param
      */
     public function setRankId($data)
     {
-        parent::setData(self::ATTR_RANK_ID, $data);
+        parent::set(self::ATTR_RANK_ID, $data);
     }
 }

@@ -132,7 +132,7 @@ class Call
         $req = new DownlineSnapGetStateOnDateRequest();
         $req->setDatestamp($dstamp);
         $resp = $this->_callDownlineSnap->getStateOnDate($req);
-        $result = $resp->getData();
+        $result = $resp->get();
         return $result;
     }
 

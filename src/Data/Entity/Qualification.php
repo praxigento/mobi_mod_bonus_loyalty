@@ -18,7 +18,7 @@ class Qualification
      */
     public function getGv()
     {
-        $result = parent::getData(self::ATTR_GV);
+        $result = parent::get(self::ATTR_GV);
         return $result;
     }
 
@@ -32,7 +32,7 @@ class Qualification
      */
     public function getPsaa()
     {
-        $result = parent::getData(self::ATTR_PSAA);
+        $result = parent::get(self::ATTR_PSAA);
         return $result;
     }
 
@@ -41,7 +41,7 @@ class Qualification
      */
     public function getPv()
     {
-        $result = parent::getData(self::ATTR_PV);
+        $result = parent::get(self::ATTR_PV);
         return $result;
     }
 
@@ -50,7 +50,7 @@ class Qualification
      */
     public function getCompressId()
     {
-        $result = parent::getData(self::ATTR_COMPRESS_ID);
+        $result = parent::get(self::ATTR_COMPRESS_ID);
         return $result;
     }
 
@@ -59,7 +59,7 @@ class Qualification
      */
     public function setGv($data)
     {
-        parent::setData(self::ATTR_GV, $data);
+        parent::set(self::ATTR_GV, $data);
     }
 
     /**
@@ -67,7 +67,7 @@ class Qualification
      */
     public function setPsaa($data)
     {
-        parent::setData(self::ATTR_PSAA, $data);
+        parent::set(self::ATTR_PSAA, $data);
     }
 
     /**
@@ -75,7 +75,7 @@ class Qualification
      */
     public function setPv($data)
     {
-        parent::setData(self::ATTR_PV, $data);
+        parent::set(self::ATTR_PV, $data);
     }
 
     /**
@@ -83,7 +83,7 @@ class Qualification
      */
     public function setCompressId($data)
     {
-        parent::setData(self::ATTR_COMPRESS_ID, $data);
+        parent::set(self::ATTR_COMPRESS_ID, $data);
     }
 
 }
