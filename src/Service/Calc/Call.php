@@ -30,7 +30,7 @@ class Call
     /** @var  \Praxigento\Wallet\Service\IOperation */
     protected $_callWalletOperation;
     /** @var \Psr\Log\LoggerInterface */
-    protected $_logger;
+    protected $logger;
     /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
     /** @var  \Praxigento\BonusBase\Repo\Entity\ICompress */
@@ -146,7 +146,7 @@ class Call
         $result = new Response\Bonus();
         $datePerformed = $req->getDatePerformed();
         $dateApplied = $req->getDateApplied();
-        $this->_logger->info("'Loyalty Bonus' calculation is started. Performed at: $datePerformed, applied at: $dateApplied.");
+        $this->logger->info("'Loyalty Bonus' calculation is started. Performed at: $datePerformed, applied at: $dateApplied.");
         $reqGetPeriod = new PeriodGetForDependentCalcRequest();
         $calcTypeBase = Cfg::CODE_TYPE_CALC_QUALIFICATION;
         $calcType = Cfg::CODE_TYPE_CALC_BONUS;
@@ -186,7 +186,7 @@ class Call
                 $this->_manTrans->end($def);
             }
         }
-        $this->_logger->info("'Loyalty Bonus' calculation is complete.");
+        $this->logger->info("'Loyalty Bonus' calculation is complete.");
         return $result;
     }
 
@@ -194,7 +194,7 @@ class Call
     {
         $result = new Response\Compress();
         $calcTypeCode = Cfg::CODE_TYPE_CALC_COMPRESSION;
-        $this->_logger->info("'Loyalty Compression' calculation is started.");
+        $this->logger->info("'Loyalty Compression' calculation is started.");
         $reqGetLatest = new PeriodGetLatestForPvBasedCalcRequest();
         $reqGetLatest->setCalcTypeCode($calcTypeCode);
         $respGetLatest = $this->_callBasePeriod->getForPvBasedCalc($reqGetLatest);
@@ -232,7 +232,7 @@ class Call
                 $this->_manTrans->end($def);
             }
         }
-        $this->_logger->info("'Loyalty Compression' calculation is complete.");
+        $this->logger->info("'Loyalty Compression' calculation is complete.");
         return $result;
     }
 
@@ -243,7 +243,7 @@ class Call
         $dateApplied = $req->getDateApplied();
         $gvMaxLevels = $req->getGvMaxLevels();
         $psaaLevel = $req->getPsaaLevel();
-        $this->_logger->info("'Qualification for Loyalty' calculation is started. Performed at: $datePerformed, applied at: $dateApplied.");
+        $this->logger->info("'Qualification for Loyalty' calculation is started. Performed at: $datePerformed, applied at: $dateApplied.");
         $reqGetPeriod = new PeriodGetForDependentCalcRequest();
         $calcTypeBase = Cfg::CODE_TYPE_CALC_COMPRESSION;
         $calcType = Cfg::CODE_TYPE_CALC_QUALIFICATION;
@@ -273,7 +273,7 @@ class Call
                 $this->_manTrans->end($def);
             }
         }
-        $this->_logger->info("'Qualification for Loyalty' calculation is complete.");
+        $this->logger->info("'Qualification for Loyalty' calculation is complete.");
         return $result;
     }
 }
