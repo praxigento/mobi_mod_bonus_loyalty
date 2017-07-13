@@ -54,6 +54,8 @@ class Module extends Db implements IModule
         $where = ECfgGeneration::ATTR_CALC_TYPE_ID . '=' . (int)$calcTypeId;
         $rows = $this->_repoBonusCfgGen->get($where);
         foreach ($rows as $row) {
+            /* TODO: use as object not as array */
+            $row = (array)$row->get();
             $rankId = $row[ECfgGeneration::ATTR_RANK_ID];
             $gen = $row[ECfgGeneration::ATTR_GENERATION];
             $percent = $row[ECfgGeneration::ATTR_PERCENT];
