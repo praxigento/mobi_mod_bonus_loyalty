@@ -60,7 +60,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
     private $_repoBonusTypeCalc;
     /** @var \Praxigento\Core\Repo\IGeneric */
     private $_repoCore;
-    /** @var  \Praxigento\Accounting\Repo\Entity\Type\IAsset */
+    /** @var  \Praxigento\Accounting\Repo\Entity\Type\Def\Asset */
     private $_repoTypeAsset;
 
     public function __construct()
@@ -71,7 +71,7 @@ class Main_IntegrationTest extends BaseIntegrationTest
         $this->_repoCore = $this->_manObj->get(\Praxigento\Core\Repo\IGeneric::class);
         $this->_repoBonusTypeCalc = $this->_manObj->get(\Praxigento\BonusBase\Repo\Entity\Type\ICalc::class);
         $this->_repoBonusRank = $this->_manObj->get(\Praxigento\BonusBase\Repo\Entity\IRank::class);
-        $this->_repoTypeAsset = $this->_manObj->get(\Praxigento\Accounting\Repo\Entity\Type\IAsset::class);
+        $this->_repoTypeAsset = $this->_manObj->get(\Praxigento\Accounting\Repo\Entity\Type\Def\Asset::class);
         $this->_repoAcc = $this->_manObj->get(\Praxigento\Accounting\Repo\IModule::class);
     }
 
