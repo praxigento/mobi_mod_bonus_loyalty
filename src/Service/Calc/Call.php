@@ -30,11 +30,11 @@ class Call
     protected $_callWalletOperation;
     /** @var  \Praxigento\Core\Transaction\Database\IManager */
     protected $_manTrans;
-    /** @var  \Praxigento\BonusBase\Repo\Entity\Def\Compress */
+    /** @var  \Praxigento\BonusBase\Repo\Entity\Compress */
     protected $_repoBonusCompress;
     /** @var \Praxigento\BonusBase\Repo\Service\IModule */
     protected $_repoBonusService;
-    /** @var \Praxigento\BonusBase\Repo\Entity\Type\Def\Calc */
+    /** @var \Praxigento\BonusBase\Repo\Entity\Type\Calc */
     protected $_repoBonusTypeCalc;
     /** @var \Praxigento\BonusLoyalty\Repo\IModule */
     protected $_repoMod;
@@ -52,8 +52,8 @@ class Call
      * @param \Praxigento\Core\Transaction\Database\IManager $manTrans
      * @param \Praxigento\BonusLoyalty\Repo\IModule $repoMod
      * @param \Praxigento\BonusBase\Repo\Service\IModule $repoBonusService
-     * @param \Praxigento\BonusBase\Repo\Entity\Def\Compress $repoBonusCompress
-     * @param \Praxigento\BonusBase\Repo\Entity\Type\Def\Calc $repoBonusTypeCalc
+     * @param \Praxigento\BonusBase\Repo\Entity\Compress $repoBonusCompress
+     * @param \Praxigento\BonusBase\Repo\Entity\Type\Calc $repoBonusTypeCalc
      * @param \Praxigento\BonusBase\Service\ICompress $callBaseCompress
      * @param \Praxigento\BonusBase\Service\IPeriod $callBasePeriod
      * @param \Praxigento\Downline\Service\ISnap $callDownlineSnap
@@ -69,8 +69,8 @@ class Call
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\BonusLoyalty\Repo\IModule $repoMod,
         \Praxigento\BonusBase\Repo\Service\IModule $repoBonusService,
-        \Praxigento\BonusBase\Repo\Entity\Def\Compress $repoBonusCompress,
-        \Praxigento\BonusBase\Repo\Entity\Type\Def\Calc $repoBonusTypeCalc,
+        \Praxigento\BonusBase\Repo\Entity\Compress $repoBonusCompress,
+        \Praxigento\BonusBase\Repo\Entity\Type\Calc $repoBonusTypeCalc,
         \Praxigento\BonusBase\Service\ICompress $callBaseCompress,
         \Praxigento\BonusBase\Service\IPeriod $callBasePeriod,
         \Praxigento\Downline\Service\ISnap $callDownlineSnap,

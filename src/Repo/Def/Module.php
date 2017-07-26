@@ -20,11 +20,11 @@ class Module extends Db implements IModule
     protected $_manTrans;
     /** @var \Praxigento\Core\Repo\IGeneric */
     protected $_repoBasic;
-    /** @var \Praxigento\BonusBase\Repo\Entity\Cfg\Def\Generation */
+    /** @var \Praxigento\BonusBase\Repo\Entity\Cfg\Generation */
     protected $_repoBonusCfgGen;
-    /** @var  \Praxigento\BonusBase\Repo\Entity\Log\Def\Sales */
+    /** @var  \Praxigento\BonusBase\Repo\Entity\Log\Sales */
     protected $_repoLogSales;
-    /** @var \Praxigento\BonusBase\Repo\Entity\Type\Def\Calc */
+    /** @var \Praxigento\BonusBase\Repo\Entity\Type\Calc */
     protected $_repoTypeCalc;
     /** @var  \Praxigento\Core\Tool\IPeriod */
     protected $_toolPeriod;
@@ -33,9 +33,9 @@ class Module extends Db implements IModule
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Transaction\Database\IManager $manTrans,
         \Praxigento\Core\Repo\IGeneric $repoBasic,
-        \Praxigento\BonusBase\Repo\Entity\Cfg\Def\Generation $repoBonusCfgGen,
-        \Praxigento\BonusBase\Repo\Entity\Log\Def\Sales $repoLogSales,
-        \Praxigento\BonusBase\Repo\Entity\Type\Def\Calc $repoTypeCalc,
+        \Praxigento\BonusBase\Repo\Entity\Cfg\Generation $repoBonusCfgGen,
+        \Praxigento\BonusBase\Repo\Entity\Log\Sales $repoLogSales,
+        \Praxigento\BonusBase\Repo\Entity\Type\Calc $repoTypeCalc,
         \Praxigento\Core\Tool\IPeriod $toolPeriod
     ) {
         parent::__construct($resource);
