@@ -8,7 +8,6 @@ use Praxigento\BonusLoyalty\Data\Entity\Cfg\Param as Entity;
 
 class Param
     extends \Praxigento\Core\Repo\Def\Entity
-    implements \Praxigento\BonusLoyalty\Repo\Entity\Cfg\IParam
 {
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,

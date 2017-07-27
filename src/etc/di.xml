@@ -2,8 +2,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
     <!-- Repos -->
-    <preference for="Praxigento\BonusLoyalty\Repo\Entity\Cfg\IParam" type="Praxigento\BonusLoyalty\Repo\Entity\Cfg\Def\Param"/>
-    <preference for="Praxigento\BonusLoyalty\Repo\Entity\IQualification" type="Praxigento\BonusLoyalty\Repo\Entity\Def\Qualification"/>
     <preference for="Praxigento\BonusLoyalty\Repo\IModule" type="Praxigento\BonusLoyalty\Repo\Def\Module"/>
 
     <!-- Services -->

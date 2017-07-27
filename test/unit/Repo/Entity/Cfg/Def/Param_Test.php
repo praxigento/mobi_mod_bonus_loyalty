@@ -25,6 +25,6 @@ class Param_UnitTest
     public function test_constructor()
     {
         /* === Call and asserts  === */
-        $this->assertInstanceOf(\Praxigento\BonusLoyalty\Repo\Entity\Cfg\IParam::class, $this->obj);
+        $this->assertInstanceOf(\Praxigento\BonusLoyalty\Repo\Entity\Cfg\Def\Param::class, $this->obj);
     }
 }

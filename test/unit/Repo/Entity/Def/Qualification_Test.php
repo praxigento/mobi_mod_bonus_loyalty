@@ -25,6 +25,6 @@ class Qualification_UnitTest
     public function test_constructor()
     {
         /* === Call and asserts  === */
-        $this->assertInstanceOf(\Praxigento\BonusLoyalty\Repo\Entity\IQualification::class, $this->obj);
+        $this->assertInstanceOf(\Praxigento\BonusLoyalty\Repo\Entity\Def\Qualification::class, $this->obj);
     }
 }
