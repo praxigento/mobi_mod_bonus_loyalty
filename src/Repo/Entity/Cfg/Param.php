@@ -2,11 +2,12 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\BonusLoyalty\Repo\Entity\Def;
 
-use Praxigento\BonusLoyalty\Data\Entity\Qualification as Entity;
+namespace Praxigento\BonusLoyalty\Repo\Entity\Cfg;
 
-class Qualification
+use Praxigento\BonusLoyalty\Data\Entity\Cfg\Param as Entity;
+
+class Param
     extends \Praxigento\Core\Repo\Def\Entity
 {
     public function __construct(

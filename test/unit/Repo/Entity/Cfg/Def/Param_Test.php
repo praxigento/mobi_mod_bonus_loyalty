@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\BonusLoyalty\Repo\Entity\Cfg\Def;
+
+namespace Praxigento\BonusLoyalty\Repo\Entity\Cfg;
 
 include_once(__DIR__ . '/../../../../phpunit_bootstrap.php');
 
@@ -25,6 +26,6 @@ class Param_UnitTest
     public function test_constructor()
     {
         /* === Call and asserts  === */
-        $this->assertInstanceOf(\Praxigento\BonusLoyalty\Repo\Entity\Cfg\Def\Param::class, $this->obj);
+        $this->assertInstanceOf(\Praxigento\BonusLoyalty\Repo\Entity\Cfg\Param::class, $this->obj);
     }
 }
