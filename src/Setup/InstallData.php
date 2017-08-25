@@ -8,7 +8,7 @@ namespace Praxigento\BonusLoyalty\Setup;
 
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Praxigento\Accounting\Data\Entity\Type\Operation as TypeOperation;
+use Praxigento\Accounting\Repo\Entity\Data\Type\Operation as TypeOperation;
 use Praxigento\BonusBase\Data\Entity\Type\Calc as TypeCalc;
 use Praxigento\BonusLoyalty\Config as Cfg;
 

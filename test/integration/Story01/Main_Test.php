@@ -4,7 +4,7 @@
  */
 namespace Praxigento\BonusLoyalty\Lib\Test\Story01;
 
-use Praxigento\Accounting\Data\Entity\Account;
+use Praxigento\Accounting\Repo\Entity\Data\Account;
 use Praxigento\BonusBase\Data\Entity\Calculation;
 use Praxigento\BonusBase\Data\Entity\Cfg\Generation;
 use Praxigento\BonusBase\Data\Entity\Compress;
