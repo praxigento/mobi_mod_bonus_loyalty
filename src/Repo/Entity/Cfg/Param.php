@@ -5,7 +5,7 @@
 
 namespace Praxigento\BonusLoyalty\Repo\Entity\Cfg;
 
-use Praxigento\BonusLoyalty\Data\Entity\Cfg\Param as Entity;
+use Praxigento\BonusLoyalty\Repo\Entity\Data\Cfg\Param as Entity;
 
 class Param
     extends \Praxigento\Core\Repo\Def\Entity

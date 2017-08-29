@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\BonusLoyalty\Data\Entity;
+
+namespace Praxigento\BonusLoyalty\Repo\Entity\Data;
 
 class Qualification
     extends \Praxigento\Core\Data\Entity\Base
@@ -12,6 +13,15 @@ class Qualification
     const ATTR_PSAA = 'psaa';
     const ATTR_PV = 'pv';
     const ENTITY_NAME = 'prxgt_bon_loyal_qual';
+
+    /**
+     * @return int
+     */
+    public function getCompressId()
+    {
+        $result = parent::get(self::ATTR_COMPRESS_ID);
+        return $result;
+    }
 
     /**
      * @return double
@@ -46,12 +56,11 @@ class Qualification
     }
 
     /**
-     * @return int
+     * @param int $data
      */
-    public function getCompressId()
+    public function setCompressId($data)
     {
-        $result = parent::get(self::ATTR_COMPRESS_ID);
-        return $result;
+        parent::set(self::ATTR_COMPRESS_ID, $data);
     }
 
     /**
@@ -76,14 +85,6 @@ class Qualification
     public function setPv($data)
     {
         parent::set(self::ATTR_PV, $data);
-    }
-
-    /**
-     * @param int $data
-     */
-    public function setCompressId($data)
-    {
-        parent::set(self::ATTR_COMPRESS_ID, $data);
     }
 
 }

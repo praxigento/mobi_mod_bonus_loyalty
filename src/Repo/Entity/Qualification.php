@@ -5,7 +5,7 @@
 
 namespace Praxigento\BonusLoyalty\Repo\Entity;
 
-use Praxigento\BonusLoyalty\Data\Entity\Qualification as Entity;
+use Praxigento\BonusLoyalty\Repo\Entity\Data\Qualification as Entity;
 
 class Qualification
     extends \Praxigento\Core\Repo\Def\Entity

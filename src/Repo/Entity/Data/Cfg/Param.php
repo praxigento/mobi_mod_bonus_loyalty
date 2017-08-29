@@ -2,7 +2,8 @@
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
-namespace Praxigento\BonusLoyalty\Data\Entity\Cfg;
+
+namespace Praxigento\BonusLoyalty\Repo\Entity\Data\Cfg;
 
 
 class Param
