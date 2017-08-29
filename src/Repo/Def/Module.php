@@ -5,8 +5,8 @@
  */
 namespace Praxigento\BonusLoyalty\Repo\Def;
 
-use Praxigento\BonusBase\Data\Entity\Cfg\Generation as ECfgGeneration;
-use Praxigento\BonusBase\Data\Entity\Compress;
+use Praxigento\BonusBase\Repo\Entity\Data\Cfg\Generation as ECfgGeneration;
+use Praxigento\BonusBase\Repo\Entity\Data\Compress;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\BonusLoyalty\Data\Entity\Cfg\Param as CfgParam;
 use Praxigento\BonusLoyalty\Data\Entity\Qualification;
@@ -229,8 +229,8 @@ class Module extends Db implements IModule
         try {
             foreach ($updates as $transId => $saleId) {
                 $data = [
-                    \Praxigento\BonusBase\Data\Entity\Log\Sales::ATTR_TRANS_ID => $transId,
-                    \Praxigento\BonusBase\Data\Entity\Log\Sales::ATTR_SALE_ORDER_ID => $saleId
+                    \Praxigento\BonusBase\Repo\Entity\Data\Log\Sales::ATTR_TRANS_ID => $transId,
+                    \Praxigento\BonusBase\Repo\Entity\Data\Log\Sales::ATTR_SALE_ORDER_ID => $saleId
                 ];
                 $this->_repoLogSales->create($data);
             }

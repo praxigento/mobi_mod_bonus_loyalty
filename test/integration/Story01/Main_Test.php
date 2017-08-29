@@ -5,10 +5,10 @@
 namespace Praxigento\BonusLoyalty\Lib\Test\Story01;
 
 use Praxigento\Accounting\Repo\Entity\Data\Account;
-use Praxigento\BonusBase\Data\Entity\Calculation;
-use Praxigento\BonusBase\Data\Entity\Cfg\Generation;
-use Praxigento\BonusBase\Data\Entity\Compress;
-use Praxigento\BonusBase\Data\Entity\Rank;
+use Praxigento\BonusBase\Repo\Entity\Data\Calculation;
+use Praxigento\BonusBase\Repo\Entity\Data\Cfg\Generation;
+use Praxigento\BonusBase\Repo\Entity\Data\Compress;
+use Praxigento\BonusBase\Repo\Entity\Data\Rank;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\BonusLoyalty\Data\Entity\Cfg\Param;
 use Praxigento\BonusLoyalty\Data\Entity\Qualification;
