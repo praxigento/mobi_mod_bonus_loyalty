@@ -12,7 +12,7 @@ use Praxigento\BonusLoyalty\Repo\Entity\Data\Cfg\Param as CfgParam;
 use Praxigento\BonusLoyalty\Repo\Entity\Data\Qualification;
 use Praxigento\BonusLoyalty\Repo\IModule;
 use Praxigento\Core\Repo\Def\Db;
-use Praxigento\Pv\Data\Entity\Sale as PvSale;
+use Praxigento\Pv\Repo\Entity\Data\Sale as PvSale;
 
 class Module extends Db implements IModule
 {
