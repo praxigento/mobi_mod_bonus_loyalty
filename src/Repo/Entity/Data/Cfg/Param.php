@@ -7,7 +7,7 @@ namespace Praxigento\BonusLoyalty\Repo\Entity\Data\Cfg;
 
 
 class Param
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_GV = 'gv';
     const ATTR_PSAA = 'psaa';

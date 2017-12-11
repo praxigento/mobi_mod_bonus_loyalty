@@ -29,7 +29,7 @@ class InstallSchema_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->markTestSkipped('Test is deprecated after M1 & M2 merge is done.');
         /** create mocks */
         $this->mConn = $this->_mockConn();
-        $this->mToolDem = $this->_mock(\Praxigento\Core\Setup\Dem\Tool::class);
+        $this->mToolDem = $this->_mock(\Praxigento\Core\App\Setup\Dem\Tool::class);
         $this->mSetup = $this->_mock(\Magento\Framework\Setup\SchemaSetupInterface::class);
         $this->mContext = $this->_mock(\Magento\Framework\Setup\ModuleContextInterface::class);
         /** create object to test */

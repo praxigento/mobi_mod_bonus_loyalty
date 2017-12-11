@@ -4,6 +4,6 @@
  */
 namespace Praxigento\BonusLoyalty\Service\Calc\Request;
 
-class Compress extends \Praxigento\Core\Service\Base\Request {
+class Compress extends \Praxigento\Core\App\Service\Base\Request {
 
 }

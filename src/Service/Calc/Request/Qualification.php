@@ -13,6 +13,6 @@ namespace Praxigento\BonusLoyalty\Service\Calc\Request;
  * @method int getGvMaxLevels() Max levels to calculate GV
  * @method void setGvMaxLevels(int $data)
  */
-class Qualification extends \Praxigento\Core\Service\Base\Request {
+class Qualification extends \Praxigento\Core\App\Service\Base\Request {
 
 }

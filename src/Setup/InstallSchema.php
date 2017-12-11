@@ -8,7 +8,7 @@ namespace Praxigento\BonusLoyalty\Setup;
 use Praxigento\BonusLoyalty\Repo\Entity\Data\Cfg\Param;
 use Praxigento\BonusLoyalty\Repo\Entity\Data\Qualification;
 
-class InstallSchema extends \Praxigento\Core\Setup\Schema\Base
+class InstallSchema extends \Praxigento\Core\App\Setup\Schema\Base
 {
     protected function _setup()
     {

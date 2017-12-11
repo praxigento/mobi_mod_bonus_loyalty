@@ -6,7 +6,7 @@
 namespace Praxigento\BonusLoyalty\Repo\Entity\Data;
 
 class Qualification
-    extends \Praxigento\Core\Data\Entity\Base
+    extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
     const ATTR_COMPRESS_ID = 'compress_id';
     const ATTR_GV = 'gv';
