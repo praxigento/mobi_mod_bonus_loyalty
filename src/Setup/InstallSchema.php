@@ -10,7 +10,7 @@ use Praxigento\BonusLoyalty\Repo\Entity\Data\Qualification;
 
 class InstallSchema extends \Praxigento\Core\App\Setup\Schema\Base
 {
-    protected function _setup()
+    protected function setup()
     {
         /** Read and parse JSON schema. */
         $pathToFile = __DIR__ . '/../etc/dem.json';
