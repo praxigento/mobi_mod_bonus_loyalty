@@ -26,7 +26,7 @@ class Module extends Db implements IModule
     protected $_repoLogSales;
     /** @var \Praxigento\BonusBase\Repo\Entity\Type\Calc */
     protected $_repoTypeCalc;
-    /** @var  \Praxigento\Core\Tool\IPeriod */
+    /** @var  \Praxigento\Core\Api\Helper\Period */
     protected $_toolPeriod;
 
     public function __construct(
@@ -36,7 +36,7 @@ class Module extends Db implements IModule
         \Praxigento\BonusBase\Repo\Entity\Cfg\Generation $repoBonusCfgGen,
         \Praxigento\BonusBase\Repo\Entity\Log\Sales $repoLogSales,
         \Praxigento\BonusBase\Repo\Entity\Type\Calc $repoTypeCalc,
-        \Praxigento\Core\Tool\IPeriod $toolPeriod
+        \Praxigento\Core\Api\Helper\Period $toolPeriod
     ) {
         parent::__construct($resource);
         $this->_manTrans = $manTrans;

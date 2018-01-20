@@ -18,7 +18,7 @@ class Bonus {
     protected $_rankQualifier;
     /** @var  \Praxigento\Downline\Api\Helper\Downline */
     protected $_toolDownlineTree;
-    /** @var  \Praxigento\Core\Tool\IFormat */
+    /** @var  \Praxigento\Core\Api\Helper\Format */
     protected $_toolFormat;
 
     /**
@@ -26,7 +26,7 @@ class Bonus {
      */
     public function __construct(
         \Praxigento\Downline\Service\ISnap $callDownlineSnap,
-        \Praxigento\Core\Tool\IFormat $toolFormat,
+        \Praxigento\Core\Api\Helper\Format $toolFormat,
         \Praxigento\Downline\Api\Helper\Downline $toolDownlineTree,
         Bonus\RankQualifier $rankQualifier
     ) {
