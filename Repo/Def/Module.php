@@ -16,7 +16,7 @@ use Praxigento\Pv\Repo\Entity\Data\Sale as PvSale;
 
 class Module extends Db implements IModule
 {
-    /** @var  \Praxigento\Core\App\Api\Repo\Transaction\Manager */
+    /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     protected $_manTrans;
     /** @var \Praxigento\Core\App\Repo\IGeneric */
     protected $_repoBasic;
@@ -31,7 +31,7 @@ class Module extends Db implements IModule
 
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
-        \Praxigento\Core\App\Api\Repo\Transaction\Manager $manTrans,
+        \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\Core\App\Repo\IGeneric $repoBasic,
         \Praxigento\BonusBase\Repo\Entity\Cfg\Generation $repoBonusCfgGen,
         \Praxigento\BonusBase\Repo\Entity\Log\Sales $repoLogSales,
