@@ -6,8 +6,8 @@
 namespace Praxigento\BonusLoyalty\Service\Calc\Sub\Bonus;
 
 use Praxigento\BonusBase\Repo\Data\Compress;
-use Praxigento\BonusLoyalty\Repo\Entity\Data\Cfg\Param as CfgParam;
-use Praxigento\BonusLoyalty\Repo\Entity\Data\Qualification;
+use Praxigento\BonusLoyalty\Repo\Data\Cfg\Param as CfgParam;
+use Praxigento\BonusLoyalty\Repo\Data\Qualification;
 
 class RankQualifier {
 

@@ -3,9 +3,9 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\BonusLoyalty\Repo\Entity;
+namespace Praxigento\BonusLoyalty\Repo\Dao;
 
-use Praxigento\BonusLoyalty\Repo\Entity\Data\Qualification as Entity;
+use Praxigento\BonusLoyalty\Repo\Data\Qualification as Entity;
 
 class Qualification
     extends \Praxigento\Core\App\Repo\Def\Entity

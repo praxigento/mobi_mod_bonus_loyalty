@@ -3,25 +3,17 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\BonusLoyalty\Repo\Entity\Data;
+namespace Praxigento\BonusLoyalty\Repo\Data\Cfg;
 
-class Qualification
+
+class Param
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_COMPRESS_ID = 'compress_id';
     const ATTR_GV = 'gv';
     const ATTR_PSAA = 'psaa';
     const ATTR_PV = 'pv';
-    const ENTITY_NAME = 'prxgt_bon_loyal_qual';
-
-    /**
-     * @return int
-     */
-    public function getCompressId()
-    {
-        $result = parent::get(self::ATTR_COMPRESS_ID);
-        return $result;
-    }
+    const ATTR_RANK_ID = 'rank_id';
+    const ENTITY_NAME = 'prxgt_bon_loyal_cfg_param';
 
     /**
      * @return double
@@ -34,7 +26,7 @@ class Qualification
 
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_COMPRESS_ID];
+        return [self::ATTR_RANK_ID];
     }
 
     /**
@@ -56,11 +48,12 @@ class Qualification
     }
 
     /**
-     * @param int $data
+     * @return int
      */
-    public function setCompressId($data)
+    public function getRankId()
     {
-        parent::set(self::ATTR_COMPRESS_ID, $data);
+        $result = parent::get(self::ATTR_RANK_ID);
+        return $result;
     }
 
     /**
@@ -87,4 +80,11 @@ class Qualification
         parent::set(self::ATTR_PV, $data);
     }
 
+    /**
+     * @param int $data
+     */
+    public function setRankId($data)
+    {
+        parent::set(self::ATTR_RANK_ID, $data);
+    }
 }

@@ -4,8 +4,8 @@
  */
 namespace Praxigento\BonusLoyalty\Setup;
 
-use Praxigento\BonusLoyalty\Repo\Entity\Data\Cfg\Param;
-use Praxigento\BonusLoyalty\Repo\Entity\Data\Qualification;
+use Praxigento\BonusLoyalty\Repo\Data\Cfg\Param;
+use Praxigento\BonusLoyalty\Repo\Data\Qualification;
 
 include_once(__DIR__ . '/../phpunit_bootstrap.php');
 

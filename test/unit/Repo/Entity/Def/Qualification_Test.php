@@ -3,7 +3,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\BonusLoyalty\Repo\Entity;
+namespace Praxigento\BonusLoyalty\Repo\Dao;
 
 include_once(__DIR__ . '/../../../phpunit_bootstrap.php');
 
@@ -26,6 +26,6 @@ class Qualification_UnitTest
     public function test_constructor()
     {
         /* === Call and asserts  === */
-        $this->assertInstanceOf(\Praxigento\BonusLoyalty\Repo\Entity\Qualification::class, $this->obj);
+        $this->assertInstanceOf(\Praxigento\BonusLoyalty\Repo\Dao\Qualification::class, $this->obj);
     }
 }

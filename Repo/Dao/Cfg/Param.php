@@ -3,9 +3,9 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Praxigento\BonusLoyalty\Repo\Entity\Cfg;
+namespace Praxigento\BonusLoyalty\Repo\Dao\Cfg;
 
-use Praxigento\BonusLoyalty\Repo\Entity\Data\Cfg\Param as Entity;
+use Praxigento\BonusLoyalty\Repo\Data\Cfg\Param as Entity;
 
 class Param
     extends \Praxigento\Core\App\Repo\Def\Entity
