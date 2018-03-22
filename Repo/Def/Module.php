@@ -5,8 +5,8 @@
  */
 namespace Praxigento\BonusLoyalty\Repo\Def;
 
-use Praxigento\BonusBase\Repo\Entity\Data\Cfg\Generation as ECfgGeneration;
-use Praxigento\BonusBase\Repo\Entity\Data\Compress;
+use Praxigento\BonusBase\Repo\Data\Cfg\Generation as ECfgGeneration;
+use Praxigento\BonusBase\Repo\Data\Compress;
 use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\BonusLoyalty\Repo\Entity\Data\Cfg\Param as CfgParam;
 use Praxigento\BonusLoyalty\Repo\Entity\Data\Qualification;
@@ -20,11 +20,11 @@ class Module extends Db implements IModule
     protected $_manTrans;
     /** @var \Praxigento\Core\App\Repo\IGeneric */
     protected $_repoBasic;
-    /** @var \Praxigento\BonusBase\Repo\Entity\Cfg\Generation */
+    /** @var \Praxigento\BonusBase\Repo\Dao\Cfg\Generation */
     protected $_repoBonusCfgGen;
-    /** @var  \Praxigento\BonusBase\Repo\Entity\Log\Sales */
+    /** @var  \Praxigento\BonusBase\Repo\Dao\Log\Sales */
     protected $_repoLogSales;
-    /** @var \Praxigento\BonusBase\Repo\Entity\Type\Calc */
+    /** @var \Praxigento\BonusBase\Repo\Dao\Type\Calc */
     protected $_repoTypeCalc;
     /** @var  \Praxigento\Core\Api\Helper\Period */
     protected $_toolPeriod;
@@ -33,9 +33,9 @@ class Module extends Db implements IModule
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\Core\App\Repo\IGeneric $repoBasic,
-        \Praxigento\BonusBase\Repo\Entity\Cfg\Generation $repoBonusCfgGen,
-        \Praxigento\BonusBase\Repo\Entity\Log\Sales $repoLogSales,
-        \Praxigento\BonusBase\Repo\Entity\Type\Calc $repoTypeCalc,
+        \Praxigento\BonusBase\Repo\Dao\Cfg\Generation $repoBonusCfgGen,
+        \Praxigento\BonusBase\Repo\Dao\Log\Sales $repoLogSales,
+        \Praxigento\BonusBase\Repo\Dao\Type\Calc $repoTypeCalc,
         \Praxigento\Core\Api\Helper\Period $toolPeriod
     ) {
         parent::__construct($resource);
@@ -229,8 +229,8 @@ class Module extends Db implements IModule
         try {
             foreach ($updates as $transId => $saleId) {
                 $data = [
-                    \Praxigento\BonusBase\Repo\Entity\Data\Log\Sales::ATTR_TRANS_ID => $transId,
-                    \Praxigento\BonusBase\Repo\Entity\Data\Log\Sales::ATTR_SALE_ORDER_ID => $saleId
+                    \Praxigento\BonusBase\Repo\Data\Log\Sales::ATTR_TRANS_ID => $transId,
+                    \Praxigento\BonusBase\Repo\Data\Log\Sales::ATTR_SALE_ORDER_ID => $saleId
                 ];
                 $this->_repoLogSales->create($data);
             }
