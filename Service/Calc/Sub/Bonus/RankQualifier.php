@@ -14,20 +14,20 @@ class RankQualifier {
     public function qualifyCustomers($customers, $params) {
         $result = [ ];
         foreach($customers as $customer) {
-            $custId = $customer[Compress::ATTR_CUSTOMER_ID];
-            $pv = $customer[Qualification::ATTR_PV];
-            $gv = $customer[Qualification::ATTR_GV];
-            $psaa = $customer[Qualification::ATTR_PSAA];
+            $custId = $customer[Compress::A_CUSTOMER_ID];
+            $pv = $customer[Qualification::A_PV];
+            $gv = $customer[Qualification::A_GV];
+            $psaa = $customer[Qualification::A_PSAA];
             foreach($params as $param) {
-                $qPv = $param[CfgParam::ATTR_PV];
-                $qGv = $param[CfgParam::ATTR_GV];
-                $qPsaa = $param[CfgParam::ATTR_PSAA];
+                $qPv = $param[CfgParam::A_PV];
+                $qGv = $param[CfgParam::A_GV];
+                $qPsaa = $param[CfgParam::A_PSAA];
                 if(
                     ($pv >= $qPv) &&
                     ($gv >= $qGv) &&
                     ($psaa >= $qPsaa)
                 ) {
-                    $result[$custId] = $param[CfgParam::ATTR_RANK_ID];
+                    $result[$custId] = $param[CfgParam::A_RANK_ID];
                     break;
                 }
             }

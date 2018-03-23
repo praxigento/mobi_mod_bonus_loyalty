@@ -38,8 +38,8 @@ class Bonus {
 
     private function _expandTree($data) {
         $req = new DownlineSnapExtendMinimalRequest();
-        $req->setKeyCustomerId(Compress::ATTR_CUSTOMER_ID);
-        $req->setKeyParentId(Compress::ATTR_PARENT_ID);
+        $req->setKeyCustomerId(Compress::A_CUSTOMER_ID);
+        $req->setKeyParentId(Compress::A_PARENT_ID);
         $req->setTree($data);
         $resp = $this->_callDownlineSnap->expandMinimal($req);
         return $resp->getSnapData();
@@ -59,9 +59,9 @@ class Bonus {
         $mapRankById = $this->_rankQualifier->qualifyCustomers($tree, $params);
         foreach($orders as $order) {
             $custId = $order[Cfg::E_SALE_ORDER_A_CUSTOMER_ID];
-            $orderId = $order[PvSale::ATTR_SALE_ID];
-            $pv = $order[PvSale::ATTR_TOTAL];
-            $path = $mapTreeExp[$custId][Snap::ATTR_PATH];
+            $orderId = $order[PvSale::A_SALE_ID];
+            $pv = $order[PvSale::A_TOTAL];
+            $path = $mapTreeExp[$custId][Snap::A_PATH];
             $parents = $this->_toolDownlineTree->getParentsFromPathReversed($path);
             $gen = 1;
             foreach($parents as $parentId) {

@@ -49,14 +49,14 @@ class Bonus_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         $BONUS_1 = 'bonus';
         $TREE = 'tree';
         $TREE_EXP = [
-            $CUST_1 => [ Snap::ATTR_PATH => 'path1' ]
+            $CUST_1 => [ Snap::A_PATH => 'path1' ]
         ];
         $MAP_RANKS = [ $PARENT_1 => $RANK_1 ];
         $ORDERS = [
             [
                 Cfg::E_SALE_ORDER_A_CUSTOMER_ID => $CUST_1,
-                PvSale::ATTR_SALE_ID            => $ORDR_1,
-                PvSale::ATTR_TOTAL              => $PV_1
+                PvSale::A_SALE_ID            => $ORDR_1,
+                PvSale::A_TOTAL              => $PV_1
             ]
         ];
         $PARAMS = [

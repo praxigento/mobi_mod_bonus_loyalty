@@ -9,10 +9,10 @@ namespace Praxigento\BonusLoyalty\Repo\Data\Cfg;
 class Param
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_GV = 'gv';
-    const ATTR_PSAA = 'psaa';
-    const ATTR_PV = 'pv';
-    const ATTR_RANK_ID = 'rank_id';
+    const A_GV = 'gv';
+    const A_PSAA = 'psaa';
+    const A_PV = 'pv';
+    const A_RANK_ID = 'rank_id';
     const ENTITY_NAME = 'prxgt_bon_loyal_cfg_param';
 
     /**
@@ -20,13 +20,13 @@ class Param
      */
     public function getGv()
     {
-        $result = parent::get(self::ATTR_GV);
+        $result = parent::get(self::A_GV);
         return $result;
     }
 
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_RANK_ID];
+        return [self::A_RANK_ID];
     }
 
     /**
@@ -34,7 +34,7 @@ class Param
      */
     public function getPsaa()
     {
-        $result = parent::get(self::ATTR_PSAA);
+        $result = parent::get(self::A_PSAA);
         return $result;
     }
 
@@ -43,7 +43,7 @@ class Param
      */
     public function getPv()
     {
-        $result = parent::get(self::ATTR_PV);
+        $result = parent::get(self::A_PV);
         return $result;
     }
 
@@ -52,7 +52,7 @@ class Param
      */
     public function getRankId()
     {
-        $result = parent::get(self::ATTR_RANK_ID);
+        $result = parent::get(self::A_RANK_ID);
         return $result;
     }
 
@@ -61,7 +61,7 @@ class Param
      */
     public function setGv($data)
     {
-        parent::set(self::ATTR_GV, $data);
+        parent::set(self::A_GV, $data);
     }
 
     /**
@@ -69,7 +69,7 @@ class Param
      */
     public function setPsaa($data)
     {
-        parent::set(self::ATTR_PSAA, $data);
+        parent::set(self::A_PSAA, $data);
     }
 
     /**
@@ -77,7 +77,7 @@ class Param
      */
     public function setPv($data)
     {
-        parent::set(self::ATTR_PV, $data);
+        parent::set(self::A_PV, $data);
     }
 
     /**
@@ -85,6 +85,6 @@ class Param
      */
     public function setRankId($data)
     {
-        parent::set(self::ATTR_RANK_ID, $data);
+        parent::set(self::A_RANK_ID, $data);
     }
 }

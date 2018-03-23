@@ -34,8 +34,8 @@ class Qualification {
 
     private function _expandTree($data) {
         $req = new DownlineSnapExtendMinimalRequest();
-        $req->setKeyCustomerId(Compress::ATTR_CUSTOMER_ID);
-        $req->setKeyParentId(Compress::ATTR_PARENT_ID);
+        $req->setKeyCustomerId(Compress::A_CUSTOMER_ID);
+        $req->setKeyParentId(Compress::A_PARENT_ID);
         $req->setTree($data);
         $resp = $this->_callDownlineSnap->expandMinimal($req);
         return $resp->getSnapData();
@@ -43,10 +43,10 @@ class Qualification {
 
     private function _initEntry() {
         $result = [
-            EntityQual::ATTR_COMPRESS_ID => 0,
-            EntityQual::ATTR_PV          => 0,
-            EntityQual::ATTR_GV          => 0,
-            EntityQual::ATTR_PSAA        => 0
+            EntityQual::A_COMPRESS_ID => 0,
+            EntityQual::A_PV          => 0,
+            EntityQual::A_GV          => 0,
+            EntityQual::A_PSAA        => 0
         ];
         return $result;
     }
@@ -54,15 +54,15 @@ class Qualification {
     private function _mapById($tree) {
         $req = new DownlineMapByIdRequest();
         $req->setDataToMap($tree);
-        $req->setAsId(Compress::ATTR_CUSTOMER_ID);
+        $req->setAsId(Compress::A_CUSTOMER_ID);
         $resp = $this->_callDownlineMap->byId($req);
         return $resp->getMapped();
     }
 
     private function _mapByTeams($tree) {
         $req = new DownlineMapTreeByTeamsRequest();
-        $req->setAsCustomerId(Compress::ATTR_CUSTOMER_ID);
-        $req->setAsParentId(Compress::ATTR_PARENT_ID);
+        $req->setAsCustomerId(Compress::A_CUSTOMER_ID);
+        $req->setAsParentId(Compress::A_PARENT_ID);
         $req->setDataToMap($tree);
         $resp = $this->_callDownlineMap->treeByTeams($req);
         return $resp->getMapped();
@@ -71,8 +71,8 @@ class Qualification {
     private function _mapByTreeDepthDesc($tree) {
         $req = new DownlineMapTreeByDepthRequest();
         $req->setDataToMap($tree);
-        $req->setAsCustomerId(Compress::ATTR_CUSTOMER_ID);
-        $req->setAsDepth(Snap::ATTR_DEPTH);
+        $req->setAsCustomerId(Compress::A_CUSTOMER_ID);
+        $req->setAsDepth(Snap::A_DEPTH);
         $req->setShouldReversed(true);
         $resp = $this->_callDownlineMap->treeByDepth($req);
         return $resp->getMapped();
@@ -89,13 +89,13 @@ class Qualification {
                 /* init result entry for the customer if entry is not exist */
                 if(!isset($result[$custId])) {
                     $result[$custId] = $this->_initEntry();
-                    $result[$custId][EntityQual::ATTR_COMPRESS_ID] = $mapById[$custId][Compress::ATTR_ID];
+                    $result[$custId][EntityQual::A_COMPRESS_ID] = $mapById[$custId][Compress::A_ID];
                 }
                 /* process PV */
                 $pv = $qData[$custId];
-                $result[$custId][EntityQual::ATTR_PV] = $pv;
+                $result[$custId][EntityQual::A_PV] = $pv;
                 /* process GV */
-                $path = $treeExpanded[$custId][Snap::ATTR_PATH];
+                $path = $treeExpanded[$custId][Snap::A_PATH];
                 $parents = $this->_toolDownlineTree->getParentsFromPathReversed($path);
                 $gen = 1;
                 foreach($parents as $parentId) {
@@ -104,9 +104,9 @@ class Qualification {
                     }
                     if(!isset($result[$parentId])) {
                         $result[$parentId] = $this->_initEntry();
-                        $result[$parentId][EntityQual::ATTR_COMPRESS_ID] = $mapById[$parentId][Compress::ATTR_ID];
+                        $result[$parentId][EntityQual::A_COMPRESS_ID] = $mapById[$parentId][Compress::A_ID];
                     }
-                    $result[$parentId][EntityQual::ATTR_GV] += $pv;
+                    $result[$parentId][EntityQual::A_GV] += $pv;
                     $gen++;
                 }
                 /* process PSAA */
@@ -114,12 +114,12 @@ class Qualification {
                     $psaa = 0;
                     $team = $mapTeams[$custId];
                     foreach($team as $memberId) {
-                        $mPv = $result[$memberId][EntityQual::ATTR_PV];
+                        $mPv = $result[$memberId][EntityQual::A_PV];
                         if($mPv > $psaaLevel) {
                             $psaa++;
                         }
                     }
-                    $result[$custId][EntityQual::ATTR_PSAA] = $psaa;
+                    $result[$custId][EntityQual::A_PSAA] = $psaa;
                 }
             }
         }

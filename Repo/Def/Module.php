@@ -51,14 +51,14 @@ class Module extends Db implements IModule
     {
         $result = [];
         $calcTypeId = $this->_repoTypeCalc->getIdByCode(Cfg::CODE_TYPE_CALC_BONUS);
-        $where = ECfgGeneration::ATTR_CALC_TYPE_ID . '=' . (int)$calcTypeId;
+        $where = ECfgGeneration::A_CALC_TYPE_ID . '=' . (int)$calcTypeId;
         $rows = $this->_repoBonusCfgGen->get($where);
         foreach ($rows as $row) {
             /* TODO: use as object not as array */
             $row = (array)$row->get();
-            $rankId = $row[ECfgGeneration::ATTR_RANK_ID];
-            $gen = $row[ECfgGeneration::ATTR_GENERATION];
-            $percent = $row[ECfgGeneration::ATTR_PERCENT];
+            $rankId = $row[ECfgGeneration::A_RANK_ID];
+            $gen = $row[ECfgGeneration::A_GENERATION];
+            $percent = $row[ECfgGeneration::A_PERCENT];
             $result[$rankId][$gen] = $percent;
         }
         return $result;
@@ -88,17 +88,17 @@ class Module extends Db implements IModule
         $tblQual = $this->resource->getTableName(Qualification::ENTITY_NAME);
         // SELECT FROM prxgt_bon_base_compress pbbc
         $query = $this->conn->select();
-        $query->from([$asCompress => $tblCompress], [Compress::ATTR_CUSTOMER_ID, Compress::ATTR_PARENT_ID]);
+        $query->from([$asCompress => $tblCompress], [Compress::A_CUSTOMER_ID, Compress::A_PARENT_ID]);
         // LEFT JOIN prxgt_bon_loyal_qual pblq ON pbbc.id = pblq.compress_id
-        $on = "$asCompress." . Compress::ATTR_ID . "=$asQual." . Qualification::ATTR_COMPRESS_ID;
+        $on = "$asCompress." . Compress::A_ID . "=$asQual." . Qualification::A_COMPRESS_ID;
         $cols = [
-            Qualification::ATTR_PV,
-            Qualification::ATTR_GV,
-            Qualification::ATTR_PSAA
+            Qualification::A_PV,
+            Qualification::A_GV,
+            Qualification::A_PSAA
         ];
         $query->joinLeft([$asQual => $tblQual], $on, $cols);
         // where
-        $where = $asCompress . '.' . Compress::ATTR_CALC_ID . '=' . (int)$calcId;
+        $where = $asCompress . '.' . Compress::A_CALC_ID . '=' . (int)$calcId;
         $query->where($where);
         // $sql = (string)$query;
         $result = $this->conn->fetchAll($query);
@@ -108,9 +108,9 @@ class Module extends Db implements IModule
     function getConfigParams()
     {
         $order = [
-            CfgParam::ATTR_PSAA . ' DESC',
-            CfgParam::ATTR_GV . ' DESC',
-            CfgParam::ATTR_PV . ' DESC'
+            CfgParam::A_PSAA . ' DESC',
+            CfgParam::A_GV . ' DESC',
+            CfgParam::A_PV . ' DESC'
         ];
         $result = $this->_repoBasic->getEntities(CfgParam::ENTITY_NAME, null, null, $order);
         return $result;
@@ -144,16 +144,16 @@ class Module extends Db implements IModule
         $tblOrder = $this->resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
         // SELECT FROM prxgt_pv_sale pps
         $query = $this->conn->select();
-        $query->from([$asPvSales => $tblPv], [$asSummary => 'SUM(' . PvSale::ATTR_TOTAL . ')']);
+        $query->from([$asPvSales => $tblPv], [$asSummary => 'SUM(' . PvSale::A_TOTAL . ')']);
         // LEFT JOIN sales_flat_order sfo ON pps.sale_id = sfo.entity_id
-        $on = "$asPvSales." . PvSale::ATTR_SALE_ID . "=$asOrder." . Cfg::E_SALE_ORDER_A_ENTITY_ID;
+        $on = "$asPvSales." . PvSale::A_SALE_ID . "=$asOrder." . Cfg::E_SALE_ORDER_A_ENTITY_ID;
         $cols = [
             Cfg::E_SALE_ORDER_A_CUSTOMER_ID
         ];
         $query->joinLeft([$asOrder => $tblOrder], $on, $cols);
         // where
-        $whereFrom = $asPvSales . '.' . PvSale::ATTR_DATE_PAID . '>=' . $this->conn->quote($tsFrom);
-        $whereTo = $asPvSales . '.' . PvSale::ATTR_DATE_PAID . '<=' . $this->conn->quote($tsTo);
+        $whereFrom = $asPvSales . '.' . PvSale::A_DATE_PAID . '>=' . $this->conn->quote($tsFrom);
+        $whereTo = $asPvSales . '.' . PvSale::A_DATE_PAID . '<=' . $this->conn->quote($tsTo);
         $query->where("$whereFrom AND $whereTo");
         // group by
         $query->group($asOrder . '.' . Cfg::E_SALE_ORDER_A_CUSTOMER_ID);
@@ -194,16 +194,16 @@ class Module extends Db implements IModule
         $tblOrder = $this->resource->getTableName(Cfg::ENTITY_MAGE_SALES_ORDER);
         // SELECT FROM prxgt_pv_sale pps
         $query = $this->conn->select();
-        $query->from([$asPv => $tblPv], [PvSale::ATTR_SALE_ID, PvSale::ATTR_TOTAL]);
+        $query->from([$asPv => $tblPv], [PvSale::A_SALE_ID, PvSale::A_TOTAL]);
         // LEFT JOIN sales_flat_order sfo ON pps.sale_id = sfo.entity_id
-        $on = "$asPv." . PvSale::ATTR_SALE_ID . "=$asOrder." . Cfg::E_SALE_ORDER_A_ENTITY_ID;
+        $on = "$asPv." . PvSale::A_SALE_ID . "=$asOrder." . Cfg::E_SALE_ORDER_A_ENTITY_ID;
         $cols = [
             Cfg::E_SALE_ORDER_A_CUSTOMER_ID
         ];
         $query->joinLeft([$asOrder => $tblOrder], $on, $cols);
         // where
-        $whereFrom = $asPv . '.' . PvSale::ATTR_DATE_PAID . '>=' . $this->conn->quote($tsFrom);
-        $whereTo = $asPv . '.' . PvSale::ATTR_DATE_PAID . '<=' . $this->conn->quote($tsTo);
+        $whereFrom = $asPv . '.' . PvSale::A_DATE_PAID . '>=' . $this->conn->quote($tsFrom);
+        $whereTo = $asPv . '.' . PvSale::A_DATE_PAID . '<=' . $this->conn->quote($tsTo);
         $query->where("$whereFrom AND $whereTo");
         // $sql = (string)$query;
         $result = $this->conn->fetchAll($query);
@@ -229,8 +229,8 @@ class Module extends Db implements IModule
         try {
             foreach ($updates as $transId => $saleId) {
                 $data = [
-                    \Praxigento\BonusBase\Repo\Data\Log\Sales::ATTR_TRANS_ID => $transId,
-                    \Praxigento\BonusBase\Repo\Data\Log\Sales::ATTR_SALE_ORDER_ID => $saleId
+                    \Praxigento\BonusBase\Repo\Data\Log\Sales::A_TRANS_ID => $transId,
+                    \Praxigento\BonusBase\Repo\Data\Log\Sales::A_SALE_ORDER_ID => $saleId
                 ];
                 $this->_repoLogSales->create($data);
             }

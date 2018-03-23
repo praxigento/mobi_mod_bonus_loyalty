@@ -25,18 +25,18 @@ class RankQualifier_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery {
         $RANK_ID = 5;
         $CUSTOMERS = [
             [
-                Compress::ATTR_CUSTOMER_ID => $CUST_ID,
-                Qualification::ATTR_PV     => 10,
-                Qualification::ATTR_GV     => 100,
-                Qualification::ATTR_PSAA   => 2
+                Compress::A_CUSTOMER_ID => $CUST_ID,
+                Qualification::A_PV     => 10,
+                Qualification::A_GV     => 100,
+                Qualification::A_PSAA   => 2
             ]
         ];
         $PARAMS = [
             [
-                CfgParam::ATTR_PV      => 5,
-                CfgParam::ATTR_GV      => 50,
-                CfgParam::ATTR_PSAA    => 2,
-                CfgParam::ATTR_RANK_ID => $RANK_ID
+                CfgParam::A_PV      => 5,
+                CfgParam::A_GV      => 50,
+                CfgParam::A_PSAA    => 2,
+                CfgParam::A_RANK_ID => $RANK_ID
             ]
         ];
 

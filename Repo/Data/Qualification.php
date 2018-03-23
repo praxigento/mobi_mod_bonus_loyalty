@@ -8,10 +8,10 @@ namespace Praxigento\BonusLoyalty\Repo\Data;
 class Qualification
     extends \Praxigento\Core\App\Repo\Data\Entity\Base
 {
-    const ATTR_COMPRESS_ID = 'compress_id';
-    const ATTR_GV = 'gv';
-    const ATTR_PSAA = 'psaa';
-    const ATTR_PV = 'pv';
+    const A_COMPRESS_ID = 'compress_id';
+    const A_GV = 'gv';
+    const A_PSAA = 'psaa';
+    const A_PV = 'pv';
     const ENTITY_NAME = 'prxgt_bon_loyal_qual';
 
     /**
@@ -19,7 +19,7 @@ class Qualification
      */
     public function getCompressId()
     {
-        $result = parent::get(self::ATTR_COMPRESS_ID);
+        $result = parent::get(self::A_COMPRESS_ID);
         return $result;
     }
 
@@ -28,13 +28,13 @@ class Qualification
      */
     public function getGv()
     {
-        $result = parent::get(self::ATTR_GV);
+        $result = parent::get(self::A_GV);
         return $result;
     }
 
     public static function getPrimaryKeyAttrs()
     {
-        return [self::ATTR_COMPRESS_ID];
+        return [self::A_COMPRESS_ID];
     }
 
     /**
@@ -42,7 +42,7 @@ class Qualification
      */
     public function getPsaa()
     {
-        $result = parent::get(self::ATTR_PSAA);
+        $result = parent::get(self::A_PSAA);
         return $result;
     }
 
@@ -51,7 +51,7 @@ class Qualification
      */
     public function getPv()
     {
-        $result = parent::get(self::ATTR_PV);
+        $result = parent::get(self::A_PV);
         return $result;
     }
 
@@ -60,7 +60,7 @@ class Qualification
      */
     public function setCompressId($data)
     {
-        parent::set(self::ATTR_COMPRESS_ID, $data);
+        parent::set(self::A_COMPRESS_ID, $data);
     }
 
     /**
@@ -68,7 +68,7 @@ class Qualification
      */
     public function setGv($data)
     {
-        parent::set(self::ATTR_GV, $data);
+        parent::set(self::A_GV, $data);
     }
 
     /**
@@ -76,7 +76,7 @@ class Qualification
      */
     public function setPsaa($data)
     {
-        parent::set(self::ATTR_PSAA, $data);
+        parent::set(self::A_PSAA, $data);
     }
 
     /**
@@ -84,7 +84,7 @@ class Qualification
      */
     public function setPv($data)
     {
-        parent::set(self::ATTR_PV, $data);
+        parent::set(self::A_PV, $data);
     }
 
 }
