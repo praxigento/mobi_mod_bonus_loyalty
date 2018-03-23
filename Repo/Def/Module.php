@@ -32,18 +32,18 @@ class Module extends Db implements IModule
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
-        \Praxigento\Core\App\Repo\IGeneric $repoBasic,
-        \Praxigento\BonusBase\Repo\Dao\Cfg\Generation $repoBonusCfgGen,
-        \Praxigento\BonusBase\Repo\Dao\Log\Sales $repoLogSales,
-        \Praxigento\BonusBase\Repo\Dao\Type\Calc $repoTypeCalc,
+        \Praxigento\Core\App\Repo\IGeneric $daoBasic,
+        \Praxigento\BonusBase\Repo\Dao\Cfg\Generation $daoBonusCfgGen,
+        \Praxigento\BonusBase\Repo\Dao\Log\Sales $daoLogSales,
+        \Praxigento\BonusBase\Repo\Dao\Type\Calc $daoTypeCalc,
         \Praxigento\Core\Api\Helper\Period $toolPeriod
     ) {
         parent::__construct($resource);
         $this->_manTrans = $manTrans;
-        $this->_repoBasic = $repoBasic;
-        $this->_repoBonusCfgGen = $repoBonusCfgGen;
-        $this->_repoLogSales = $repoLogSales;
-        $this->_repoTypeCalc = $repoTypeCalc;
+        $this->_repoBasic = $daoBasic;
+        $this->_repoBonusCfgGen = $daoBonusCfgGen;
+        $this->_repoLogSales = $daoLogSales;
+        $this->_repoTypeCalc = $daoTypeCalc;
         $this->_toolPeriod = $toolPeriod;
     }
 

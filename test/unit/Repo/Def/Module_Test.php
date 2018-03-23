@@ -20,7 +20,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
     /** @var  \Mockery\MockInterface */
     private $mToolPeriod;
     /** @var  Module */
-    private $repo;
+    private $dao;
 
     protected function setUp()
     {
@@ -30,7 +30,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->mDba = $this->_mockResourceConnection($this->mConn);
         $this->mRepoGeneric = $this->_mockRepoGeneric($this->mDba);
         $this->mToolPeriod = $this->_mock(\Praxigento\Core\Api\Helper\Period::class);
-        $this->repo = new Module(
+        $this->dao = new Module(
             $this->mRepoGeneric,
             $this->mRepoBonusBase,
             $this->mToolPeriod
@@ -53,7 +53,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
             ->with($CALC_TYPE_ID)
             ->andReturn($PERCENT);
         /** === Call and asserts  === */
-        $resp = $this->repo->getBonusPercents();
+        $resp = $this->dao->getBonusPercents();
         $this->assertEquals($PERCENT, $resp);
     }
 
@@ -81,7 +81,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
             ->shouldReceive('fetchAll')->once()
             ->andReturn($RESULT);
         /** === Call and asserts  === */
-        $resp = $this->repo->getCompressedTreeWithQualifications($CALC_ID);
+        $resp = $this->dao->getCompressedTreeWithQualifications($CALC_ID);
         $this->assertEquals($RESULT, $resp);
     }
 
@@ -95,7 +95,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
             ->shouldReceive('getEntities')->once()
             ->andReturn($RESULT);
         /** === Call and asserts  === */
-        $resp = $this->repo->getConfigParams();
+        $resp = $this->dao->getConfigParams();
         $this->assertEquals($RESULT, $resp);
     }
 
@@ -140,7 +140,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
             ->shouldReceive('fetchAll')->once()
             ->andReturn($ITEMS);
         /** === Call and asserts  === */
-        $resp = $this->repo->getQualificationData($DS_FROM, $DS_TO);
+        $resp = $this->dao->getQualificationData($DS_FROM, $DS_TO);
         $this->assertTrue(is_array($resp));
         $this->assertEquals($SUMMARY, $resp[$CUST_ID]);
     }
@@ -181,7 +181,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
             ->shouldReceive('fetchAll')->once()
             ->andReturn($ITEMS);
         /** === Call and asserts  === */
-        $resp = $this->repo->getSalesOrdersForPeriod($DS_FROM, $DS_TO);
+        $resp = $this->dao->getSalesOrdersForPeriod($DS_FROM, $DS_TO);
         $this->assertEquals($ITEMS, $resp);
     }
 
@@ -200,7 +200,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->mConn
             ->shouldReceive('commit')->once();
         /** === Call and asserts  === */
-        $this->repo->saveBonus($UPDATES);
+        $this->dao->saveBonus($UPDATES);
     }
 
     /**
@@ -222,7 +222,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->mConn
             ->shouldReceive('rollback')->once();
         /** === Call and asserts  === */
-        $this->repo->saveBonus($UPDATES);
+        $this->dao->saveBonus($UPDATES);
     }
 
     public function test_saveLogSaleOrders_commit()
@@ -240,7 +240,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->mConn
             ->shouldReceive('commit')->once();
         /** === Call and asserts  === */
-        $this->repo->saveLogSaleOrders($UPDATES);
+        $this->dao->saveLogSaleOrders($UPDATES);
     }
 
     /**
@@ -262,7 +262,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->mConn
             ->shouldReceive('rollback')->once();
         /** === Call and asserts  === */
-        $this->repo->saveLogSaleOrders($UPDATES);
+        $this->dao->saveLogSaleOrders($UPDATES);
     }
 
     public function test_saveQualificationParams_commit()
@@ -280,7 +280,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->mConn
             ->shouldReceive('commit')->once();
         /** === Call and asserts  === */
-        $this->repo->saveQualificationParams($UPDATES);
+        $this->dao->saveQualificationParams($UPDATES);
     }
 
     /**
@@ -302,7 +302,7 @@ class Module_UnitTest extends \Praxigento\Core\Test\BaseCase\Mockery
         $this->mConn
             ->shouldReceive('rollback')->once();
         /** === Call and asserts  === */
-        $this->repo->saveQualificationParams($UPDATES);
+        $this->dao->saveQualificationParams($UPDATES);
     }
 
 }
