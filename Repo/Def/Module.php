@@ -11,14 +11,14 @@ use Praxigento\BonusLoyalty\Config as Cfg;
 use Praxigento\BonusLoyalty\Repo\Data\Cfg\Param as CfgParam;
 use Praxigento\BonusLoyalty\Repo\Data\Qualification;
 use Praxigento\BonusLoyalty\Repo\IModule;
-use Praxigento\Core\App\Repo\Def\Db;
+use Praxigento\Core\App\Repo\Db;
 use Praxigento\Pv\Repo\Data\Sale as PvSale;
 
 class Module extends Db implements IModule
 {
     /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
     protected $_manTrans;
-    /** @var \Praxigento\Core\App\Repo\IGeneric */
+    /** @var \Praxigento\Core\Api\App\Repo\Generic */
     protected $_repoBasic;
     /** @var \Praxigento\BonusBase\Repo\Dao\Cfg\Generation */
     protected $_repoBonusCfgGen;
@@ -32,7 +32,7 @@ class Module extends Db implements IModule
     public function __construct(
         \Magento\Framework\App\ResourceConnection $resource,
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
-        \Praxigento\Core\App\Repo\IGeneric $daoBasic,
+        \Praxigento\Core\Api\App\Repo\Generic $daoBasic,
         \Praxigento\BonusBase\Repo\Dao\Cfg\Generation $daoBonusCfgGen,
         \Praxigento\BonusBase\Repo\Dao\Log\Sales $daoLogSales,
         \Praxigento\BonusBase\Repo\Dao\Type\Calc $daoTypeCalc,
