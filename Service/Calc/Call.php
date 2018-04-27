@@ -17,55 +17,35 @@ use Praxigento\Wallet\Service\Operation\Request\AddToWalletActive as WalletOpera
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Call
-    extends \Praxigento\Core\App\Service\Base\Call
     implements \Praxigento\BonusLoyalty\Service\ICalc
 {
     /** @var  \Praxigento\BonusBase\Service\ICompress */
-    protected $_callBaseCompress;
+    private $callBaseCompress;
     /** @var  \Praxigento\BonusBase\Service\IPeriod */
-    protected $_callBasePeriod;
+    private $callBasePeriod;
     /** @var  \Praxigento\Downline\Service\ISnap */
-    protected $_callDownlineSnap;
+    private $callDownlineSnap;
     /** @var  \Praxigento\Wallet\Service\IOperation */
-    protected $_callWalletOperation;
-    /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
-    protected $_manTrans;
-    /** @var  \Praxigento\BonusBase\Repo\Dao\Compress */
-    protected $_repoBonusCompress;
-    /** @var \Praxigento\BonusBase\Repo\Service\IModule */
-    protected $_repoBonusService;
-    /** @var \Praxigento\BonusBase\Repo\Dao\Type\Calc */
-    protected $_repoBonusTypeCalc;
-    /** @var \Praxigento\BonusLoyalty\Repo\IModule */
-    protected $_repoMod;
-    /** @var Sub\Bonus */
-    protected $_subBonus;
-    /** @var Sub\Qualification */
-    protected $_subQualification;
+    private $callWalletOperation;
     /** @var \Psr\Log\LoggerInterface */
-    protected $logger;
+    private $logger;
+    /** @var  \Praxigento\Core\Api\App\Repo\Transaction\Manager */
+    private $manTrans;
+    /** @var  \Praxigento\BonusBase\Repo\Dao\Compress */
+    private $repoBonusCompress;
+    /** @var \Praxigento\BonusBase\Repo\Service\IModule */
+    private $repoBonusService;
+    /** @var \Praxigento\BonusBase\Repo\Dao\Type\Calc */
+    private $repoBonusTypeCalc;
+    /** @var \Praxigento\BonusLoyalty\Repo\IModule */
+    private $repoMod;
+    /** @var Sub\Bonus */
+    private $subBonus;
+    /** @var Sub\Qualification */
+    private $subQualification;
 
-    /**
-     * Call constructor.
-     * @param \Praxigento\Core\Api\App\Logger\Main $logger
-     * @param \Magento\Framework\ObjectManagerInterface $manObj
-     * @param \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans
-     * @param \Praxigento\BonusLoyalty\Repo\IModule $daoMod
-     * @param \Praxigento\BonusBase\Repo\Service\IModule $daoBonusService
-     * @param \Praxigento\BonusBase\Repo\Dao\Compress $daoBonusCompress
-     * @param \Praxigento\BonusBase\Repo\Dao\Type\Calc $daoBonusTypeCalc
-     * @param \Praxigento\BonusBase\Service\ICompress $callBaseCompress
-     * @param \Praxigento\BonusBase\Service\IPeriod $callBasePeriod
-     * @param \Praxigento\Downline\Service\ISnap $callDownlineSnap
-     * @param \Praxigento\Wallet\Service\IOperation $callWalletOperation
-     * @param Sub\Bonus $subBonus
-     * @param Sub\Qualification $subQualification
-     *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     */
     public function __construct(
         \Praxigento\Core\Api\App\Logger\Main $logger,
-        \Magento\Framework\ObjectManagerInterface $manObj,
         \Praxigento\Core\Api\App\Repo\Transaction\Manager $manTrans,
         \Praxigento\BonusLoyalty\Repo\IModule $daoMod,
         \Praxigento\BonusBase\Repo\Service\IModule $daoBonusService,
@@ -78,18 +58,18 @@ class Call
         Sub\Bonus $subBonus,
         Sub\Qualification $subQualification
     ) {
-        parent::__construct($logger, $manObj);
-        $this->_manTrans = $manTrans;
-        $this->_repoMod = $daoMod;
-        $this->_repoBonusService = $daoBonusService;
-        $this->_repoBonusCompress = $daoBonusCompress;
-        $this->_repoBonusTypeCalc = $daoBonusTypeCalc;
-        $this->_callBaseCompress = $callBaseCompress;
-        $this->_callBasePeriod = $callBasePeriod;
-        $this->_callDownlineSnap = $callDownlineSnap;
-        $this->_callWalletOperation = $callWalletOperation;
-        $this->_subBonus = $subBonus;
-        $this->_subQualification = $subQualification;
+        $this->logger = $logger;
+        $this->manTrans = $manTrans;
+        $this->repoMod = $daoMod;
+        $this->repoBonusService = $daoBonusService;
+        $this->repoBonusCompress = $daoBonusCompress;
+        $this->repoBonusTypeCalc = $daoBonusTypeCalc;
+        $this->callBaseCompress = $callBaseCompress;
+        $this->callBasePeriod = $callBasePeriod;
+        $this->callDownlineSnap = $callDownlineSnap;
+        $this->callWalletOperation = $callWalletOperation;
+        $this->subBonus = $subBonus;
+        $this->subQualification = $subQualification;
     }
 
     /**
@@ -115,7 +95,7 @@ class Call
         $req->setAsRef($asRef);
         $req->setOperationTypeCode(Cfg::CODE_TYPE_OPER_BONUS_LOYALTY);
         $req->setTransData($transData);
-        $result = $this->_callWalletOperation->addToWalletActive($req);
+        $result = $this->callWalletOperation->addToWalletActive($req);
         return $result;
     }
 
@@ -130,7 +110,7 @@ class Call
     {
         $req = new DownlineSnapGetStateOnDateRequest();
         $req->setDatestamp($dstamp);
-        $resp = $this->_callDownlineSnap->getStateOnDate($req);
+        $resp = $this->callDownlineSnap->getStateOnDate($req);
         $result = $resp->get();
         return $result;
     }
@@ -151,9 +131,9 @@ class Call
         $calcType = Cfg::CODE_TYPE_CALC_BONUS;
         $reqGetPeriod->setBaseCalcTypeCode($calcTypeBase);
         $reqGetPeriod->setDependentCalcTypeCode($calcType);
-        $respGetPeriod = $this->_callBasePeriod->getForDependentCalc($reqGetPeriod);
+        $respGetPeriod = $this->callBasePeriod->getForDependentCalc($reqGetPeriod);
         if ($respGetPeriod->isSucceed()) {
-            $def = $this->_manTrans->begin();
+            $def = $this->manTrans->begin();
             try {
                 $periodDataDepend = $respGetPeriod->getDependentPeriodData();
                 $calcDataDepend = $respGetPeriod->getDependentCalcData();
@@ -161,28 +141,28 @@ class Call
                 $dsBegin = $periodDataDepend->getDstampBegin();
                 $dsEnd = $periodDataDepend->getDstampEnd();
                 /* collect data to process bonus */
-                $calcTypeIdCompress = $this->_repoBonusTypeCalc->getIdByCode(Cfg::CODE_TYPE_CALC_COMPRESSION);
-                $calcDataCompress = $this->_repoBonusService
+                $calcTypeIdCompress = $this->repoBonusTypeCalc->getIdByCode(Cfg::CODE_TYPE_CALC_COMPRESSION);
+                $calcDataCompress = $this->repoBonusService
                     ->getLastCalcForPeriodByDates($calcTypeIdCompress, $dsBegin, $dsEnd);
                 $calcIdCompress = $calcDataCompress->getId();
-                $params = $this->_repoMod->getConfigParams();
-                $percents = $this->_repoMod->getBonusPercents();
-                $treeCompressed = $this->_repoMod->getCompressedTreeWithQualifications($calcIdCompress);
-                $orders = $this->_repoMod->getSalesOrdersForPeriod($dsBegin, $dsEnd);
+                $params = $this->repoMod->getConfigParams();
+                $percents = $this->repoMod->getBonusPercents();
+                $treeCompressed = $this->repoMod->getCompressedTreeWithQualifications($calcIdCompress);
+                $orders = $this->repoMod->getSalesOrdersForPeriod($dsBegin, $dsEnd);
                 /* calculate bonus */
-                $updates = $this->_subBonus->calc($treeCompressed, $orders, $params, $percents);
+                $updates = $this->subBonus->calc($treeCompressed, $orders, $params, $percents);
                 /* create new operation with bonus transactions and save sales log */
                 $respAdd = $this->_createBonusOperation($updates);
                 $transLog = $respAdd->getTransactionsIds();
-                $this->_repoMod->saveLogSaleOrders($transLog);
+                $this->repoMod->saveLogSaleOrders($transLog);
                 /* mark calculation as completed and finalize bonus */
-                $this->_repoBonusService->markCalcComplete($calcIdDepend);
-                $this->_manTrans->commit($def);
+                $this->repoBonusService->markCalcComplete($calcIdDepend);
+                $this->manTrans->commit($def);
                 $result->setPeriodId($periodDataDepend->getId());
                 $result->setCalcId($calcIdDepend);
                 $result->markSucceed();
             } finally {
-                $this->_manTrans->end($def);
+                $this->manTrans->end($def);
             }
         }
         $this->logger->info("'Loyalty Bonus' calculation is complete.");
@@ -196,16 +176,16 @@ class Call
         $this->logger->info("'Loyalty Compression' calculation is started.");
         $reqGetLatest = new PeriodGetLatestForPvBasedCalcRequest();
         $reqGetLatest->setCalcTypeCode($calcTypeCode);
-        $respGetLatest = $this->_callBasePeriod->getForPvBasedCalc($reqGetLatest);
+        $respGetLatest = $this->callBasePeriod->getForPvBasedCalc($reqGetLatest);
         if ($respGetLatest->isSucceed()) {
-            $def = $this->_manTrans->begin();
+            $def = $this->manTrans->begin();
             try {
                 /* get tree snapshot and orders data */
                 $periodData = $respGetLatest->getPeriodData();
                 $dsBegin = $periodData->getDstampBegin();
                 $dsEnd = $periodData->getDstampEnd();
                 $tree = $this->_getDownlineSnapshot($dsEnd);
-                $orders = $this->_repoMod->getSalesOrdersForPeriod($dsBegin, $dsEnd);
+                $orders = $this->repoMod->getSalesOrdersForPeriod($dsBegin, $dsEnd);
                 /* match orders to customers  */
                 foreach ($orders as $order) {
                     $custId = $order[Cfg::E_SALE_ORDER_A_CUSTOMER_ID];
@@ -219,16 +199,16 @@ class Call
                 $reqCompress->setFlatTree($tree);
                 $reqCompress->setSkipTreeExpand(true);
                 $reqCompress->setQualifier(new Sub\CompressQualifier());
-                $respCompress = $this->_callBaseCompress->qualifyByUserData($reqCompress);
+                $respCompress = $this->callBaseCompress->qualifyByUserData($reqCompress);
                 if ($respCompress->isSucceed()) {
-                    $this->_repoBonusService->markCalcComplete($calcId);
-                    $this->_manTrans->commit($def);
+                    $this->repoBonusService->markCalcComplete($calcId);
+                    $this->manTrans->commit($def);
                     $result->setPeriodId($periodData->getId());
                     $result->setCalcId($calcId);
                     $result->markSucceed();
                 }
             } finally {
-                $this->_manTrans->end($def);
+                $this->manTrans->end($def);
             }
         }
         $this->logger->info("'Loyalty Compression' calculation is complete.");
@@ -248,9 +228,9 @@ class Call
         $calcType = Cfg::CODE_TYPE_CALC_QUALIFICATION;
         $reqGetPeriod->setBaseCalcTypeCode($calcTypeBase);
         $reqGetPeriod->setDependentCalcTypeCode($calcType);
-        $respGetPeriod = $this->_callBasePeriod->getForDependentCalc($reqGetPeriod);
+        $respGetPeriod = $this->callBasePeriod->getForDependentCalc($reqGetPeriod);
         if ($respGetPeriod->isSucceed()) {
-            $def = $this->_manTrans->begin();
+            $def = $this->manTrans->begin();
             try {
                 $periodDataDepend = $respGetPeriod->getDependentPeriodData();
                 $calcDataDepend = $respGetPeriod->getDependentCalcData();
@@ -259,17 +239,17 @@ class Call
                 $dsBegin = $periodDataDepend->getDstampBegin();
                 $dsEnd = $periodDataDepend->getDstampEnd();
                 $calcIdBase = $calcDataBase->getId();
-                $tree = $this->_repoBonusCompress->getTreeByCalcId($calcIdBase);
-                $qualData = $this->_repoMod->getQualificationData($dsBegin, $dsEnd);
-                $updates = $this->_subQualification->calcParams($tree, $qualData, $gvMaxLevels, $psaaLevel);
-                $this->_repoMod->saveQualificationParams($updates);
-                $this->_repoBonusService->markCalcComplete($calcIdDepend);
-                $this->_manTrans->commit($def);
+                $tree = $this->repoBonusCompress->getTreeByCalcId($calcIdBase);
+                $qualData = $this->repoMod->getQualificationData($dsBegin, $dsEnd);
+                $updates = $this->subQualification->calcParams($tree, $qualData, $gvMaxLevels, $psaaLevel);
+                $this->repoMod->saveQualificationParams($updates);
+                $this->repoBonusService->markCalcComplete($calcIdDepend);
+                $this->manTrans->commit($def);
                 $result->setPeriodId($periodDataDepend->getId());
                 $result->setCalcId($calcIdDepend);
                 $result->markSucceed();
             } finally {
-                $this->_manTrans->end($def);
+                $this->manTrans->end($def);
             }
         }
         $this->logger->info("'Qualification for Loyalty' calculation is complete.");
