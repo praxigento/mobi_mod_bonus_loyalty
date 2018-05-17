@@ -12,28 +12,28 @@ use Praxigento\Downline\Service\Snap\Request\ExpandMinimal as DownlineSnapExtend
 use Praxigento\Pv\Repo\Data\Sale as PvSale;
 
 class Bonus {
-    /** @var   \Praxigento\Downline\Service\ISnap */
-    protected $_callDownlineSnap;
-    /** @var Bonus\RankQualifier */
-    protected $_rankQualifier;
-    /** @var  \Praxigento\Downline\Api\Helper\Downline */
-    protected $_toolDownlineTree;
+    /** @var \Praxigento\BonusLoyalty\Service\Calc\Sub\Bonus\RankQualifier */
+    private $aRankQualifier;
     /** @var  \Praxigento\Core\Api\Helper\Format */
-    protected $_toolFormat;
+    private $hlpFormat;
+    /** @var  \Praxigento\Downline\Api\Helper\Tree */
+    private $hlpTree;
+    /** @var   \Praxigento\Downline\Service\ISnap */
+    private $servDownlineSnap;
 
     /**
      * Bonus constructor.
      */
     public function __construct(
-        \Praxigento\Downline\Service\ISnap $callDownlineSnap,
-        \Praxigento\Core\Api\Helper\Format $toolFormat,
-        \Praxigento\Downline\Api\Helper\Downline $toolDownlineTree,
-        Bonus\RankQualifier $rankQualifier
+        \Praxigento\Downline\Service\ISnap $servDownlineSnap,
+        \Praxigento\Core\Api\Helper\Format $hlpFormat,
+        \Praxigento\Downline\Api\Helper\Tree $hlpTree,
+        \Praxigento\BonusLoyalty\Service\Calc\Sub\Bonus\RankQualifier $aRankQualifier
     ) {
-        $this->_callDownlineSnap = $callDownlineSnap;
-        $this->_toolFormat = $toolFormat;
-        $this->_toolDownlineTree = $toolDownlineTree;
-        $this->_rankQualifier = $rankQualifier;
+        $this->servDownlineSnap = $servDownlineSnap;
+        $this->hlpFormat = $hlpFormat;
+        $this->hlpTree = $hlpTree;
+        $this->aRankQualifier = $aRankQualifier;
     }
 
     private function _expandTree($data) {
@@ -41,7 +41,7 @@ class Bonus {
         $req->setKeyCustomerId(Compress::A_CUSTOMER_ID);
         $req->setKeyParentId(Compress::A_PARENT_ID);
         $req->setTree($data);
-        $resp = $this->_callDownlineSnap->expandMinimal($req);
+        $resp = $this->servDownlineSnap->expandMinimal($req);
         return $resp->getSnapData();
     }
 
@@ -56,13 +56,13 @@ class Bonus {
     public function calc($tree, $orders, $params, $percents) {
         $result = [ ];
         $mapTreeExp = $this->_expandTree($tree);
-        $mapRankById = $this->_rankQualifier->qualifyCustomers($tree, $params);
+        $mapRankById = $this->aRankQualifier->qualifyCustomers($tree, $params);
         foreach($orders as $order) {
             $custId = $order[Cfg::E_SALE_ORDER_A_CUSTOMER_ID];
             $orderId = $order[PvSale::A_SALE_ID];
             $pv = $order[PvSale::A_TOTAL];
             $path = $mapTreeExp[$custId][Snap::A_PATH];
-            $parents = $this->_toolDownlineTree->getParentsFromPathReversed($path);
+            $parents = $this->hlpTree->getParentsFromPathReversed($path);
             $gen = 1;
             foreach($parents as $parentId) {
                 if(isset($mapRankById[$parentId])) {
@@ -70,7 +70,7 @@ class Bonus {
                     if(isset($percents[$parentRank][$gen])) {
                         $percent = $percents[$parentRank][$gen];
                         $bonus = $pv * $percent;
-                        $bonus = $this->_toolFormat->roundBonus($bonus);
+                        $bonus = $this->hlpFormat->roundBonus($bonus);
                         $result[$parentId][$orderId] = $bonus;
                     }
                 }

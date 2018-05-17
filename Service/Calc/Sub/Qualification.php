@@ -15,21 +15,21 @@ use Praxigento\Downline\Service\Snap\Request\ExpandMinimal as DownlineSnapExtend
 
 class Qualification {
 
+    /** @var \Praxigento\Downline\Api\Helper\Tree */
+    private $hlpTree;
     /** @var  \Praxigento\Downline\Service\IMap */
-    protected $_callDownlineMap;
+    private $servDownlineMap;
     /** @var   \Praxigento\Downline\Service\ISnap */
-    protected $_callDownlineSnap;
-    /** @var \Praxigento\Downline\Api\Helper\Downline */
-    protected $_toolDownlineTree;
+    private $servDownlineSnap;
 
     public function __construct(
-        \Praxigento\Downline\Service\IMap $callDownlineMap,
-        \Praxigento\Downline\Service\ISnap $callDownlineSnap,
-        \Praxigento\Downline\Api\Helper\Downline $toolDownlineTree
+        \Praxigento\Downline\Service\IMap $servDownlineMap,
+        \Praxigento\Downline\Service\ISnap $servDownlineSnap,
+        \Praxigento\Downline\Api\Helper\Tree $hlpTree
     ) {
-        $this->_callDownlineMap = $callDownlineMap;
-        $this->_callDownlineSnap = $callDownlineSnap;
-        $this->_toolDownlineTree = $toolDownlineTree;
+        $this->servDownlineMap = $servDownlineMap;
+        $this->servDownlineSnap = $servDownlineSnap;
+        $this->hlpTree = $hlpTree;
     }
 
     private function _expandTree($data) {
@@ -37,7 +37,7 @@ class Qualification {
         $req->setKeyCustomerId(Compress::A_CUSTOMER_ID);
         $req->setKeyParentId(Compress::A_PARENT_ID);
         $req->setTree($data);
-        $resp = $this->_callDownlineSnap->expandMinimal($req);
+        $resp = $this->servDownlineSnap->expandMinimal($req);
         return $resp->getSnapData();
     }
 
@@ -55,7 +55,7 @@ class Qualification {
         $req = new DownlineMapByIdRequest();
         $req->setDataToMap($tree);
         $req->setAsId(Compress::A_CUSTOMER_ID);
-        $resp = $this->_callDownlineMap->byId($req);
+        $resp = $this->servDownlineMap->byId($req);
         return $resp->getMapped();
     }
 
@@ -64,7 +64,7 @@ class Qualification {
         $req->setAsCustomerId(Compress::A_CUSTOMER_ID);
         $req->setAsParentId(Compress::A_PARENT_ID);
         $req->setDataToMap($tree);
-        $resp = $this->_callDownlineMap->treeByTeams($req);
+        $resp = $this->servDownlineMap->treeByTeams($req);
         return $resp->getMapped();
     }
 
@@ -74,7 +74,7 @@ class Qualification {
         $req->setAsCustomerId(Compress::A_CUSTOMER_ID);
         $req->setAsDepth(Snap::A_DEPTH);
         $req->setShouldReversed(true);
-        $resp = $this->_callDownlineMap->treeByDepth($req);
+        $resp = $this->servDownlineMap->treeByDepth($req);
         return $resp->getMapped();
     }
 
@@ -96,7 +96,7 @@ class Qualification {
                 $result[$custId][EntityQual::A_PV] = $pv;
                 /* process GV */
                 $path = $treeExpanded[$custId][Snap::A_PATH];
-                $parents = $this->_toolDownlineTree->getParentsFromPathReversed($path);
+                $parents = $this->hlpTree->getParentsFromPathReversed($path);
                 $gen = 1;
                 foreach($parents as $parentId) {
                     if($gen > $gvMaxLevels) {
